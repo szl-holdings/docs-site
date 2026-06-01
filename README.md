@@ -1,5 +1,8 @@
 # SZL Holdings — Unified Documentation Site
 
+<!-- CII-BEST-PRACTICES-BADGE: PENDING — replace 'PENDING' with the project id once founder registers this repo at https://bestpractices.coreinfrastructure.org/ -->
+[![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/PENDING/badge)](https://bestpractices.coreinfrastructure.org/)
+
 The source for the SZL Holdings documentation portal (target: `docs.szlholdings.com`).
 It documents the five flagships (a11oy, amaru, sentra, killinchu, rosie), the PURIQ
 doctrine and master formula, the twelve anatomy organs plus the Killinchu bridge, the
