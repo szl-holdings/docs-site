@@ -21,10 +21,9 @@ echo "Lean: $DECL declarations / $AXIOM_UNIQ unique axioms / $SORRY sorries"
 | Snapshot | Declarations | Unique axioms | Sorries | Anchor |
 |----------|-------------|---------------|---------|--------|
 | **v11 LOCKED (contract)** | <span class="locked">749</span> | <span class="locked">14</span> | <span class="locked">163</span> | tag `lutar-v18.0.0` / `c7c0ba17` |
-| Live (corpus growth) | 752 *(corrected @ `3de37e5`)* | 14 | 160 (109 baseline + 51 Putnam) | `lean_numbers.json` |
+| Live (matches contract) | 749 *(measured @ `c7c0ba17`)* | 14 | 163 (112 baseline + 51 Putnam) | `lean_numbers.json` |
 
-Both are stated honestly. The **locked** figures are the doctrine contract; the **live**
-figures are current reality after Cursor merges. Source for the live snapshot:
+Both are stated honestly. The **locked** figures are the doctrine contract; the **live** figures are the current measured reality, and now match the locked contract. Source for the live snapshot:
 [`lean_numbers.json`](https://github.com/szl-holdings/.github/blob/main/.github/data/lean_numbers.json).
 
 ## Lean kernel
