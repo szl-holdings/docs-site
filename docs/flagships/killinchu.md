@@ -10,9 +10,7 @@ target is resolved. Gloss: <a href="https://kaikki.org/eswiktionary/">kaikki.org
 
 `killinchu` 🦅 is the SZL **drone-intelligence flagship**: a formally-governed **counter-UAS
 rule engine** with **Λ-gate governance**, **DSSE Khipu receipts**, and **real protocol
-ingest**. It is the airborne-domain pivot of the maritime `vessels` work — maritime domain
-awareness → airborne unmanned domain awareness — and preserves the vessels API aliases for
-continuity.
+ingest**. It is the SZL counter-UAS rule engine for the governance substrate.
 
 **Anatomy mapping:** killinchu is the **embodied bridge organ** — the
 [Killinchu-bridge](/anatomy/#killinchu-bridge) — that extends digital governance to
