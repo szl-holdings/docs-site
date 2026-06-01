@@ -44,7 +44,7 @@ jobs:
           touch docs/.vitepress/dist/.nojekyll
           # Custom domain (enable once DNS CNAME docs.szlholdings.com is set):
           # echo "docs.szlholdings.com" > docs/.vitepress/dist/CNAME
-      - uses: actions/configure-pages@v5
+      - uses: actions/configure-pages@v6
       - uses: actions/upload-pages-artifact@v3
         with:
           path: docs/.vitepress/dist
