@@ -82,6 +82,7 @@ export default withMermaid(defineConfig({
         items: [
           { text: 'SDKs', link: '/sdks/' },
           { text: 'API Reference', link: '/api/' },
+          { text: 'UDS — Unified Demo Surface (Coming Soon · Jun 16)', link: '/uds/' },
           { text: 'Cookbook', link: '/cookbook/' },
           { text: 'Use Cases', link: '/use-cases/' }
         ]
@@ -194,6 +195,14 @@ export default withMermaid(defineConfig({
           text: 'Evidence',
           items: [
             { text: 'Evidence Index', link: '/evidence/' }
+          ]
+        }
+      ],
+      '/uds/': [
+        {
+          text: 'UDS — Unified Demo Surface',
+          items: [
+            { text: 'Overview (Coming Soon · Jun 16)', link: '/uds/' }
           ]
         }
       ]
