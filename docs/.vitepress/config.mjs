@@ -50,7 +50,9 @@ export default withMermaid(defineConfig({
   },
 
   themeConfig: {
-    logo: '/img/szl-mark.svg',
+    // Inca animated avatar (Amaru) as the navbar logo. Static szl-mark.svg
+    // retained on disk at /img/szl-mark.svg (additive — not removed).
+    logo: '/img/szl-avatar-animated.gif',
     siteTitle: 'SZL Holdings',
 
     nav: [

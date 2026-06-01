@@ -152,3 +152,9 @@ Maintained by SZL Holdings. Content is the SZL doctrine of record; the LOCKED nu
 contract. NO BANDAID. Math-grounded, Quechua-rooted.
 
 — Yachay
+
+## SZL Holdings
+
+![SZL Holdings](./branding/szl-avatar-animated.gif)
+
+*Amaru — the Inca avatar of SZL Holdings. Animated mark (400×400, 16fps loop). Signed Yachay.*
