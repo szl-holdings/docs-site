@@ -1,0 +1,63 @@
+# SPDX-License-Identifier: Apache-2.0
+# © 2026 SZL Holdings · Signed: Yachay <yachay@szlholdings.dev>
+# Co-Authored-By: Perplexity Computer Agent
+#
+# Build the VitePress docs site and deploy to GitHub Pages.
+# Additive: adds a deploy path only; does not alter docs content or config.
+# Founder UI action required once: repo Settings → Pages → Source = "GitHub Actions".
+# Custom domain (docs.szlholdings.com) is set via the CNAME step + DNS (see DOMAIN_ACQUISITION.md).
+name: Deploy Docs (GitHub Pages)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/deploy-pages.yml'
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment; in-progress runs are not cancelled.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install deps
+        run: npm ci || npm install
+      - name: Build (VitePress)
+        run: npm run docs:build
+      - name: Write CNAME (custom domain)
+        run: echo 'docs.szlholdings.com' > docs/.vitepress/dist/CNAME
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/.vitepress/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
