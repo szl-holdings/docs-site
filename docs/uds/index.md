@@ -13,7 +13,6 @@ Byzantine-fault-tolerant consensus receipt** — every step provenanced on the K
 chain.
 
 > Doctrine v11 **LOCKED** — 749 declarations / 14 axioms / 163 sorries · locked_at `c7c0ba17`.
-> v12 declared (781 / 14 / 194, same 14 axioms, replay hash unchanged) — additive only.
 > SLSA L1 (honest). Λ = Conjecture 1 (not a theorem). Quechua names are brand naming only.
 
 ## What UDS does
