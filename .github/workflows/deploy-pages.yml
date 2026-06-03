@@ -46,7 +46,7 @@ jobs:
           # Custom domain (enable once DNS CNAME docs.szlholdings.com is set):
           # echo "docs.szlholdings.com" > docs/.vitepress/dist/CNAME
       - uses: actions/configure-pages@v4
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: docs/.vitepress/dist
 
