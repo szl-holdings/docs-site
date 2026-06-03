@@ -91,6 +91,7 @@ export default withMermaid(defineConfig({
         text: 'Trust',
         items: [
           { text: 'Evidence', link: '/evidence/' },
+          { text: 'Data Lake', link: '/lake' },
           { text: 'Compliance & Security', link: '/compliance' },
           { text: 'Status', link: '/status' },
           { text: 'Brand Kit', link: '/brand' }
