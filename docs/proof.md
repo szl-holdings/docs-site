@@ -5,7 +5,7 @@ Lean kernel, the public attestation lake, and the persistent Zenodo DOIs. For th
 reproduction commands and commit anchors, see [Evidence](/evidence/).
 
 > Doctrine v11 **LOCKED** — 749 declarations / 14 unique axioms / 163 tracked sorries ·
-> kernel `c7c0ba17`. **Λ = Conjecture 1** (not a theorem). SLSA L1 honest.
+> kernel `c7c0ba17`. **Λ = Conjecture 1** (not a theorem). SLSA L1 + L2 build provenance attested (verifiable via slsa-verifier).
 
 ## Lean kernel — `lutar-lean`
 
@@ -58,4 +58,4 @@ A complete, versioned list is maintained in the thesis repository's `CITATION.cf
 [Evidence page](/evidence/) carries the full DOI register and commit anchors.
 
 ---
-*Doctrine v11 LOCKED · 749/14/163 · kernel c7c0ba17 · Λ = Conjecture 1 · SLSA L1 honest*
+*Doctrine v11 LOCKED · 749/14/163 · kernel c7c0ba17 · Λ = Conjecture 1 · SLSA L1 + L2 build provenance attested (verifiable via slsa-verifier)*
