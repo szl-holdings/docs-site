@@ -72,6 +72,7 @@ export default withMermaid(defineConfig({
         text: 'Anatomy',
         items: [
           { text: 'Architecture (7 organs)', link: '/architecture' },
+          { text: 'Mesh — nervous system', link: '/mesh' },
           { text: '3D Showcases', link: '/anatomy/3d-showcases' },
           { text: 'Anatomy + Organs', link: '/anatomy/' },
           { text: 'PURIQ Doctrine', link: '/doctrine/puriq' },
@@ -124,6 +125,7 @@ export default withMermaid(defineConfig({
           text: 'Anatomy',
           items: [
             { text: 'Anatomy + Organs', link: '/anatomy/' },
+            { text: 'Mesh — nervous system', link: '/mesh' },
             { text: '3D Showcases', link: '/anatomy/3d-showcases' }
           ]
         },
