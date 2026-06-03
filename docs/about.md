@@ -50,5 +50,5 @@ engineering agent) under founder authority, with the Lean corpus maintained in
 
 ---
 
-*This site was authored by **Yachay** under SZL Doctrine v12 (PURIQ). Math-grounded.
+*This site was authored by **Yachay** under SZL Doctrine v11 LOCKED (PURIQ is a proposed additive layer — not yet promoted). Math-grounded.
 Quechua-rooted. Zero mysticism. — NO BANDAID. Series-A grade.*
