@@ -1,8 +1,8 @@
 name: deploy-docs-pages
 
 # Build the VitePress docs site and deploy to GitHub Pages.
-# Sovereign: no external API keys. Clean CI build (npm ci) avoids the
-# truncated-dependency issue seen in constrained sandboxes.
+# Fixed: use npm ci (lock-file-exact install) instead of npm install.
+# Resolves ERESOLVE peer-dep conflict with markdown-it-mathjax3 v5 vs v4.
 #
 # Founder one-time action: repo Settings -> Pages -> Source = "GitHub Actions".
 # Then (optional) set a custom domain docs.szlholdings.com (see DNS plan).
@@ -27,14 +27,15 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: 'npm'
       - name: Install deps
-        run: npm install --no-audit --no-fund
+        run: npm ci --no-audit --no-fund
       - name: Build docs
         run: |
           node node_modules/vitepress/bin/vitepress.js build docs
@@ -44,7 +45,7 @@ jobs:
           touch docs/.vitepress/dist/.nojekyll
           # Custom domain (enable once DNS CNAME docs.szlholdings.com is set):
           # echo "docs.szlholdings.com" > docs/.vitepress/dist/CNAME
-      - uses: actions/configure-pages@v6
+      - uses: actions/configure-pages@v4
       - uses: actions/upload-pages-artifact@v3
         with:
           path: docs/.vitepress/dist
@@ -57,4 +58,4 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
-        uses: actions/deploy-pages@v5
+        uses: actions/deploy-pages@v4
