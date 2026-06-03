@@ -21,6 +21,12 @@ hero:
     - theme: alt
       text: Evidence
       link: /evidence/
+    - theme: alt
+      text: Verify a receipt
+      link: https://github.com/szl-holdings/szl-cookbook/blob/main/recipes/01-verify-a-receipt-end-to-end.md
+    - theme: alt
+      text: Cite
+      link: /#citation
 
 features:
   - title: a11oy — execution fabric
@@ -101,6 +107,35 @@ Beyond the five flagships, two repositories carry the load-bearing evidence:
 - **[Changelog](/changelog)** — aggregated v1.0.0 release notes (Keep a Changelog).
 - **[UDS — Deploy & Hand-off](/uds)** — sign-verify-deploy a flagship as a UDS payload.
 - **[Compliance & Security](/compliance)** — honest posture: SLSA L1, cosign PENDING, certification roadmap.
+
+## Citation
+
+If you build on SZL, please cite the archived release:
+
+```bibtex
+@software{szl_holdings_2026,
+  author    = {Lutar, Stephen P.},
+  title     = {SZL Holdings: Sovereign Governed AI --- a formally-verified governance substrate for agentic systems},
+  year      = {2026},
+  publisher = {Zenodo},
+  version   = {Doctrine v11 LOCKED},
+  doi       = {10.5281/zenodo.20434276},
+  url       = {https://github.com/szl-holdings},
+  note      = {749 declarations / 14 axioms / 163 sorries, kernel c7c0ba17}
+}
+```
+
+## Built with / learned from
+
+Our documentation and publication conventions were learned from open-source leaders — we
+adapted their *patterns*, not their words. Inspired by patterns from **Polymathic AI**
+([the_well](https://github.com/PolymathicAI/the_well), [walrus](https://github.com/PolymathicAI/walrus)),
+**Anthropic**, **OpenAI** ([whisper](https://github.com/openai/whisper)), **Stripe** (docs craft),
+Google DeepMind ([alphafold3](https://github.com/google-deepmind/alphafold3)),
+Meta FAIR ([segment-anything](https://github.com/facebookresearch/segment-anything)),
+EleutherAI ([lm-evaluation-harness](https://github.com/EleutherAI/lm-evaluation-harness)),
+and Hugging Face ([transformers](https://github.com/huggingface/transformers)).
+We are a precision substrate, not a vibes company.
 
 <div class="quechua">
 <strong>No mysticism.</strong> SZL's naming is etymological, not ritual. The Quechua words
