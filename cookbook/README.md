@@ -39,6 +39,24 @@
 
 ## What this is
 
+> **📖 The cookbook is live and reactivated.** Browse the full, customer-facing recipe library at
+> **[github.com/szl-holdings/szl-cookbook](https://github.com/szl-holdings/szl-cookbook)** —
+> 15 runnable recipes for the five flagships. Fastest start:
+> **[Verify a receipt end-to-end](https://github.com/szl-holdings/szl-cookbook/blob/main/recipes/01-verify-a-receipt-end-to-end.md)**
+> (cryptographically validates a real DSSE receipt in under a minute, no credentials).
+>
+> | Recipe | Flagship |
+> |---|---|
+> | [01 Verify a receipt end-to-end](https://github.com/szl-holdings/szl-cookbook/blob/main/recipes/01-verify-a-receipt-end-to-end.md) | amaru · a11oy · sentra |
+> | [04 Drone counter-UAS verdict](https://github.com/szl-holdings/szl-cookbook/blob/main/recipes/04-drone-counter-uas-verdict.md) | killinchu |
+> | [05 Memory-attested reasoning](https://github.com/szl-holdings/szl-cookbook/blob/main/recipes/05-memory-attested-reasoning.md) | amaru |
+> | [06 Verify cosign + Rekor (SLSA L1)](https://github.com/szl-holdings/szl-cookbook/blob/main/recipes/06-cosign-rekor-slsa-l1.md) | all 5 |
+> | [12 Doctrine ledger query](https://github.com/szl-holdings/szl-cookbook/blob/main/recipes/12-doctrine-ledger-query.md) | all 5 |
+>
+> Full index: [szl-cookbook/recipes](https://github.com/szl-holdings/szl-cookbook/tree/main/recipes).
+
+
+
 **szl-cookbook** provides executable recipes and SKILL.md patterns for engineering teams building governed AI applications on the SZL substrate. Two flagship recipes demonstrate the full stack: `knot-calculus-v1` implements the khipu receipt DAG with a McAllester-1999 PAC-Bayes bound and TH11 knot-invariant verification; `anatomy-evolved-v1` covers the 8-organ anatomy with carlota-jo doctrine guards for adversarial prompt defense. Nine claude-code skills are provided with HARVEST_LOG provenance, each a `SKILL.md` agent-instruction pattern harvested from real production sessions.
 
 ## Why it matters
