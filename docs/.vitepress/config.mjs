@@ -94,6 +94,7 @@ export default withMermaid(defineConfig({
         items: [
           { text: 'Evidence', link: '/evidence/' },
           { text: 'Proof — Lean · Lake · DOIs', link: '/proof' },
+          { text: 'Thesis Lineage — v1 → v22', link: '/lineage' },
           { text: 'Data Lake', link: '/lake' },
           { text: 'Changelog', link: '/changelog' },
           { text: 'Compliance & Security', link: '/compliance' },
