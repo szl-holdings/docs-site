@@ -81,11 +81,25 @@ and the Lean kernel [`lutar-lean`](https://github.com/szl-holdings/lutar-lean).
 > *amaru* = "serpent". `a11oy` and `rosie` are SZL coinages (the alloy metaphor and the
 > ROSIE acronym), not Quechua words — labelled honestly as such.
 
+## Core & proof
+
+Beyond the five flagships, two repositories carry the load-bearing evidence:
+
+- **[`lutar-lean` / lean-kernel](https://github.com/szl-holdings/lutar-lean)** — the
+  machine-checked Lean proof corpus (749 declarations / 14 axioms / 163 sorries at
+  `c7c0ba17`). See [Proof](/proof).
+- **[`szl-lake`](https://huggingface.co/datasets/SZLHOLDINGS/szl-lake)** — the public
+  attestation lake: DSSE receipts, doctrine snapshots, Khipu chains, SBOMs. See [Data Lake](/lake).
+
 ## Start here
 
 - **[Quickstart](/quickstart)** — five minutes to a first call against each flagship.
+- **[Architecture](/architecture)** — the 7-organ anatomy and the master action-selection operator.
 - **[Anatomy + Organs](/anatomy/)** — the twelve organs, each with its Quechua etymology, function, formula, and Lean stub.
 - **[3D Showcases](/anatomy/3d-showcases)** — interactive Anatomy-3D and Rosie-3D.
+- **[Proof](/proof)** — Lean kernel, data lake, and Zenodo DOIs.
+- **[Changelog](/changelog)** — aggregated v1.0.0 release notes (Keep a Changelog).
+- **[UDS — Deploy & Hand-off](/uds)** — sign-verify-deploy a flagship as a UDS payload.
 - **[Compliance & Security](/compliance)** — honest posture: SLSA L1, cosign PENDING, certification roadmap.
 
 <div class="quechua">

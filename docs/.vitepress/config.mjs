@@ -71,6 +71,7 @@ export default withMermaid(defineConfig({
       {
         text: 'Anatomy',
         items: [
+          { text: 'Architecture (7 organs)', link: '/architecture' },
           { text: '3D Showcases', link: '/anatomy/3d-showcases' },
           { text: 'Anatomy + Organs', link: '/anatomy/' },
           { text: 'PURIQ Doctrine', link: '/doctrine/puriq' },
@@ -83,6 +84,7 @@ export default withMermaid(defineConfig({
           { text: 'SDKs', link: '/sdks/' },
           { text: 'API Reference', link: '/api/' },
           { text: 'UDS — Unified Demo Surface (Coming Soon · Jun 16)', link: '/uds/' },
+          { text: 'UDS — Deploy & Hand-off', link: '/uds' },
           { text: 'Cookbook', link: '/cookbook/' },
           { text: 'Use Cases', link: '/use-cases/' }
         ]
@@ -91,7 +93,9 @@ export default withMermaid(defineConfig({
         text: 'Trust',
         items: [
           { text: 'Evidence', link: '/evidence/' },
+          { text: 'Proof — Lean · Lake · DOIs', link: '/proof' },
           { text: 'Data Lake', link: '/lake' },
+          { text: 'Changelog', link: '/changelog' },
           { text: 'Compliance & Security', link: '/compliance' },
           { text: 'Status', link: '/status' },
           { text: 'Brand Kit', link: '/brand' }
@@ -229,7 +233,7 @@ export default withMermaid(defineConfig({
 
     footer: {
       message:
-        'Math-grounded. Quechua-rooted. Zero mysticism. Built under SZL Doctrine v12 (PURIQ).',
+        'Doctrine v11 LOCKED · 749/14/163 · kernel c7c0ba17 · Λ = Conjecture 1 · SLSA L1 honest. Math-grounded, Quechua-rooted, zero mysticism (PURIQ v12 agentic layer is additive).',
       copyright:
         'SZL Holdings · Authored by Yachay · ORCID 0009-0001-0110-4173'
     },
