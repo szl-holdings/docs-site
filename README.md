@@ -1,3 +1,45 @@
+<!-- szl-investor-header -->
+<div align="center">
+
+# docs-site
+
+### The unified documentation hub for everything SZL — quickstarts, how-to recipes, and the full technical reference for governed AI.
+
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg?style=flat-square)](LICENSE) [![Build](https://github.com/szl-holdings/docs-site/actions/workflows/deploy-pages.yml/badge.svg?branch=main)](https://github.com/szl-holdings/docs-site/actions/workflows/deploy-pages.yml) [![Doctrine v11](https://img.shields.io/badge/Doctrine-v11_LOCKED-3b82f6?style=flat-square)](https://github.com/szl-holdings/.github/tree/main/doctrine) [![SLSA](https://img.shields.io/badge/SLSA-L1_honest-22c55e?style=flat-square)](https://slsa.dev/spec/v1.0/levels)
+
+[Docs](https://docs.szlholdings.com) · [Quickstart](https://docs.szlholdings.com/quickstart) · [Live demo](https://docs.szlholdings.com) · [SZL Holdings](https://szlholdings.com)
+
+</div>
+
+## 💡 Why it matters
+
+It is where investors, design partners, and engineers go to understand what SZL does, try it in minutes, and verify the claims for themselves — all in plain language with deep technical docs one click away.
+
+## ▶️ Live demo
+
+**[Open the live demo →](https://docs.szlholdings.com)**
+
+[![demo screenshot](https://raw.githubusercontent.com/szl-holdings/szl-brand/main/kit/logos/png/kanchay-512.png)](https://docs.szlholdings.com)
+
+<sub>_Screenshot: SZL Holdings kanchay mark — replace with a live capture of the running surface._</sub>
+
+## ⚡ Quick start (30 seconds)
+
+```bash
+git clone https://github.com/szl-holdings/docs-site.git
+cd docs-site
+make quickstart   # or: see docs.szlholdings.com/quickstart
+```
+
+## 🔍 How it works
+
+In two sentences: this component is part of SZL's governed-AI mesh — it enforces policy and emits signed, replayable audit receipts so every AI action can be verified after the fact. The full mathematical foundation, formal proofs, and protocol details are documented below and in the [technical docs](https://docs.szlholdings.com).
+
+---
+
+<details>
+<summary><strong>📐 Full technical detail, math, and proofs (the proof, not the pitch)</strong></summary>
+
 # SZL Holdings — Unified Documentation Site
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
@@ -168,3 +210,16 @@ contract. NO BANDAID. Math-grounded, Quechua-rooted.
 ![SZL Holdings](./branding/szl-avatar-animated.gif)
 
 *Amaru — the Inca avatar of SZL Holdings. Animated mark (400×400, 16fps loop). Signed Yachay.*
+
+
+</details>
+
+<!-- szl-doctrine-footer -->
+
+---
+
+### Citation & doctrine
+
+Cite this work via [`CITATION.cff`](CITATION.cff). Math foundations: [szl-papers](https://github.com/szl-holdings/szl-papers) · [lutar-lean](https://github.com/szl-holdings/lutar-lean) (kernel `c7c0ba17`).
+
+<sub>Λ Conjecture 1 (not a theorem) · 749/14/163 v11 LOCKED (kernel `c7c0ba17`) · SLSA L1 honest · Section 889 = 5 vendors · [SZL Holdings](https://szlholdings.com) · Apache-2.0 code · CC-BY-4.0 papers</sub>
