@@ -3,14 +3,21 @@
 Live operational status of the SZL surfaces. This page is a static snapshot of the canonical
 endpoints; for real-time liveness, hit each service's `/healthz` directly.
 
-## Live services
+## Live flagship services
 
 | Surface | Endpoint | Liveness check |
 |---------|----------|----------------|
-| killinchu API | [szlholdings-killinchu.hf.space](https://szlholdings-killinchu.hf.space) | `GET /api/killinchu/healthz` |
+| **a11oy** | [szlholdings-a11oy.hf.space](https://szlholdings-a11oy.hf.space) | `GET /healthz` → doctrine v11 · 749/14/163 |
+| **amaru** | [szlholdings-amaru.hf.space](https://szlholdings-amaru.hf.space) | `GET /healthz` |
+| **killinchu** | [szlholdings-killinchu.hf.space](https://szlholdings-killinchu.hf.space) | `GET /api/killinchu/healthz` |
+| **rosie** | [szlholdings-rosie.hf.space](https://szlholdings-rosie.hf.space) | `GET /healthz` |
+| **sentra** | [szlholdings-sentra.hf.space](https://szlholdings-sentra.hf.space) | `GET /api/sentra/healthz` |
 | Anatomy-3D | [szlholdings-anatomy-3d.static.hf.space](https://szlholdings-anatomy-3d.static.hf.space/) | static Space |
 | Rosie-3D | [szlholdings-rosie-3d.static.hf.space](https://szlholdings-rosie-3d.static.hf.space/) | static Space |
-| MCP receipts server | `szlholdings-mcp-receipts-server.hf.space` | `GET /gradio_api/info` (17 tools) |
+| MCP receipts server | [szlholdings-mcp-receipts-server.hf.space](https://szlholdings-mcp-receipts-server.hf.space) | `GET /gradio_api/info` (17 tools) |
+
+All five flagship `/healthz` endpoints return Doctrine v11 verbatim:
+`749 declarations / 14 unique axioms / 163 tracked sorries`, locked at `c7c0ba17`.
 
 ## Repositories
 
@@ -34,5 +41,11 @@ real-time source of truth.
 
 - **cosign signing:** PENDING — DSSE signatures are `PLACEHOLDER` (see [Compliance](/compliance)).
 - **Cardano mainnet anchoring (amaru):** in development.
-- **Cross-mesh W3C traceparent (OTel-VSP Wire D):** in development; in-process tracing is live.
+- **Wire D (W3C traceparent):** in-process tracing is **LIVE** on every request; cross-Space
+  distributed-trace broker is **NOT wired** (roadmap). See [WIRES D–H](/architecture).
+- **Wire E–H (cortex SSE, Khipu receipts, brain mesh, lean-verify):** **LIVE in-process**
+  within each Space; cross-Space orchestration layer is roadmap.
+- **UDS public demo:** launches Warhacker Jun 16, 2026 — not yet live.
 - **Unified SDKs (szl-python, szl-ts):** in development.
+
+*Doctrine v11 LOCKED · 749/14/163 · kernel c7c0ba17 · SLSA L1 honest*
