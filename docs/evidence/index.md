@@ -77,7 +77,9 @@ tagged) or from the Zenodo deposit.
 
 The Ouroboros self-evaluation harness (`OUROBOROS_RUN_ALL`) exercises the governed loop
 end-to-end and emits a self-test log. Results and the doctrine self-grade are published in the
-thesis repo under `docs/audit/doctrine-pass-results.md` and `papers/v13/doctrine_self_grade.md`.
+thesis repo under `docs/audit/doctrine-pass-results.md`.
+The self-grade artifact lives at `papers/v13/self_grade.md` in the ouroboros-thesis repo
+(note: v13 here is the thesis paper version number, unrelated to governance versioning).
 The Putnam suite (4/12 GREEN) is the formal-math eval anchor.
 
 ## Khipu receipt examples

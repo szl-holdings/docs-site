@@ -29,7 +29,7 @@ traces to a versioned, DOI-pinned thesis. This is the canonical timeline.
 | **v9** | 2026-05-05 | [zenodo.20053148](https://doi.org/10.5281/zenodo.20053148) | Unified-Operational — the Lutar Invariant family |
 | **v10** | 2026-05-05 | [zenodo.20053163](https://doi.org/10.5281/zenodo.20053163) | Exhaustive-Audit — the audit-closure operator Λ |
 | **v11** | 2026-05-11 | [zenodo.20119582](https://doi.org/10.5281/zenodo.20119582) | Applied Λ — measured per-request overhead |
-| **v12** | 2026-05-14 | [concept](https://doi.org/10.5281/zenodo.19944926) | The Λ-Ouroboros substrate — first four verified theorems |
+| **v12** | 2026-05-14 | [concept](https://doi.org/10.5281/zenodo.19944926) | The Λ-Ouroboros substrate — first four machine-checked Lean proofs (Λ still Conjecture 1 at this stage) |
 | **v13** | 2026-05-18 | [concept](https://doi.org/10.5281/zenodo.19944926) | Anatomy as architecture |
 | **v14** | 2026-05-28 | [zenodo.20173912](https://doi.org/10.5281/zenodo.20173912) | Verifiable multi-agent anatomy; **Λ downgraded to Conjecture 1** |
 | **v15** | 2026-05-28 | [zenodo.20195368](https://doi.org/10.5281/zenodo.20195368) | Knot calculus for governed decision receipts |
@@ -39,7 +39,7 @@ traces to a versioned, DOI-pinned thesis. This is the canonical timeline.
 | **v19** | — | *(no release — version gap; v18 → v20)* | — |
 | **v20** | 2026-06-01 | [concept](https://doi.org/10.5281/zenodo.19944926) | "The Culmination" — formally-verified anatomical substrate |
 | **v21** | 2026-06-01 | [concept](https://doi.org/10.5281/zenodo.19944926) | **The PURIQ-OS Substrate** — 12-organ runtime, 23 agentic formulas |
-| **v22** | 2026-06-03 | **DOI pending (founder mint)** | **"Convergence"** — A5 merge, Cauchy_ND partial, VCG, SLSA L2, Rounds 10–11, Sim-to-Real (α=0.10) |
+| **v22** | 2026-06-03 | **DOI pending (founder mint)** | **"Convergence"** — A5 merge, Cauchy_ND partial, VCG, Rounds 10–11, Sim-to-Real (α=0.10) (SLSA L1 honest — L2 roadmap) |
 
 ::: tip v19 gap
 Numbering jumped v18 → v20 during the late-May consolidation. There is no v19 paper or DOI; this is documented, not a missing artifact.
@@ -88,10 +88,10 @@ Honest status — only A5 is merged to `main`; the rest are **on-branch / in rev
 2. **VCG truthfulness — in review (PR #172).** Dominant-strategy truth + individual rationality.
 3. **Cauchy_ND partial closure — in review (PRs #173/#174/#175).** Topology landed true forms;
    functional analysis closed with 1 honest t=0 sorry; symmetric closed with A5 dependency.
-4. **SLSA L2 achieved.** 5/5 GHCR images verified via `slsa-verifier`. **L1 + L2; NOT L3.**
+4. **SLSA L1 (honest).** 5/5 GHCR images cosign-signed and publicly verifiable. **L2 provenance attestation is roadmap — not yet claimed.**
 5. **Innovation Rounds 10–11 — in review / in flight.** Physics, quantum, CS, crypto, distsys.
 6. **Sim-to-Real benchmark (draft).** Walrus parallel; mean **α-gap = 0.10** across five regimes.
 
 ::: warning Λ remains Conjecture 1
-The uniqueness chain is complete only when all Cauchy_ND sorries close on `main`. They have not. No SZL surface elevates Λ to a theorem.
+The uniqueness chain is complete only when all Cauchy_ND sorries close on `main`. They have not. No SZL surface elevates Λ to a theorem (Λ = Conjecture 1, NOT a theorem).
 :::
