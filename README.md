@@ -53,7 +53,7 @@ In two sentences: this component is part of SZL's governed-AI mesh — it enforc
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/PENDING/badge)](https://bestpractices.coreinfrastructure.org/)
 
 The source for the SZL Holdings documentation portal (target: `docs.szlholdings.com`).
-It documents the five flagships (a11oy, amaru, sentra, killinchu, rosie), the PURIQ
+It documents the two SZL products (a11oy command platform + killinchu drones & vessels), the PURIQ
 doctrine and master formula, the twelve anatomy organs plus the Killinchu bridge, the
 Doctrine v11/v12 LOCKED contract numbers, the evidence ledger (DOIs, replay hash, Lean
 artifacts), SDKs, API reference, cookbook, use cases, compliance, and brand.
@@ -96,9 +96,9 @@ szl_docs_site/
 │   │   └── dist/                # build output (generated — do not edit by hand)
 │   ├── public/
 │   │   └── img/                 # logo + 3d/ screenshots
-│   ├── index.md                 # Home (hero, what is SZL, 5 flagships, CTAs)
+│   ├── index.md                 # Home (hero, what is SZL, two products, CTAs)
 │   ├── quickstart.md
-│   ├── flagships/               # index + a11oy, amaru, sentra, killinchu, rosie
+│   ├── products/                # index + a11oy, killinchu
 │   ├── anatomy/                 # index (12 organs + Killinchu bridge) + 3d-showcases
 │   ├── doctrine/                # puriq (master formula), v11-v12 (LOCKED numbers)
 │   ├── evidence/                # DOIs, replay hash, Lean, thesis, Khipu receipts
@@ -209,7 +209,7 @@ contract. NO BANDAID. Math-grounded, Quechua-rooted.
 
 ![SZL Holdings](./branding/szl-avatar-animated.gif)
 
-*Amaru — the Inca avatar of SZL Holdings. Animated mark (400×400, 16fps loop). Signed Yachay.*
+*The SZL Holdings animated mark (400×400, 16fps loop). Signed Yachay.*
 
 
 </details>
