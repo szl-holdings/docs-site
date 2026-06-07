@@ -14,7 +14,7 @@ endpoints; for real-time liveness, hit each service's `/healthz` directly.
 | **sentra** | [szlholdings-sentra.hf.space](https://szlholdings-sentra.hf.space) | `GET /api/sentra/healthz` |
 | Anatomy-3D | [szlholdings-anatomy-3d.static.hf.space](https://szlholdings-anatomy-3d.static.hf.space/) | static Space |
 | Rosie-3D | [szlholdings-rosie-3d.static.hf.space](https://szlholdings-rosie-3d.static.hf.space/) | static Space |
-| MCP receipts server | [szlholdings-mcp-receipts-server.hf.space](https://szlholdings-mcp-receipts-server.hf.space) | `GET /gradio_api/info` (17 tools) |
+| **Hatun-MCP** (Model Context Protocol) | [szlholdings-hatun-mcp.hf.space](https://szlholdings-hatun-mcp.hf.space/mcp/) | `POST /mcp/` JSON-RPC `initialize` → 23 static tools. **Re-deploying** (see note). |
 
 All five flagship `/healthz` endpoints return Doctrine v11 verbatim:
 `749 declarations / 14 unique axioms / 163 tracked sorries`, locked at `c7c0ba17`.
@@ -39,6 +39,15 @@ real-time source of truth.
 
 ## Known honest-status items
 
+- **Hatun-MCP (`szlholdings-hatun-mcp.hf.space/mcp/`):** the fleet's only spec-compliant
+  Streamable HTTP MCP server (23 static tools). The hosted Space is being re-deployed from
+  [szl-holdings/hatun-mcp](https://github.com/szl-holdings/hatun-mcp) (a Dockerfile fix restores
+  the build); until it returns `200`, run the server locally per its README. The flagship Spaces
+  (a11oy/amaru/rosie/sentra) expose tools as **HTTP catalogs** at `/api/<organ>/v1/mcp/tools`,
+  not as an MCP transport.
+- **"MCP receipts server" Space:** **removed from this table** — `szlholdings-mcp-receipts-server.hf.space`
+  is not deployed (HTTP 404) and has no backing repo. Receipt signing/verification is live today via
+  each flagship's `/khipu/sign` · `/khipu/verify` · `/khipu/pubkey` routes (a11oy verified).
 - **cosign signing:** PENDING — DSSE signatures are `PLACEHOLDER` (see [Compliance](/compliance)).
 - **Cardano mainnet anchoring (amaru):** in development.
 - **Wire D (W3C traceparent):** in-process tracing is **LIVE** on every request; cross-Space
