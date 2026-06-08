@@ -7,7 +7,7 @@
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg?style=flat-square)](LICENSE) [![Build](https://github.com/szl-holdings/docs-site/actions/workflows/deploy-pages.yml/badge.svg?branch=main)](https://github.com/szl-holdings/docs-site/actions/workflows/deploy-pages.yml) [![Doctrine v11](https://img.shields.io/badge/Doctrine-v11_LOCKED-3b82f6?style=flat-square)](https://github.com/szl-holdings/.github/tree/main/doctrine) [![SLSA](https://img.shields.io/badge/SLSA-Build_L2_(5_organ_images)-22c55e?style=flat-square)](https://slsa.dev/spec/v1.0/levels)
 
-[Docs](https://docs.szlholdings.com) · [Quickstart](https://docs.szlholdings.com/quickstart) · [Live demo](https://docs.szlholdings.com) · [SZL Holdings](https://szlholdings.com)
+[Docs](https://szl-holdings.github.io/docs-site) · [Quickstart](https://szl-holdings.github.io/docs-site/quickstart) · [Live demo](https://szl-holdings.github.io/docs-site) · [SZL Holdings](https://a11oy.net)
 
 </div>
 
@@ -17,9 +17,9 @@ It is where investors, design partners, and engineers go to understand what SZL 
 
 ## ▶️ Live demo
 
-**[Open the live demo →](https://docs.szlholdings.com)**
+**[Open the live demo →](https://szl-holdings.github.io/docs-site)**
 
-[![demo screenshot](https://raw.githubusercontent.com/szl-holdings/szl-brand/main/kit/logos/png/kanchay-512.png)](https://docs.szlholdings.com)
+[![demo screenshot](https://raw.githubusercontent.com/szl-holdings/szl-brand/main/kit/logos/png/kanchay-512.png)](https://szl-holdings.github.io/docs-site)
 
 <sub>_Screenshot: SZL Holdings kanchay mark — replace with a live capture of the running surface._</sub>
 
@@ -33,7 +33,7 @@ make quickstart   # or: see docs.szlholdings.com/quickstart
 
 ## 🔍 How it works
 
-In two sentences: this component is part of SZL's governed-AI mesh — it enforces policy and emits signed, replayable audit receipts so every AI action can be verified after the fact. The full mathematical foundation, formal proofs, and protocol details are documented below and in the [technical docs](https://docs.szlholdings.com).
+In two sentences: this component is part of SZL's governed-AI mesh — it enforces policy and emits signed, replayable audit receipts so every AI action can be verified after the fact. The full mathematical foundation, formal proofs, and protocol details are documented below and in the [technical docs](https://szl-holdings.github.io/docs-site).
 
 ---
 
@@ -222,5 +222,5 @@ contract. NO BANDAID. Math-grounded, Quechua-rooted.
 
 Cite this work via [`CITATION.cff`](CITATION.cff). Math foundations: [szl-papers](https://github.com/szl-holdings/szl-papers) · [lutar-lean](https://github.com/szl-holdings/lutar-lean) (kernel `c7c0ba17`).
 
-<sub>Λ Conjecture 1 (not a theorem) · 749/14/163 v11 LOCKED (kernel `c7c0ba17`) · SLSA Build L2 on all 5 organ images (L3 not claimed; bundle artifact not yet attested) · proved formulas = 5 {F1,F11,F12,F18,F19} · Section 889 = 5 vendors · [SZL Holdings](https://szlholdings.com) · Apache-2.0 code · CC-BY-4.0 papers</sub>
+<sub>Λ Conjecture 1 (not a theorem) · 749/14/163 v11 LOCKED (kernel `c7c0ba17`) · SLSA Build L2 on all 5 organ images (L3 not claimed; bundle artifact not yet attested) · proved formulas = 5 {F1,F11,F12,F18,F19} · Section 889 = 5 vendors · [SZL Holdings](https://a11oy.net) · Apache-2.0 code · CC-BY-4.0 papers</sub>
 
