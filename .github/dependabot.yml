@@ -17,24 +17,8 @@ updates:
         patterns:
           - "*"
 
-  # Python pip dependencies
-  - package-ecosystem: "pip"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-      day: "monday"
-      time: "08:00"
-      timezone: "America/New_York"
-    labels:
-      - "dependencies"
-    open-pull-requests-limit: 5
-    groups:
-      python-deps:
-        patterns:
-          - "*"
-
-  # Docker dependencies
-  - package-ecosystem: "docker"
+  # npm / Node dependencies
+  - package-ecosystem: "npm"
     directory: "/"
     schedule:
       interval: "weekly"
@@ -44,4 +28,8 @@ updates:
     labels:
       - "dependencies"
       - "security"
-    open-pull-requests-limit: 3
+    open-pull-requests-limit: 10
+    groups:
+      npm-deps:
+        patterns:
+          - "*"
