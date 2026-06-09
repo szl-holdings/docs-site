@@ -15,7 +15,7 @@ function, one formula, and one Lean proof obligation in
 ```mermaid
 flowchart TD
   L["Λ — Spine (aggregator)"] --> Y["Yuyay — Heart (13-axis admission gate)"]
-  A["Amaru — Cortex (memory)"] --> Y
+  A["Yuyaq — Cortex (memory)"] --> Y
   Y --> H["Hukulla — Immune (kill-switch)"]
   H --> K["Khipu — DAG (receipt accumulator)"]
   K --> W["Yawar — Blood (receipt ledger)"]
@@ -25,11 +25,11 @@ flowchart TD
 
 | # | Organ | Role | Flagship that embodies it |
 |---|-------|------|---------------------------|
-| 1 | **Λ — Spine** | Aggregator; bounds every decision | a11oy (gate), sentra (Λ-threshold) |
-| 2 | **Yuyay — Heart** | 13-axis conjunctive admission gate (no compensation) | all 5 (the `yuyay_v3` score) |
-| 3 | **Amaru — Cortex** | Memory cortex; COSE-receipted reads/writes | amaru |
-| 4 | **Hukulla — Immune** | Deny-by-default kill-switch / tripwires | sentra |
-| 5 | **Khipu — DAG** | Merkle receipt accumulator; sum invariant | rosie |
+| 1 | **Λ — Spine** | Aggregator; bounds every decision | a11oy (gate); Policy role (Λ-threshold, roadmap) |
+| 2 | **Yuyay — Heart** | 13-axis conjunctive admission gate (no compensation) | a11oy + killinchu (the `yuyay_v3` score) |
+| 3 | **Yuyaq — Cortex** | Memory cortex; COSE-receipted reads/writes | Provenance Anchor role (roadmap) |
+| 4 | **Hukulla — Immune** | Deny-by-default kill-switch / tripwires | Policy role (roadmap); gate lives in a11oy |
+| 5 | **Khipu — DAG** | Merkle receipt accumulator; sum invariant | Operator role (roadmap); DAG lives in a11oy |
 | 6 | **Yawar — Blood** | Circulatory receipt ledger | a11oy `/v1/ledger` |
 | 7 | **Killinchu — Bridge** | Extends digital governance to physical space | killinchu (counter-UAS) |
 
@@ -49,8 +49,8 @@ renderings of the spine, heart, and Khipu DAG.
 
 ## How a request flows
 
-1. A request enters through an operator surface ([rosie](/flagships/rosie)) or directly at a
-   flagship API.
+1. A request enters through the Operator console surface (roadmap; internal codename *rosie*,
+   retired) or directly at a shipping flagship API (a11oy / killinchu).
 2. The **Λ-spine** scores it; the **Yuyay heart** applies the 13-axis conjunctive gate.
 3. The **Hukulla immune** layer can hard-stop (deny by default).
 4. Every accepted decision emits a **Khipu** receipt into the **Yawar** ledger.
