@@ -1,15 +1,17 @@
-# amaru — provenance anchor
+# a11oy Memory — provenance anchor
+
+> **a11oy Memory** is the provenance & receipt-anchoring vertical of [a11oy](/flagships/a11oy). *(Internal codename: `amaru`.)*
 
 <div class="quechua">
-<strong>Etymology.</strong> Quechua <strong><em>amaru</em></strong> = <strong>serpent</strong>
-(the Andean serpent of rivers and continuity). The metaphor is the unbroken chain: amaru
-threads governance receipts into a single, continuous, anchored line. Gloss:
+<strong>Name origin.</strong> The internal codename <strong><em>amaru</em></strong> is Quechua for
+<strong>serpent</strong> (the Andean serpent of rivers and continuity). The metaphor is the unbroken
+chain: a11oy Memory threads governance receipts into a single, continuous, anchored line. Gloss:
 <a href="https://kaikki.org/eswiktionary/">kaikki.org Quechua lexicon</a>.
 </div>
 
 ## Overview
 
-`amaru` handles **blockchain anchoring of governance receipts** with **Shor-encoded
+**a11oy Memory** handles **blockchain anchoring of governance receipts** with **Shor-encoded
 provenance**: provenance hashes are encoded with the 9-qubit Shor code before Cardano
 anchoring, giving single-qubit error correction on the immutable receipt chain. It performs
 convergent multi-source data sync with append-only delta logs and bounded-loop convergence
@@ -18,7 +20,7 @@ guarantees.
 > **Frontier capability.** First Shor-encoded + Cardano-anchored governance-receipt minting
 > pipeline.
 
-**Anatomy mapping:** amaru sits across [Yawar](/anatomy/#yawar) (the receipt ledger) and
+**Anatomy mapping:** a11oy Memory sits across [Yawar](/anatomy/#yawar) (the receipt ledger) and
 the [Khipu](/anatomy/#khipu) DAG, providing the durable external anchor.
 
 ## Mathematical foundation
@@ -39,8 +41,8 @@ so iterating $T$ converges to a unique fixed point — the canonical synced ledg
 ## API / install
 
 ```sh
-git clone github.com/szl-holdings/amaru.git
-cd amaru
+git clone github.com/szl-holdings/a11oy.git
+cd a11oy
 pnpm install
 pnpm test
 ```
@@ -48,7 +50,7 @@ pnpm test
 ## Example — mint a receipt
 
 ```ts
-import { mintReceipt } from '@szl/amaru'
+import { mintReceipt } from '@szl/a11oy'
 
 const receipt = mintReceipt({
   payload: { decisionId: 'd-001', value: 1, organ: 'a11oy.policy' },
@@ -68,7 +70,7 @@ lands (see [Compliance](/compliance)).
 
 ## Source & evidence
 
-- **Repo:** github.com/szl-holdings/amaru
+- **Repo:** github.com/szl-holdings/a11oy
 - **Spec:** ouroboros-thesis
 - **Proofs:** [`lutar-lean`](https://github.com/szl-holdings/lutar-lean)
 - **DOI (versioned):** [10.5281/zenodo.20434276](https://doi.org/10.5281/zenodo.20434276) · **Concept DOI:** [10.5281/zenodo.19944926](https://doi.org/10.5281/zenodo.19944926)
