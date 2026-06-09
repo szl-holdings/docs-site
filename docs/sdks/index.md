@@ -5,9 +5,9 @@ SZL is shipping two first-party client SDKs that wrap the [flagships](/flagships
 **`szl-ts`** for TypeScript.
 
 ::: warning In development
-The unified `szl-python` and `szl-ts` packages are **in development**. Today, each flagship is
-consumed via its own package (`@szl-holdings/a11oy-policy`, `@szl/amaru`, etc.) or its live
-Space API (killinchu). The unified SDKs roll those into one client with shared receipt,
+The unified `szl-python` and `szl-ts` packages are **in development**. Today, the shipping
+flagships are consumed via the a11oy package (`@szl-holdings/a11oy-policy`) or the live
+killinchu Space API. The unified SDKs roll those into one client with shared receipt,
 Λ-gate, and Khipu types.
 
 **Target:** first public `szl-python` + `szl-ts` release at the Series-A milestone. Until then,
@@ -20,10 +20,10 @@ the per-flagship packages on [the org](https://github.com/szl-holdings) and the
 | Capability | Backed by | Status |
 |------------|-----------|--------|
 | Policy evaluation (13-axis Λ-gate) | [a11oy](/flagships/a11oy) | per-package live; unified in dev |
-| Receipt minting + anchoring | [amaru](/flagships/amaru) | local live; Cardano mainnet in dev |
-| Khipu receipt DAG + sum invariant | [rosie](/flagships/rosie) | live |
-| Posture-drift scoring | [sentra](/flagships/sentra) | live |
 | Counter-UAS / protocol decode | [killinchu](/flagships/killinchu) | live (Space API) |
+| Receipt minting + anchoring | Provenance Anchor *(codename amaru, retired)* | roadmap; local Merkle anchoring lives inside a11oy; Cardano mainnet in dev |
+| Khipu receipt DAG + sum invariant | Operator *(codename rosie, retired)* | roadmap; sum invariant verified in lutar-lean |
+| Posture-drift scoring | Policy *(codename sentra, retired)* | roadmap; live policy gate ships inside a11oy |
 
 ## Design principles
 
