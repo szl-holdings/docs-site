@@ -1,20 +1,24 @@
 ---
 title: "UDS Mesh — the nervous system"
-description: "The 7-organ trace + receipt mesh: what is LIVE, what is in-process, what is roadmap."
+description: "The trace + receipt mesh: what is LIVE, what is in-process, what is roadmap."
 outline: deep
 ---
 
 # UDS Mesh — the nervous system
 
-The SZL substrate is modeled as a body. Five flagship organs ship in the UDS bundle
-(**a11oy**, **sentra**, **amaru**, **rosie** + **killinchu**-when-unblocked); two
-structural organs complete the anatomy (**skeleton** = vessels / deployment fabric,
-**wires** = the W3C-`traceparent` nervous signal). The mesh is the **nervous system**
-that carries trace context + DSSE receipts between them.
+The SZL substrate is modeled as a body. Two flagships ship today — **a11oy** (the
+policy + receipt heart) and **killinchu** (drone-intelligence courier) — alongside three
+roadmap/frontier roles: the **Provenance Anchor** (convergent memory sync), the
+**Operator** (decision/receipt console), and the **Policy** drift detector (fail-closed
+safety gate). Two structural organs complete the anatomy (**skeleton** = vessels /
+deployment fabric, **wires** = the W3C-`traceparent` nervous signal). The mesh is the
+**nervous system** that carries trace context + DSSE receipts between them.
 
 ::: tip Honest status legend
 `LIVE` = wired and verified in-process · `IN-PROC` = real within a single organ, not
 cross-pod · `ROADMAP` = v0.4.0, not shipped. **Honesty over checklist.**
+The names *amaru*, *rosie*, and *sentra* are retired internal codenames; the honest roles
+are Provenance Anchor, Operator, and Policy. Roadmap components have no live Space today.
 :::
 
 ```mermaid
@@ -25,56 +29,53 @@ flowchart TB
 
     subgraph BODY["SZL UDS substrate — anatomy"]
       direction TB
-      ROSIE["🧠 brain / nervous-cortex<br/><b>rosie</b> — operator console<br/>rosie.decision.*<br/>(issues commands)"]:::inproc
-      A11OY["❤️ heart / switch-fabric<br/><b>a11oy</b> — policy + receipt substrate<br/>a11oy.graph.* · /honest · MCP tools<br/>Wire D traceparent + DSSE Khipu DAG"]:::live
-      AMARU["🩸 blood / memory cortex<br/><b>amaru</b> — convergent sync<br/>amaru.sync.* (KL-drift bounded)"]:::inproc
-      SENTRA["🛡️ immune system<br/><b>sentra</b> — fail-closed safety gate<br/>sentra.gate.* (ALLOW/DENY)"]:::live
-      KILLINCHU["📡 nervous / courier<br/><b>killinchu</b> — receipt relay<br/>killinchu.courier.*<br/>(PRIVATE — not in bundle)"]:::roadmap
-      VESSELS["🦴 skeleton / deployment fabric<br/><b>vessels</b> — structural proving ground<br/>(deprecated sibling of killinchu)"]:::roadmap
+      OPERATOR["🧠 brain / nervous-cortex<br/><b>Operator</b> — decision console<br/>(roadmap; issues commands)"]:::roadmap
+      A11OY["❤️ heart / switch-fabric<br/><b>a11oy</b> — policy + receipt substrate<br/>/honest · MCP tools<br/>Wire D traceparent + DSSE Khipu DAG"]:::live
+      ANCHOR["🩸 blood / memory cortex<br/><b>Provenance Anchor</b> — convergent sync<br/>(roadmap; KL-drift bounded)"]:::roadmap
+      POLICY["🛡️ immune system<br/><b>Policy</b> — fail-closed safety gate<br/>(roadmap; ALLOW/DENY)"]:::roadmap
+      KILLINCHU["📡 nervous / courier<br/><b>killinchu</b> — drone-intelligence relay<br/>(shipping flagship)"]:::live
+      VESSELS["🦴 skeleton / deployment fabric<br/><b>vessels</b> — structural proving ground"]:::roadmap
       WIRES["🔌 wires / W3C trace context<br/>traceparent: 00-&lt;trace&gt;-&lt;span&gt;-01<br/>tracestate: szl=&lt;span&gt;"]:::live
     end
 
     RECEIPTS["📜 szl-receipts<br/>DSSE Khipu Merkle DAG<br/>(receipt sink)"]:::inproc
 
-    ROSIE -->|"Wire C: /v1/events + Khipu ingest (IN-PROC)"| A11OY
-    A11OY -->|"Wire B: /v1/verdict + /v1/inspect (IN-PROC)"| SENTRA
-    A11OY -->|"Wire E: SSE cortex-subscribe (IN-PROC ring buffer)"| AMARU
+    OPERATOR -->|"Wire C: /v1/events + Khipu ingest (ROADMAP)"| A11OY
+    A11OY -->|"Wire B: /v1/verdict + /v1/inspect (IN-PROC)"| POLICY
+    A11OY -->|"Wire E: SSE cortex-subscribe (IN-PROC ring buffer)"| ANCHOR
     A11OY -->|"Wire F: /v1/receipts/ingest (IN-PROC)"| VESSELS
-    KILLINCHU -.->|"courier relay (ROADMAP)"| RECEIPTS
     A11OY -->|"DSSE receipt (traceparent embedded) — LIVE"| RECEIPTS
-    SENTRA -->|"gate verdict receipt — LIVE"| RECEIPTS
 
-    WIRES -.->|"traceparent on every request (LIVE in-process)"| ROSIE
-    WIRES -.-> A11OY
-    WIRES -.-> AMARU
-    WIRES -.-> SENTRA
+    WIRES -.->|"traceparent on every request (LIVE in-process)"| A11OY
+    WIRES -.-> KILLINCHU
 ```
 
 ## Wire status table (verified 2026-06-03)
 
 | Wire | Edge | What it carries | Status |
 |---|---|---|---|
-| **B** | a11oy ↔ sentra (immune) | gate verdict / inspect | **LIVE (in-process)** |
-| **C** | a11oy ↔ rosie (receipt stream) | decision events + Khipu ingest | **LIVE (in-process)** |
+| **B** | a11oy ↔ Policy (immune) | gate verdict / inspect | **IN-PROC (Policy = roadmap role)** |
+| **C** | a11oy ↔ Operator (receipt stream) | decision events + Khipu ingest | **ROADMAP (Operator not deployed)** |
 | **D** | W3C traceparent | real trace-id/span-id generation + propagation | **LIVE in-process; cross-Space broker NOT wired** |
-| **E** | a11oy ↔ amaru (cortex sync) | brand-decision SSE events | **LIVE (in-memory ring buffer)** |
+| **E** | a11oy ↔ Provenance Anchor (cortex sync) | decision SSE events | **IN-PROC (in-memory ring buffer)** |
 | **F** | a11oy ↔ vessels (receipts) | DSSE receipts into Khipu DAG | **LIVE (in-process)** |
 | OTLP | any organ → collector | OTEL span export | **NOT WIRED — schema only (roadmap)** |
-| cross-pod | organ ↔ organ over k8s Service | mTLS service mesh (Istio Package CR) | **ROADMAP v0.4.0** (verified: in-cluster sentra→a11oy ClusterIP times out today) |
+| cross-pod | organ ↔ organ over k8s Service | mTLS service mesh (Istio Package CR) | **ROADMAP v0.4.0** (verified: in-cluster ClusterIP call times out today) |
 
 ## What is real vs. aspirational
 
 **Real, verified live (2026-06-03):**
 
-- Every organ emits **real W3C trace context** — `traceparent: 00-<trace>-<span>-01`,
+- a11oy emits **real W3C trace context** — `traceparent: 00-<trace>-<span>-01`,
   `tracestate: szl=<span>`, plus an `x-szl-wire-d: LIVE` marker — on every HTTP response.
   Incoming `trace_id` is preserved across the request (propagation verified).
 - **a11oy** binds that traceparent into every **DSSE Khipu receipt** envelope (verified
   by decoding the base64 DSSE payload — the traceparent is embedded).
-- Span **schemas** are published and shared under a `szl.mesh.*` envelope
-  (`a11oy.graph`, `sentra.gate`, `amaru.sync`, `rosie.decision`, `killinchu.courier`).
-- In-cluster proof: **a11oy + sentra both run 1/1 Ready** in the `szl-stress` kind
-  cluster; a11oy serves `{"status":"ok"}` on port 7860.
+- Span **schemas** are published under a `szl.mesh.*` envelope as internal topic
+  identifiers (`a11oy.graph`, plus reserved keys for the roadmap roles); these are
+  technical schema names, not user-facing product names.
+- In-cluster proof: a11oy runs 1/1 Ready in the `szl-stress` kind cluster and serves
+  `{"status":"ok"}` on port 7860.
 
 **Honest gaps (not yet wired):**
 
@@ -82,8 +83,10 @@ flowchart TB
   documented schema, not a live telemetry signal.
 - **DSSE receipts are UNSIGNED** today (`signatures: []`) — the cosign private key
   (`SZL_COSIGN_PRIVATE_PEM`) is not present in the runtime.
-- **Cross-pod organ traffic is NOT wired.** An in-cluster `sentra → a11oy` ClusterIP call
-  times out; there is no Istio `Package` CR / service-discovery wiring in the bundle charts.
+- **Cross-pod organ traffic is NOT wired.** An in-cluster ClusterIP call times out; there
+  is no Istio `Package` CR / service-discovery wiring in the bundle charts.
+- **The Operator, Provenance Anchor, and Policy roles are roadmap** — they have no live
+  Space today; only a11oy and killinchu ship.
 
 > Until modules actually call each other across pods and spans are exported, this is a
 > **live in-process governance signal**, not distributed telemetry — honestly short of a
