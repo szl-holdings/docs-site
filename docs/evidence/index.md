@@ -58,7 +58,7 @@ A complete, versioned list is maintained in the thesis repository's `CITATION.cf
 | `lutar-v18.0.0` / `c7c0ba17` | Doctrine v11 LOCKED Lean snapshot (749/14/163) |
 | `3de37e5` | Live reproducibility correction (752/160) |
 | `85de269` | lutar-lean `main` HEAD at 2026-05-30 verification |
-| rosie PR #6 | CSS ingress + QEC lineage (v17) |
+| Operator PR #6 (codename *rosie*, retired) | CSS ingress + QEC lineage (v17) |
 
 ## Thesis PDFs (v18–v20)
 
@@ -84,8 +84,8 @@ The Putnam suite (4/12 GREEN) is the formal-math eval anchor.
 
 ## Khipu receipt examples
 
-A Khipu receipt is the atomic unit of provenance. The structure (from
-[rosie](/flagships/rosie)):
+A Khipu receipt is the atomic unit of provenance. The structure (from the Operator
+receipt-DAG role, internal codename *rosie* retired — [reference](/flagships/rosie)):
 
 ```json
 {
@@ -102,7 +102,7 @@ A Khipu receipt is the atomic unit of provenance. The structure (from
 
 The receipt rule is `packet → json.dumps(sort_keys=True) → sha256 → hexdigest → append`. The
 summation invariant `rootValue = Σ pendantValues = Σ Σ decisionValues` is verified at runtime
-(rosie's 10 tests) and formally in `Lutar/Khipu/SummationInvariant.lean`.
+(the Operator role's 10 runtime tests) and formally in `Lutar/Khipu/SummationInvariant.lean`.
 
 ::: warning Honest signature status
 The `signature` field is **`DSSE-PLACEHOLDER`**. Receipts carry a real SHA-256 Merkle digest
