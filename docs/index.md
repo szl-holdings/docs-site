@@ -4,7 +4,7 @@ layout: home
 hero:
   name: SZL Holdings
   text: Governed AI, proven in Lean.
-  tagline: A math-grounded, Quechua-rooted anatomy for agentic AI. Twelve organs, five flagships, one action-selection operator — every act gated, bounded, and receipted.
+  tagline: A math-grounded, Quechua-rooted anatomy for agentic AI. Twelve organs, two shipping flagships (a11oy, killinchu) plus frontier roles, one action-selection operator — every act gated, bounded, and receipted.
   image:
     src: /img/szl-mark.svg
     alt: SZL Holdings
@@ -13,7 +13,7 @@ hero:
       text: Quickstart →
       link: /quickstart
     - theme: alt
-      text: The 5 Flagships
+      text: The Flagships
       link: /flagships/
     - theme: alt
       text: PURIQ Doctrine
@@ -32,18 +32,18 @@ features:
   - title: a11oy — execution fabric
     details: The seven-layer governed agentic execution substrate. Policy, measurement, knowledge-graph, and QEC-integrity packages with a Lean-verified termination + Λ-monotonicity proof.
     link: /flagships/a11oy
-  - title: amaru — provenance anchor
-    details: Cardano-anchored governance-receipt minting with Shor-encoded provenance and bounded-loop convergence (Banach contraction).
-    link: /flagships/amaru
-  - title: sentra — drift detector
-    details: Kitaev-surface posture-drift detection on a Λ-axis-governed observability fiber. Cyber-resilience domain pack.
-    link: /flagships/sentra
   - title: killinchu — drone intelligence
     details: Formally-governed counter-UAS rule engine. Real Remote-ID / ADS-B / MAVLink ingest, haversine geofence, 13-axis Λ-gate, DSSE Khipu receipts.
     link: /flagships/killinchu
-  - title: rosie — receipt orchestration
-    details: QEC-admission-controlled receipt DAG with CSS ingress and a kernel-verified summation invariant. The Khipu-indexed audit surface.
+  - title: Provenance Anchor (roadmap)
+    details: Cardano-anchored governance-receipt minting with Shor-encoded provenance and bounded-loop convergence (Banach contraction). Roadmap component (internal codename amaru, retired).
+    link: /flagships/amaru
+  - title: Operator — receipt orchestration
+    details: QEC-admission-controlled receipt DAG with CSS ingress and a kernel-verified summation invariant. The Khipu-indexed audit surface (internal codename rosie, retired).
     link: /flagships/rosie
+  - title: Policy — drift detector (roadmap)
+    details: Kitaev-surface posture-drift detection on a Λ-axis-governed observability fiber. Cyber-resilience domain pack (internal codename sentra, retired).
+    link: /flagships/sentra
 ---
 
 ## What is SZL?
@@ -67,29 +67,30 @@ The Lean corpus that backs these claims is, at the Doctrine v11 lock,
 (see [Doctrine v11 + v12](/doctrine/v11-v12) for the locked register and
 [Evidence](/evidence/) for reproduction commands).
 
-## The five flagships
+## The flagships
 
-Each flagship is a real GitHub repository under [`szl-holdings`](https://github.com/szl-holdings),
-cross-referenced to the Ouroboros Thesis ([DOI 10.5281/zenodo.20434276](https://doi.org/10.5281/zenodo.20434276))
-and the Lean kernel [`lutar-lean`](https://github.com/szl-holdings/lutar-lean).
+Two flagships ship today — **a11oy** and **killinchu** — alongside three frontier/roadmap
+components surfaced under honest role names. Each is cross-referenced to the Ouroboros Thesis
+([DOI 10.5281/zenodo.20434276](https://doi.org/10.5281/zenodo.20434276)) and the Lean kernel
+[`lutar-lean`](https://github.com/szl-holdings/lutar-lean).
 
-| Flagship | Quechua etymology | One line |
-|----------|-------------------|----------|
-| **[a11oy](/flagships/a11oy)** | English *alloy* (a11y-styled) — a blended, hardened substrate | Governed agentic **execution fabric** (7 layers) |
-| **[amaru](/flagships/amaru)** | *amaru* = **serpent** | **Provenance anchor** — Cardano + Shor-encoded receipts |
-| **[sentra](/flagships/sentra)** | from *sentry* / Quechua-styled guard | **Drift detector** — Kitaev-surface posture monitoring |
-| **[killinchu](/flagships/killinchu)** | *killinchu* = **kestrel** (a small Andean falcon) | **Drone intelligence** — counter-UAS Λ-gate |
-| **[rosie](/flagships/rosie)** | Receipt-Orchestrated Signed Ingress Environment | **Receipt orchestration** — Khipu DAG + CSS ingress |
+| Component | Role | Status |
+|----------|------|--------|
+| **[a11oy](/flagships/a11oy)** | Governed agentic **execution fabric** (7 layers); English *alloy* — a blended, hardened substrate | **Shipping** |
+| **[killinchu](/flagships/killinchu)** | **Drone intelligence** — counter-UAS Λ-gate; Quechua *killinchu* = **kestrel** | **Shipping** |
+| **[Provenance Anchor](/flagships/amaru)** | Cardano + Shor-encoded receipt anchoring | Roadmap |
+| **[Operator](/flagships/rosie)** | **Receipt orchestration** — Khipu DAG + CSS ingress | Frontier |
+| **[Policy](/flagships/sentra)** | **Drift detector** — Kitaev-surface posture monitoring | Roadmap |
 
-> Quechua glosses follow the standard lexica indexed at
-> [kaikki.org Quechua](https://kaikki.org/eswiktionary/) and
-> [Wiktionary *puriy*/*puriq*](https://en.wiktionary.org/wiki/puriy). *killinchu* = "kestrel";
-> *amaru* = "serpent". `a11oy` and `rosie` are SZL coinages (the alloy metaphor and the
-> ROSIE acronym), not Quechua words — labelled honestly as such.
+> The internal codenames *amaru*, *rosie*, and *sentra* are retired; the honest, user-facing
+> names are **Provenance Anchor**, **Operator**, and **Policy**. Quechua glosses follow the
+> standard lexica at [kaikki.org Quechua](https://kaikki.org/eswiktionary/); *killinchu* =
+> "kestrel". `a11oy` is an SZL coinage (the alloy metaphor), not a Quechua word — labelled
+> honestly as such.
 
 ## Core & proof
 
-Beyond the five flagships, two repositories carry the load-bearing evidence:
+Beyond the flagships, two repositories carry the load-bearing evidence:
 
 - **[`lutar-lean` / lean-kernel](https://github.com/szl-holdings/lutar-lean)** — the
   machine-checked Lean proof corpus (749 declarations / 14 axioms / 163 sorries at
@@ -99,10 +100,10 @@ Beyond the five flagships, two repositories carry the load-bearing evidence:
 
 ## Start here
 
-- **[Quickstart](/quickstart)** — five minutes to a first call against each flagship.
+- **[Quickstart](/quickstart)** — five minutes to a first call against the shipping flagships.
 - **[Architecture](/architecture)** — the 7-organ anatomy and the master action-selection operator.
 - **[Anatomy + Organs](/anatomy/)** — the twelve organs, each with its Quechua etymology, function, formula, and Lean stub.
-- **[3D Showcases](/anatomy/3d-showcases)** — interactive Anatomy-3D and Rosie-3D.
+- **[3D Showcases](/anatomy/3d-showcases)** — interactive Anatomy-3D and Operator receipt-DAG visualizers.
 - **[Proof](/proof)** — Lean kernel, data lake, and Zenodo DOIs.
 - **[Changelog](/changelog)** — aggregated v1.0.0 release notes (Keep a Changelog).
 - **[UDS — Deploy & Hand-off](/uds)** — sign-verify-deploy a flagship as a UDS payload.
