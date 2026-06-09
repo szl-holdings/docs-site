@@ -1,15 +1,18 @@
-# rosie — receipt orchestration
+# a11oy Operator — receipt orchestration
+
+> **a11oy Operator** is the admission-control & receipt-DAG vertical of [a11oy](/flagships/a11oy). *(Internal codename: `rosie`.)*
 
 <div class="quechua">
-<strong>Etymology.</strong> <em>rosie</em> is the acronym <strong>R</strong>eceipt-<strong>O</strong>rchestrated
-<strong>S</strong>igned <strong>I</strong>ngress <strong>E</strong>nvironment. It is not a
-Quechua word — labelled honestly as an English acronym. Its structure, however, is pure
-Andean: the receipt DAG is modelled directly on the Inka <em>khipu</em>.
+<strong>Name origin.</strong> The internal codename <em>rosie</em> is the acronym
+<strong>R</strong>eceipt-<strong>O</strong>rchestrated <strong>S</strong>igned
+<strong>I</strong>ngress <strong>E</strong>nvironment. It is not a Quechua word — labelled
+honestly as an English acronym. Its structure, however, is pure Andean: the receipt DAG is
+modelled directly on the Inka <em>khipu</em>.
 </div>
 
 ## Overview
 
-`rosie` is the **admission-control and receipt-DAG surface** of SZL. It ships the
+**a11oy Operator** is the **admission-control and receipt-DAG surface** of a11oy. It ships the
 **Khipu-indexed receipt DAG** — a three-tier pendant-cord tree that records every governance
 decision under a **summation-cord invariant** and an optional dual-attestation field. As of
 v17 it also ships the **CSS (Calderbank-Shor-Steane) ingress** module: quantum-error-correcting
@@ -19,8 +22,8 @@ admission control for governed receipt streams.
 > kernel-verified sum invariant — `Lutar/Khipu/SummationInvariant` + CSS v17
 > ([Ouroboros Thesis DOI 10.5281/zenodo.20434276](https://doi.org/10.5281/zenodo.20434276)).
 
-**Anatomy mapping:** rosie is the operational [Khipu](/anatomy/#khipu) organ, fed by
-[Yawar](/anatomy/#yawar) and anchored externally by [amaru](/flagships/amaru).
+**Anatomy mapping:** a11oy Operator is the operational [Khipu](/anatomy/#khipu) organ, fed by
+[Yawar](/anatomy/#yawar) and anchored externally by [a11oy Memory](/flagships/amaru).
 
 ```mermaid
 flowchart TD
@@ -42,7 +45,7 @@ flowchart TD
 
 ## The summation invariant
 
-The structural heart of rosie mirrors the Inka khipu primary-cord arithmetic:
+The structural heart of a11oy Operator mirrors the Inka khipu primary-cord arithmetic:
 
 $$ \text{rootValue} \;=\; \sum \text{pendantValues} \;=\; \sum \sum \text{decisionValues}. $$
 
@@ -65,8 +68,8 @@ not hash-collision resistance alone. This is formally verified in
 ## API / install
 
 ```bash
-git clone github.com/szl-holdings/rosie.git
-cd rosie
+git clone github.com/szl-holdings/a11oy.git
+cd a11oy
 pnpm install
 pnpm test   # 10 runtime tests
 ```
@@ -84,7 +87,7 @@ verifyDualAttestation(root)   // P6 + P8 of A8: two distinct signers required
 
 ## Source & evidence
 
-- **Repo:** github.com/szl-holdings/rosie
+- **Repo:** github.com/szl-holdings/a11oy
 - **Live 3D showcase:** [Rosie-3D](/anatomy/3d-showcases#rosie-3d)
 - **Proof:** `Lutar/Khipu/SummationInvariant.lean` in [`lutar-lean`](https://github.com/szl-holdings/lutar-lean)
 - **DOI:** [10.5281/zenodo.20434276](https://doi.org/10.5281/zenodo.20434276)
