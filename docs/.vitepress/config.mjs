@@ -21,7 +21,7 @@ export default withMermaid(defineConfig({
   lang: 'en-US',
   title: 'SZL Holdings Docs',
   description:
-    'Unified documentation for SZL Holdings — math-grounded, Quechua-rooted governed-AI anatomy. Five flagships, twelve organs, PURIQ agentic layer, Doctrine v11/v12.',
+    'Unified documentation for SZL Holdings — math-grounded, Quechua-rooted governed-AI anatomy. Two products, a11oy verticals, twelve organs, PURIQ agentic layer, Doctrine v11/v12.',
   cleanUrls: false,
   lastUpdated: true,
   ignoreDeadLinks: true,
@@ -62,10 +62,10 @@ export default withMermaid(defineConfig({
         text: 'Flagships',
         items: [
           { text: 'a11oy — execution fabric', link: '/flagships/a11oy' },
-          { text: 'amaru — provenance anchor', link: '/flagships/amaru' },
-          { text: 'sentra — drift detector', link: '/flagships/sentra' },
+          { text: 'a11oy Memory — provenance', link: '/flagships/amaru' },
+          { text: 'a11oy Sentinel — drift detection', link: '/flagships/sentra' },
           { text: 'killinchu — drone intelligence', link: '/flagships/killinchu' },
-          { text: 'rosie — receipt orchestration', link: '/flagships/rosie' }
+          { text: 'a11oy Operator — receipt orchestration', link: '/flagships/rosie' }
         ]
       },
       {
@@ -113,10 +113,10 @@ export default withMermaid(defineConfig({
           items: [
             { text: 'Overview', link: '/flagships/' },
             { text: 'a11oy', link: '/flagships/a11oy' },
-            { text: 'amaru', link: '/flagships/amaru' },
-            { text: 'sentra', link: '/flagships/sentra' },
+            { text: 'a11oy Memory', link: '/flagships/amaru' },
+            { text: 'a11oy Sentinel', link: '/flagships/sentra' },
             { text: 'killinchu', link: '/flagships/killinchu' },
-            { text: 'rosie', link: '/flagships/rosie' }
+            { text: 'a11oy Operator', link: '/flagships/rosie' }
           ]
         }
       ],
@@ -133,7 +133,7 @@ export default withMermaid(defineConfig({
           text: 'The 12 Organs',
           collapsed: false,
           items: [
-            { text: 'Amaru — cortex', link: '/anatomy/#amaru' },
+            { text: 'a11oy Memory — cortex', link: '/anatomy/#amaru' },
             { text: 'Yuyay — heart', link: '/anatomy/#yuyay' },
             { text: 'Yawar — blood', link: '/anatomy/#yawar' },
             { text: 'Hukulla — immune', link: '/anatomy/#hukulla' },
