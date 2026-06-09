@@ -1,23 +1,25 @@
-# sentra — drift detector
+# a11oy Sentinel — drift detector
+
+> **a11oy Sentinel** is the security-posture & observability vertical of [a11oy](/flagships/a11oy). *(Internal codename: `sentra`.)*
 
 <div class="quechua">
-<strong>Etymology.</strong> <em>sentra</em> is a coinage on the English <strong>sentry</strong>
-(the guard who watches a boundary), styled to sit alongside the Quechua organ names. It is
-not a Quechua word and is labelled honestly as such. Its job matches the name: it watches the
-cyber-posture surface and raises a flag when it drifts.
+<strong>Name origin.</strong> The internal codename <em>sentra</em> is a coinage on the English
+<strong>sentry</strong> (the guard who watches a boundary), styled to sit alongside the Quechua
+organ names. It is not a Quechua word and is labelled honestly as such. Its job matches the name:
+a11oy Sentinel watches the cyber-posture surface and raises a flag when it drifts.
 </div>
 
 ## Overview
 
-`sentra` is the **anomaly-detection and observability substrate** of the SZL governed
-platform. It models enterprise cyber posture as a **Kitaev surface** — security state is a
-topological surface, and drift is the deviation from the ground-state configuration.
+**a11oy Sentinel** is the **anomaly-detection and observability substrate** of a11oy. It models
+enterprise cyber posture as a **Kitaev surface** — security state is a topological surface, and
+drift is the deviation from the ground-state configuration.
 
 > **Frontier capability.** First Kitaev-surface posture-drift detector on a Λ-axis-governed
 > observability fiber — `Lutar/QEC/KitaevSurface` formal lattice basis
 > ([Ouroboros Thesis DOI 10.5281/zenodo.20434276](https://doi.org/10.5281/zenodo.20434276)).
 
-**Anatomy mapping:** sentra is the operational face of the [Hukulla](/anatomy/#hukulla)
+**Anatomy mapping:** a11oy Sentinel is the operational face of the [Hukulla](/anatomy/#hukulla)
 immune system and the [OTel-VSP](/anatomy/#otel-vsp) nervous/observability fiber.
 
 ```mermaid
@@ -54,8 +56,8 @@ hand-tuned alert threshold — drift is measured against a topological ground st
 ## API / install
 
 ```bash
-git clone github.com/szl-holdings/sentra.git
-cd sentra
+git clone github.com/szl-holdings/a11oy.git
+cd a11oy
 pnpm install
 pnpm test
 ```
@@ -63,7 +65,7 @@ pnpm test
 ## Example — score posture drift
 
 ```ts
-import { driftScore } from '@szl/sentra'
+import { driftScore } from '@szl/a11oy'
 
 const report = driftScore({ baseline: surfaceA, observed: surfaceB })
 
@@ -75,7 +77,7 @@ report.events
 
 ## Source & evidence
 
-- **Repo:** github.com/szl-holdings/sentra
+- **Repo:** github.com/szl-holdings/a11oy
 - **Model:** Kitaev-surface basis in ouroboros-thesis, `Lutar/QEC/KitaevSurface`
 - **DOI:** [10.5281/zenodo.20434276](https://doi.org/10.5281/zenodo.20434276)
 - **License:** Proprietary
