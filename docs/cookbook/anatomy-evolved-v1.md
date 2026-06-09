@@ -21,7 +21,7 @@ evidence.
 
 ## Eight organs covered
 
-`a11oy` · `amaru` · `sentra` · `terra` · `vessels` · `counsel` · `carlota-jo` · `lutar-lean`
+`a11oy` · Provenance Anchor *(codename `amaru`, retired)* · Policy *(codename `sentra`, retired)* · `terra` · `vessels` · `counsel` · `carlota-jo` · `lutar-lean`
 
 ## Series-A acceptance evidence
 
