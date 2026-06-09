@@ -92,7 +92,7 @@ break any invariant. See [Anatomy + Organs](/anatomy/) for each organ's full der
 
 | SF | Organ | Extra factor | Anchor |
 |----|-------|--------------|--------|
-| SF-01 {#sf-01} | Amaru — cortex | $e^{-\gamma\mathrm{KL}}$ drift penalty | Pinsker / DPI |
+| SF-01 {#sf-01} | Yuyaq — cortex | $e^{-\gamma\mathrm{KL}}$ drift penalty | Pinsker / DPI |
 | SF-02 {#sf-02} | Yuyay — heart | identity (the gate) | 13-axis AND |
 | SF-03 {#sf-03} | Yawar — blood | $C(a)$ chain-link | SHA-256 chain |
 | SF-04 {#sf-04} | Hukulla — immune | $e^{-\beta H}$, $\beta\gg0$ | Egyptian doubling |
