@@ -1,8 +1,12 @@
 name: deploy-docs-pages
 
 # Build the VitePress docs site and deploy to GitHub Pages.
-# Fixed: use npm ci (lock-file-exact install) instead of npm install.
-# Resolves ERESOLVE peer-dep conflict with markdown-it-mathjax3 v5 vs v4.
+# Install uses `npm ci` (lock-file-exact, reproducible).
+# Root cause of prior ERESOLVE: package.json pinned markdown-it-mathjax3 ^5,
+# but vitepress 1.6.x declares an (optional) peer markdown-it-mathjax3 ^4.
+# Under npm 10 this peer conflict is fatal for `npm ci`. Fix = pin
+# markdown-it-mathjax3 to ^4.3.2 (satisfies the peer) and regenerate the
+# lockfile. No --legacy-peer-deps / --force bandaid is used.
 #
 # Founder one-time action: repo Settings -> Pages -> Source = "GitHub Actions".
 # Then (optional) set a custom domain docs.szlholdings.com (see DNS plan).
