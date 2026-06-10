@@ -19,7 +19,7 @@ Coordinated v1.0.0 launch of the **two shipping flagships**. Per-flagship GitHub
 ### Added (shipping flagships)
 - **a11oy** — policy + receipt substrate; `/v1/policy/evaluate`, `/v1/verify`, `/v1/ledger`, `/v1/honest`, `/v1/version` live.
 - **killinchu** — counter-UAS rule engine; real Remote-ID / ADS-B / MAVLink decoders (unauthenticated/spoofable, honestly disclosed); 13-axis Λ-gate; effector path is a command demonstration, simulated; DSSE Khipu receipts (PLACEHOLDER signatures).
-- Doctrine v11 compliance — kernel `c7c0ba17` (749 declarations / 14 axioms / 163 sorries); exactly 5 locked-proven formulas {F1,F11,F12,F18,F19}; Λ unconditional = Conjecture 1 (machine-checked false, never a theorem); Khipu BFT = Conjecture 2 (Wave 23 `khipu_quorum_safety_conditional` conditional-only).
+- Doctrine v11 compliance — kernel `c7c0ba17` (749 declarations / 14 axioms / 163 sorries); exactly 8 locked-proven formulas {F1,F4,F7,F11,F12,F18,F19,F22}; Λ unconditional = Conjecture 1 (machine-checked false, never a theorem); Khipu BFT = Conjecture 2 (Wave 23 `khipu_quorum_safety_conditional` conditional-only).
 
 ### Roadmap roles (not released)
 - **Provenance Anchor** *(internal codename amaru, retired)* — governance-receipt sync; Cardano hash-anchoring in development. Not released as a standalone service.
