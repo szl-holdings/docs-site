@@ -222,5 +222,5 @@ contract. NO BANDAID. Math-grounded, Quechua-rooted.
 
 Cite this work via [`CITATION.cff`](CITATION.cff). Math foundations: [szl-papers](https://github.com/szl-holdings/szl-papers) · [lutar-lean](https://github.com/szl-holdings/lutar-lean) (kernel `c7c0ba17`).
 
-<sub>Λ Conjecture 1 (not a theorem) · 749/14/163 v11 LOCKED (kernel `c7c0ba17`) · SLSA Build L1 honest (cosign keyless-signed, Rekor-anchored images) · L2 verified-provenance on the roadmap; L3 / FedRAMP / Iron Bank / CMMC not claimed · proved formulas = 5 {F1,F11,F12,F18,F19} · Section 889 = 5 vendors · [SZL Holdings](https://a11oy.net) · Apache-2.0 code · CC-BY-4.0 papers</sub>
+<sub>Λ Conjecture 1 (not a theorem) · 749/14/163 v11 LOCKED (kernel `c7c0ba17`) · SLSA Build L1 honest (cosign keyless-signed, Rekor-anchored images) · L2 verified-provenance on the roadmap; L3 / FedRAMP / Iron Bank / CMMC not claimed · locked-proven formulas = 8 {F1,F4,F7,F11,F12,F18,F19,F22} (`locked_count_eight`) · Section 889 = 5 vendors · [SZL Holdings](https://a11oy.net) · Apache-2.0 code · CC-BY-4.0 papers</sub>
 
