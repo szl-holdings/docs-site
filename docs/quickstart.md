@@ -29,8 +29,8 @@ echo "Lean: $DECL declarations / $AXIOM_UNIQ unique axioms / $SORRY sorries"
 The Doctrine v11 LOCKED snapshot is <span class="locked">749 declarations</span> /
 <span class="locked">14 unique axioms</span> / <span class="locked">163 sorries</span>
 at tag `lutar-v18.0.0`, kernel `c7c0ba17`. The corpus is living; see [Evidence](/evidence/)
-for the single source of truth and the live snapshot. Note: exactly **5** formulas are
-locked-proven {F1, F11, F12, F18, F19}; Λ unconditional is **Conjecture 1** (machine-checked
+for the single source of truth and the live snapshot. Note: exactly **8** formulas are
+locked-proven {F1, F4, F7, F11, F12, F18, F19, F22}; Λ unconditional is **Conjecture 1** (machine-checked
 false, never a theorem); the conditional Λ result is axiom-free PROVEN (Wave 22); Khipu BFT
 is **Conjecture 2** (Wave 23 `khipu_quorum_safety_conditional` is conditional-only).
 
