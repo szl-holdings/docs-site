@@ -10,6 +10,9 @@ hero:
     alt: SZL Holdings
   actions:
     - theme: brand
+      text: Warhacker 2026 — live demo →
+      link: https://a11oy.net/warhacker
+    - theme: alt
       text: Quickstart →
       link: /quickstart
     - theme: alt
@@ -29,12 +32,12 @@ hero:
       link: /#citation
 
 features:
-  - title: a11oy — execution fabric
-    details: The seven-layer governed agentic execution substrate. Policy, measurement, knowledge-graph, and QEC-integrity packages with a Lean-verified termination + Λ-monotonicity proof.
-    link: /flagships/a11oy
-  - title: killinchu — drone intelligence
-    details: Formally-governed counter-UAS rule engine. Real Remote-ID / ADS-B / MAVLink ingest, haversine geofence, 13-axis Λ-gate, DSSE Khipu receipts.
+  - title: killinchu — drone intelligence (real today)
+    details: Formally-governed counter-UAS rule engine, and the Warhacker hero. Real Remote-ID / ADS-B / MAVLink ingest, haversine geofence, 13-axis Λ-gate, DSSE Khipu receipts — tamper one byte and verification fails on screen.
     link: /flagships/killinchu
+  - title: a11oy — execution fabric (the platform)
+    details: The seven-layer governed agentic execution substrate under killinchu and all five approved problems. Policy, measurement, knowledge-graph, and QEC-integrity packages with a Lean-verified termination + Λ-monotonicity proof.
+    link: /flagships/a11oy
   - title: Provenance Anchor (roadmap)
     details: Cardano-anchored governance-receipt minting with Shor-encoded provenance and bounded-loop convergence (Banach contraction). Roadmap component (internal codename amaru, retired).
     link: /flagships/amaru
