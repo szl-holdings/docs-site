@@ -9,15 +9,19 @@ on:
     types: [published]
   workflow_dispatch:
 
+# Least-privilege default; the SBOM job opts into the write scopes it needs to
+# attach release assets (OpenSSF Scorecard Token-Permissions).
 permissions:
-  contents: write
-  packages: read
-  id-token: write
+  contents: read
 
 jobs:
   sbom:
     name: Generate SBOM
     runs-on: ubuntu-latest
+    permissions:
+      contents: write   # upload SBOM as a release asset
+      packages: read
+      id-token: write   # OIDC attestation
     steps:
       - name: Checkout code
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
