@@ -11,7 +11,7 @@ Two flagships ship today and expose live `/healthz`:
 |---------|----------|----------------|
 | **a11oy** (governed execution fabric) | [szlholdings-a11oy.hf.space](https://szlholdings-a11oy.hf.space) | `GET /healthz` → doctrine v11 · 749/14/163 |
 | **killinchu** (drone-intelligence / counter-UAS) | [szlholdings-killinchu.hf.space](https://szlholdings-killinchu.hf.space) | `GET /api/killinchu/healthz` |
-| Anatomy-3D (static showcase) | [szlholdings-anatomy-3d.static.hf.space](https://szlholdings-anatomy-3d.static.hf.space/) | static Space |
+| Anatomy-3D / Operator-3D (Three.js showcases) | not deployed | screenshots only — see [3D Showcases](/anatomy/3d-showcases); `szlholdings-anatomy-3d` / `szlholdings-rosie-3d` return HTTP 401 (no Space) |
 | **Hatun-MCP** (Model Context Protocol) | [szlholdings-hatun-mcp.hf.space](https://szlholdings-hatun-mcp.hf.space/mcp/) | `POST /mcp/` JSON-RPC `initialize` → 23 static tools. **Re-deploying** (see note). |
 
 Both shipping flagship `/healthz` endpoints return Doctrine v11 verbatim:

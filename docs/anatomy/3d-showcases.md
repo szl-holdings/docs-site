@@ -1,23 +1,18 @@
 # 3D Showcases
 
-Two interactive WebGL showcases visualise the SZL anatomy. They run live on Hugging Face
-Spaces and are embedded below; static screenshots are provided as a fallback and for offline
-review. Both are real builds (Three.js) — no placeholders.
+Two interactive WebGL (Three.js) visualisations of the SZL anatomy were built for local
+review. They are **not deployed as live Spaces today** — the static screenshots below are the
+honest, reviewable artifact. (See [Status](/status) for the live-surface inventory.)
+
+> Honesty note: earlier drafts embedded these as live Hugging Face Spaces. Those Spaces
+> (`szlholdings-anatomy-3d`, `szlholdings-rosie-3d`) are **not deployed**, so the live embeds
+> were removed rather than left as broken frames. The Three.js sources remain in the SZL
+> workspace; redeploying them as static Spaces is a roadmap item.
 
 ## Anatomy-3D {#anatomy-3d}
 
-An explorable model of the twelve organs and the wires (KALLPA) between them. Toggle the
-exploded view, watch the receipt pulse propagate, and inspect a single organ.
-
-<div class="showcase-frame">
-  <iframe src="https://szlholdings-anatomy-3d.static.hf.space/"
-          title="SZL Anatomy-3D" loading="lazy"
-          allow="fullscreen; xr-spatial-tracking"
-          referrerpolicy="no-referrer"></iframe>
-</div>
-
-> Live at [szlholdings-anatomy-3d.static.hf.space](https://szlholdings-anatomy-3d.static.hf.space/).
-> If the embed is blocked by your browser, open it directly.
+An explorable model of the twelve organs and the wires (KALLPA) between them — exploded view,
+receipt-pulse propagation, and single-organ inspection. Screenshots from the local build:
 
 | Default | Exploded | Single organ |
 |---|---|---|
@@ -32,35 +27,28 @@ exploded view, watch the receipt pulse propagate, and inspect a single organ.
 [Yawar](/anatomy/#yawar) ledger append propagating through the
 [Khipu](/anatomy/#khipu) DAG.
 
-## Rosie-3D {#rosie-3d}
+## Operator-DAG showcase {#operator-3d}
 
-A focused visualisation of [rosie](/flagships/rosie)'s receipt DAG, the brain-jack mesh, and
-the frontier-capability map across the ecosystem.
-
-<div class="showcase-frame">
-  <iframe src="https://szlholdings-rosie-3d.static.hf.space/"
-          title="SZL Rosie-3D" loading="lazy"
-          allow="fullscreen; xr-spatial-tracking"
-          referrerpolicy="no-referrer"></iframe>
-</div>
-
-> Live at [szlholdings-rosie-3d.static.hf.space](https://szlholdings-rosie-3d.static.hf.space/).
+A focused visualisation of the a11oy Operator receipt DAG (Operator is the receipt-orchestration
+role of a11oy; internal codename *rosie*, retired), the brain-jack mesh, and the
+frontier-capability map across the ecosystem. Screenshots from the local build:
 
 | Default | Brain-jack mesh |
 |---|---|
-| ![Rosie-3D default](/img/3d/rosie-default.png) | ![Rosie-3D brain-jack mesh](/img/3d/rosie-brainjack.png) |
+| ![Operator-3D default](/img/3d/rosie-default.png) | ![Operator-3D brain-jack mesh](/img/3d/rosie-brainjack.png) |
 
 | Frontier map | Ecosystem |
 |---|---|
-| ![Rosie-3D frontier](/img/3d/rosie-frontier.png) | ![Rosie-3D ecosystem](/img/3d/rosie-ecosystem.png) |
+| ![Operator-3D frontier](/img/3d/rosie-frontier.png) | ![Operator-3D ecosystem](/img/3d/rosie-ecosystem.png) |
 
 **What you are looking at:** the brain-jack mesh shows the [PURIQ](/doctrine/puriq)
-`decide → act → reflect` decision flow live; the frontier map highlights each flagship's
+`decide → act → reflect` decision flow; the frontier map highlights each flagship's
 verified frontier capability.
 
 ## Source
 
 - **Anatomy-3D:** built with Three.js; source in the SZL workspace under `anatomy_3d_v2`.
-- **Rosie-3D:** built with Three.js; source under `rosie_3d`.
-- Both deploy as static HF Spaces. Embedding here is via `<iframe>` so the canonical build
-  remains the single source of truth.
+- **Operator-3D:** built with Three.js; source under `rosie_3d` (internal codename, retired).
+- Neither is deployed as a live Space today; the canonical VitePress build is the single source
+  of truth, and the screenshots above are the reviewable artifact until a static-Space redeploy
+  lands on the roadmap.
