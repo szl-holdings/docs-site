@@ -11,7 +11,7 @@ hero:
   actions:
     - theme: brand
       text: Warhacker 2026 — live demo →
-      link: https://a11oy.net/warhacker
+      link: https://a-11-oy.com/warhacker
     - theme: alt
       text: Quickstart →
       link: /quickstart
