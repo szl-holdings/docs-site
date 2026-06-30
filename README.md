@@ -49,8 +49,7 @@ In two sentences: this component is part of SZL's governed-AI mesh — it enforc
 [![Security Policy](https://img.shields.io/badge/Security-Policy-red.svg)](SECURITY.md)
 
 
-<!-- CII-BEST-PRACTICES-BADGE: PENDING — replace 'PENDING' with the project id once founder registers this repo at https://bestpractices.coreinfrastructure.org/ -->
-[![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/PENDING/badge)](https://bestpractices.coreinfrastructure.org/)
+<!-- CII Best Practices badge (founder-action required): register at https://bestpractices.coreinfrastructure.org/ to obtain a project ID, then replace this comment with the live badge. -->
 
 The source for the SZL Holdings documentation portal (target: `docs.szlholdings.com`).
 It documents the two SZL products (a11oy command platform + killinchu drones & vessels), the PURIQ
