@@ -25,9 +25,9 @@ flowchart LR
 | Surface | Part of | Name origin | Role | Source |
 |---------|---------|-------------|------|--------|
 | [a11oy](/flagships/a11oy) | product | *alloy* — blended hardened substrate | Governed execution fabric (7 layers) | [repo](https://github.com/szl-holdings/a11oy) |
-| [a11oy Memory](/flagships/amaru) | a11oy vertical | codename *amaru* (Quechua: serpent) | Cardano-anchored provenance | [repo](https://github.com/szl-holdings/a11oy) |
-| [a11oy Sentinel](/flagships/sentra) | a11oy vertical | codename *sentra* (from *sentry*) | Kitaev-surface drift detection | [repo](https://github.com/szl-holdings/a11oy) |
-| [a11oy Operator](/flagships/rosie) | a11oy vertical | codename *rosie* (ROSIE acronym) | Receipt-DAG orchestration | [repo](https://github.com/szl-holdings/a11oy) |
+| [a11oy Memory](/flagships/memory) | a11oy vertical | provenance & receipt anchoring | Cardano-anchored provenance | [repo](https://github.com/szl-holdings/a11oy) |
+| [a11oy Sentinel](/flagships/sentinel) | a11oy vertical | security-posture guard | Kitaev-surface drift detection | [repo](https://github.com/szl-holdings/a11oy) |
+| [a11oy Operator](/flagships/operator) | a11oy vertical | receipt-orchestration surface | Receipt-DAG orchestration | [repo](https://github.com/szl-holdings/a11oy) |
 | [killinchu](/flagships/killinchu) | product | Quechua *killinchu* = kestrel | Counter-UAS drone intelligence | [repo](https://github.com/szl-holdings/killinchu) |
 
 ::: info Honesty note on SLSA

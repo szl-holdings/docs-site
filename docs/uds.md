@@ -20,7 +20,7 @@ material is regenerable; rotation forks the Khipu DAG.
 Container packages are published under `ghcr.io/szl-holdings/<flagship>`:
 
 ```bash
-# Example: a11oy. Substitute sentra / amaru / rosie / killinchu as needed.
+# Example: a11oy. Substitute sentinel / memory / operator / killinchu as needed.
 zarf package pull oci://ghcr.io/szl-holdings/a11oy:uds-v0.2.0
 ```
 

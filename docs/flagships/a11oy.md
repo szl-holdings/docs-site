@@ -20,8 +20,8 @@ cryptographic proof at every transition. It ships TypeScript packages consumed b
 > ([Ouroboros Thesis DOI 10.5281/zenodo.20434276](https://doi.org/10.5281/zenodo.20434276)).
 
 **Anatomy mapping:** a11oy is the integration host; in the
-[a11oy.code](/doctrine/v11-v12) tier→organ router it routes PRIME→[Amaru](/anatomy/#amaru),
-HEART→[Yuyay](/anatomy/#yuyay), IMMUNE→[Sentra](/anatomy/#hukulla).
+[a11oy.code](/doctrine/v11-v12) tier→organ router it routes PRIME→[Memory](/anatomy/#memory),
+HEART→[Yuyay](/anatomy/#yuyay), IMMUNE→[Sentinel](/anatomy/#hukulla).
 
 ```mermaid
 flowchart TD
@@ -47,7 +47,7 @@ Every action passes through the fabric before execution:
 4. **Approval gate** — human approval is created when policy requires it.
 5. **Execution unlock** — the action proceeds only after gate resolution.
 6. **QEC verification** — `qec-integrity` verifies proof-chain cryptographic lineage.
-7. **Receipt** — the decision is emitted to the [rosie](/flagships/rosie) Khipu DAG.
+7. **Receipt** — the decision is emitted to the [Operator](/flagships/operator) Khipu DAG.
 
 The **Λ-invariant** constrains step 3: no recommendation below the configured confidence
 threshold reaches the approval gate without escalation.

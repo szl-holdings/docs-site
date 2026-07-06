@@ -21,9 +21,9 @@ the per-flagship packages on [the org](https://github.com/szl-holdings) and the
 |------------|-----------|--------|
 | Policy evaluation (13-axis Λ-gate) | [a11oy](/flagships/a11oy) | per-package live; unified in dev |
 | Counter-UAS / protocol decode | [killinchu](/flagships/killinchu) | live (Space API) |
-| Receipt minting + anchoring | Provenance Anchor *(codename amaru, retired)* | roadmap; local Merkle anchoring lives inside a11oy; Cardano mainnet in dev |
-| Khipu receipt DAG + sum invariant | Operator *(codename rosie, retired)* | roadmap; sum invariant verified in lutar-lean |
-| Posture-drift scoring | Policy *(codename sentra, retired)* | roadmap; live policy gate ships inside a11oy |
+| Receipt minting + anchoring | Provenance Anchor | roadmap; local Merkle anchoring lives inside a11oy; Cardano mainnet in dev |
+| Khipu receipt DAG + sum invariant | Operator | roadmap; sum invariant verified in lutar-lean |
+| Posture-drift scoring | Policy | roadmap; live policy gate ships inside a11oy |
 
 ## Design principles
 

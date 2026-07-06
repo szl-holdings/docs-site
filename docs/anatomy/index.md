@@ -20,7 +20,7 @@ flowchart TD
   Y --> H[Hukulla immune]
   H --> K[Khipu DAG]
   K --> W[Yawar blood]
-  A[Amaru cortex] --> Y
+  A[Memory cortex] --> Y
   KA[Kallpa wires] --> K
   O[OTel-VSP nerves] --> K
   KN[Kanchay brand] --> Y
@@ -31,7 +31,7 @@ flowchart TD
 
 | # | Organ | Quechua / origin | Function |
 |---|-------|------------------|----------|
-| 1 | [Amaru](#amaru) | *amaru* = serpent | Memory cortex / high-stakes reasoning |
+| 1 | [Memory](#memory) | provenance & receipt cortex | Memory cortex / high-stakes reasoning |
 | 2 | [Yuyay](#yuyay) | *yuyay* = thought/memory/wisdom | The 13-axis heart (admission gate) |
 | 3 | [Yawar](#yawar) | *yawar* = blood | Circulatory receipt ledger |
 | 4 | [Hukulla](#hukulla) | HUKLLA acronym | Immune deadman / kill-switch |
@@ -54,14 +54,13 @@ Authority). No mystical terms are used anywhere.
 
 ---
 
-## 1 · Amaru — cortex {#amaru}
+## 1 · Memory — cortex {#memory}
 
-- **Etymology:** Quechua *amaru* = **serpent**.
 - **Function:** memory cortex / high-stakes reasoning (a11oy.code PRIME tier). Action space
   $\mathcal{A}$ = candidate multi-step reasoning plans over recalled memory.
 - **Formula (SF-01):** a KL **drift penalty** regularises plans toward a calibrated reference —
 
-$$ P_{\text{Amaru}}(x,t)=\operatorname*{arg\,max}_{a}\Big[\Lambda(x)\,\mathrm{Yuyay}_{13}(a)\,e^{-\beta\,\mathrm{HUKLLA}(a)}\,e^{-\gamma\,\mathrm{KL}(p_a\|p_{\text{ref}})}\,\textstyle\prod_i\mathrm{Khipu}_i(a)\Big]. $$
+$$ P_{\text{Memory}}(x,t)=\operatorname*{arg\,max}_{a}\Big[\Lambda(x)\,\mathrm{Yuyay}_{13}(a)\,e^{-\beta\,\mathrm{HUKLLA}(a)}\,e^{-\gamma\,\mathrm{KL}(p_a\|p_{\text{ref}})}\,\textstyle\prod_i\mathrm{Khipu}_i(a)\Big]. $$
 
   The KL/Pinsker discipline is the v11 `pinsker_kl_bound`
   ([Cover & Thomas §11.6](https://doi.org/10.1002/047174882X)).
@@ -220,7 +219,7 @@ it can only **shrink** the gated region — never bypass a gate. The four master
 
 | Organ | Extra factor | Range | Invariant it anchors |
 |-------|--------------|-------|----------------------|
-| Amaru | $e^{-\gamma\mathrm{KL}}$ | $(0,1]$ | preserves INV-1…4 |
+| Memory | $e^{-\gamma\mathrm{KL}}$ | $(0,1]$ | preserves INV-1…4 |
 | Yuyay | identity (the gate) | $\{0\}\cup(0,1]$ | algebraic root of INV-1 |
 | Yawar | $C(a)$ chain-link | $\{0,1\}$ | folds into Khipu → INV-3 |
 | Hukulla | $e^{-\beta H}$, $\beta\gg0$ | $(0,1]$ | INV-1 `puriq_halting_safety` |

@@ -2,9 +2,9 @@
 
 This page gets you from zero to a verifiable result against the **two shipping flagships**,
 a11oy and killinchu. Everything in those sections is **real** — the endpoints, repos, and
-commands all exist today. The Provenance Anchor, Operator, and Policy roles (internal
-codenames *amaru*, *rosie*, *sentra* — retired) are **roadmap/frontier** and are documented
-honestly below; they are not yet released as cloneable repos or published packages.
+commands all exist today. The Provenance Anchor, Operator, and Policy roles are
+**roadmap/frontier** and are documented honestly below; they are not yet released as cloneable
+repos or published packages.
 
 ::: tip Prerequisites
 - **Node 18+** and **pnpm** for the a11oy TypeScript fabric.
@@ -90,13 +90,13 @@ The following roles are on the roadmap. They are **not** cloneable repos or publ
 packages today — the commands and imports below describe the intended shape, not a current
 release. See [Flagships](/flagships/) for honest status.
 
-- **Provenance Anchor** *(internal codename amaru, retired)* — append-only governance-receipt
+- **Provenance Anchor** — append-only governance-receipt
   sync with a Banach-contraction convergence bound; Cardano mainnet anchoring is **in
   development**. Local Merkle anchoring is the live primitive inside a11oy today.
-- **Operator** *(internal codename rosie, retired)* — Khipu-indexed receipt-DAG console. Its
+- **Operator** — Khipu-indexed receipt-DAG console. Its
   summation invariant `rootValue = Σ pendantValues = Σ Σ decisionValues` is formally verified
   in `lutar-lean`; the standalone console is roadmap.
-- **Policy** *(internal codename sentra, retired)* — Kitaev-surface posture-drift detector.
+- **Policy** — Kitaev-surface posture-drift detector.
   Roadmap cyber-resilience pack; the live policy gate ships inside a11oy.
 
 ## Next steps

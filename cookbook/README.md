@@ -47,9 +47,9 @@
 >
 > | Recipe | Flagship |
 > |---|---|
-> | [01 Verify a receipt end-to-end](https://github.com/szl-holdings/szl-cookbook/blob/main/recipes/01-verify-a-receipt-end-to-end.md) | amaru · a11oy · sentra |
+> | [01 Verify a receipt end-to-end](https://github.com/szl-holdings/szl-cookbook/blob/main/recipes/01-verify-a-receipt-end-to-end.md) | a11oy Memory · a11oy · a11oy Sentinel |
 > | [04 Drone counter-UAS verdict](https://github.com/szl-holdings/szl-cookbook/blob/main/recipes/04-drone-counter-uas-verdict.md) | killinchu |
-> | [05 Memory-attested reasoning](https://github.com/szl-holdings/szl-cookbook/blob/main/recipes/05-memory-attested-reasoning.md) | amaru |
+> | [05 Memory-attested reasoning](https://github.com/szl-holdings/szl-cookbook/blob/main/recipes/05-memory-attested-reasoning.md) | a11oy Memory |
 > | [06 Verify cosign + Rekor (SLSA L1)](https://github.com/szl-holdings/szl-cookbook/blob/main/recipes/06-cosign-rekor-slsa-l1.md) | all 5 |
 > | [12 Doctrine ledger query](https://github.com/szl-holdings/szl-cookbook/blob/main/recipes/12-doctrine-ledger-query.md) | all 5 |
 >
@@ -116,8 +116,8 @@ A ban-word CI check runs on every push via `.github/workflows/doctrine.yml`. The
 | [uds-mesh](https://github.com/szl-holdings/uds-mesh) | UDS service mesh integration |
 | [vsp-otel](https://github.com/szl-holdings/vsp-otel) | OTel + DSSE exporter |
 | [a11oy](https://github.com/szl-holdings/a11oy) | Flagship governance app |
-| amaru | Cardano anchoring layer |
-| sentra | Policy enforcement engine |
+| a11oy Memory | Cardano anchoring layer |
+| a11oy Sentinel | Policy enforcement engine |
 | Hatun Doctrine Specification | [szl-holdings/platform/docs/a11oy/spec/hatun-doctrine-spec/](https://github.com/szl-holdings/platform/tree/main/docs/a11oy/spec/hatun-doctrine-spec/) |
 
 ## On Hugging Face
@@ -147,4 +147,4 @@ Preferred citation: [The Ouroboros Substrate (v18.0)](https://doi.org/10.5281/ze
 
 ![SZL Holdings](./branding/szl-avatar-animated.gif)
 
-*Amaru — the Inca avatar of SZL Holdings. Animated mark (400×400, 16fps loop). Signed Yachay.*
+*The Inca avatar of SZL Holdings. Animated mark (400×400, 16fps loop). Signed Yachay.*

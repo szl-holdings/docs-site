@@ -58,7 +58,7 @@ A complete, versioned list is maintained in the thesis repository's `CITATION.cf
 | `lutar-v18.0.0` / `c7c0ba17` | Doctrine v11 LOCKED Lean snapshot (749/14/163) |
 | `3de37e5` | Live reproducibility correction (752/160) |
 | `85de269` | lutar-lean `main` HEAD at 2026-05-30 verification |
-| Operator PR #6 (codename *rosie*, retired) | CSS ingress + QEC lineage (v17) |
+| Operator PR #6 | CSS ingress + QEC lineage (v17) |
 
 ## Thesis PDFs (v18–v20)
 
@@ -85,7 +85,7 @@ The Putnam suite (4/12 GREEN) is the formal-math eval anchor.
 ## Khipu receipt examples
 
 A Khipu receipt is the atomic unit of provenance. The structure (from the Operator
-receipt-DAG role, internal codename *rosie* retired — [reference](/flagships/rosie)):
+receipt-DAG role — [reference](/flagships/operator)):
 
 ```json
 {

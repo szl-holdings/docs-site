@@ -34,7 +34,7 @@ decision = szl.policy.evaluate(
 )
 print(decision.passed, decision.continuum_hash)
 
-# 2 · Mint + verify a Khipu receipt (amaru / rosie)
+# 2 · Mint + verify a Khipu receipt (Memory / Operator)
 receipt = szl.receipts.mint(payload={"decisionId": "d-001", "value": 1})
 assert receipt.chain_verified            # hash chain verified
 assert receipt.signature == "DSSE-PLACEHOLDER"  # honest: signing not yet wired

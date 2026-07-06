@@ -5,8 +5,8 @@ The TypeScript client for the SZL anatomy.
 ::: warning In development
 `szl-ts` is **in development** (target: Series-A milestone). The interface below is the
 **planned** unified surface. The per-flagship packages it wraps —
-`@szl-holdings/a11oy-policy`, `@szl-holdings/a11oy-measurement`, `@szl/amaru`, rosie's
-`khipu-receipt` — are **live today** and are the supported interim path (see the
+`@szl-holdings/a11oy-policy`, `@szl-holdings/a11oy-measurement`, `@szl-holdings/a11oy-memory`,
+the Operator `khipu-receipt` — are **live today** and are the supported interim path (see the
 [Quickstart](/quickstart)).
 :::
 
@@ -35,18 +35,18 @@ const decision = szl.policy.evaluate({
   axes: { moralGrounding: 0.97, measurabilityHonesty: 0.96 /* ...13 axes */ },
 })
 
-// 2 · Khipu receipt DAG + sum invariant (rosie)
+// 2 · Khipu receipt DAG + sum invariant (Operator)
 const root = szl.receipts.root(organReceipts)
 szl.receipts.verifySumInvariant(root)      // rootValue = Σ Σ decisionValues
 szl.receipts.verifyDualAttestation(root)   // two distinct signers
 
-// 3 · Posture-drift score (sentra)
-const report = szl.sentra.driftScore({ baseline, observed })
+// 3 · Posture-drift score (Sentinel)
+const report = szl.sentinel.driftScore({ baseline, observed })
 ```
 
 ## Interim path (live today)
 
 ```bash
 npm install @szl-holdings/a11oy-policy @szl-holdings/a11oy-measurement
-# rosie / amaru / sentra: clone the repo and `pnpm install && pnpm test`
+# Operator / Memory / Sentinel: clone the repo and `pnpm install && pnpm test`
 ```

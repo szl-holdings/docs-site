@@ -17,7 +17,7 @@ Two flagships ship today with live `/healthz`:
 
 | Flagship | Role | Live base URL |
 |----------|------|---------------|
-| **a11oy** | Λ-gate router / policy + receipt substrate; hosts the Hatun-MCP catalog. Bundles the **Sentinel** (policy / immune), **Memory** (provenance anchoring) and **Operator** (receipt-DAG) verticals — internal codenames *sentra*, *amaru*, *rosie*, retired as standalone Spaces and consolidated here. | `https://szlholdings-a11oy.hf.space` |
+| **a11oy** | Λ-gate router / policy + receipt substrate; hosts the Hatun-MCP catalog. Bundles the **Sentinel** (policy / immune), **Memory** (provenance anchoring) and **Operator** (receipt-DAG) verticals — consolidated here from their retired standalone Spaces. | `https://szlholdings-a11oy.hf.space` |
 | **killinchu** | Defense vertical — counter-UAS / drone intelligence | `https://szlholdings-killinchu.hf.space` |
 
 Both shipping flagships return Doctrine v11 verbatim from `/healthz`: `749 declarations / 14 unique axioms / 163 tracked sorries`, locked at `c7c0ba17`. Λ uniqueness is **Conjecture 1 (NOT a theorem)** — stated honestly. SLSA **L1 (honest)**.
@@ -41,8 +41,8 @@ Both shipping flagships return Doctrine v11 verbatim from `/healthz`: `749 decla
 
 - [`python_quickstart.py`](./EXAMPLES/python_quickstart.py) — sign a payload, verify, build a Khipu chain
 - [`mcp_claude_config.json`](./EXAMPLES/mcp_claude_config.json) — drop-in Claude Desktop config
-- [`sentra_filter_example.py`](./EXAMPLES/sentra_filter_example.py) — submit a payload, get verdict + receipt
-- [`rosie_command_example.py`](./EXAMPLES/rosie_command_example.py) — dispatch a personal-aide command
+- [`sentinel_filter_example.py`](./EXAMPLES/sentinel_filter_example.py) — submit a payload, get verdict + receipt
+- [`operator_command_example.py`](./EXAMPLES/operator_command_example.py) — dispatch a personal-aide command
 
 ---
 

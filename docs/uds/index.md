@@ -19,7 +19,7 @@ chain.
 
 1. **Single intake** — one request hits the UDS aggregator (`killinchu` acts as the
    consensus aggregator at the `/api/killinchu/uds/v1/*` surface).
-2. **Fan-out to organs** — each flagship (`a11oy`, `amaru`, `sentra`, `rosie`,
+2. **Fan-out to organs** — each flagship (`a11oy`, `memory`, `sentinel`, `operator`,
    `killinchu`) signs its verdict with its own ECDSA-P256 cosign key
    (`<organ>-cosign`).
 3. **Quorum** — a canonical receipt is emitted only when **3 of 4** organ signatures

@@ -17,8 +17,8 @@ deployment fabric, **wires** = the W3C-`traceparent` nervous signal). The mesh i
 ::: tip Honest status legend
 `LIVE` = wired and verified in-process · `IN-PROC` = real within a single organ, not
 cross-pod · `ROADMAP` = v0.4.0, not shipped. **Honesty over checklist.**
-The names *amaru*, *rosie*, and *sentra* are retired internal codenames; the honest roles
-are Provenance Anchor, Operator, and Policy. Roadmap components have no live Space today.
+The honest roles are Provenance Anchor, Operator, and Policy. Roadmap components have no live
+Space today.
 :::
 
 ```mermaid
