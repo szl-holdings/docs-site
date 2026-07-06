@@ -23,6 +23,13 @@ It is where investors, design partners, and engineers go to understand what SZL 
 
 <sub>_Screenshot: SZL Holdings kanchay mark — replace with a live capture of the running surface._</sub>
 
+## ◇ Featured: the Holographic Estate
+
+The frontier tier rendered as one live 3D holographic lattice — ~50 governed surfaces, each lit
+by a live a11oy endpoint. Vendored WebGL2 with optional WebGPU; 0 runtime CDN; mobile-friendly.
+
+**[Open the Holographic Estate →](https://szlholdings-a11oy.hf.space/holographic)**
+
 ## ⚡ Quick start (30 seconds)
 
 ```bash
