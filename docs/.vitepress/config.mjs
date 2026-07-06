@@ -34,10 +34,8 @@ export default withMermaid(defineConfig({
       rel: 'stylesheet',
       href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap'
     }],
-    ['link', {
-      rel: 'stylesheet',
-      href: 'https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css'
-    }],
+    // KaTeX CSS is bundled from the local `katex` dependency via the custom
+    // theme (docs/.vitepress/theme/index.js) — no runtime CDN (Doctrine v11).
     ['meta', { name: 'theme-color', content: '#080c14' }]
   ],
 
