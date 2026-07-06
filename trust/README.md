@@ -77,8 +77,8 @@ cat runs/E4-codex-kernel-2026-04-29/trace.jsonl | jq '[.decision_receipt.mocked]
 | [uds-mesh](https://github.com/szl-holdings/uds-mesh) | UDS service mesh integration |
 | [vsp-otel](https://github.com/szl-holdings/vsp-otel) | OTel + DSSE exporter |
 | [a11oy](https://github.com/szl-holdings/a11oy) | Flagship governance app |
-| amaru | Cardano anchoring layer |
-| sentra | Policy enforcement engine |
+| a11oy Memory | Cardano anchoring layer |
+| a11oy Sentinel | Policy enforcement engine |
 | Hatun Doctrine Specification | [szl-holdings/platform/docs/a11oy/spec/hatun-doctrine-spec/](https://github.com/szl-holdings/platform/tree/main/docs/a11oy/spec/hatun-doctrine-spec/) |
 
 ## Citation
@@ -98,7 +98,7 @@ Doctrine v11 honest scoping:
 
 - **Not a live execution system.** szl-trust is a read-only audit artifact registry — it publishes receipts, it does not execute AI decisions.
 - **Not independently sufficient for trust.** Receipts should be verified against the Ouroboros runtime and Covenant Policy Engine; this repo does not ship the verifier.
-- **Not a general-purpose blockchain ledger.** Receipts are JSON artifacts anchored by Merkle roots; Cardano anchoring (via amaru) is separate.
+- **Not a general-purpose blockchain ledger.** Receipts are JSON artifacts anchored by Merkle roots; Cardano anchoring (via the a11oy Memory provenance anchor) is separate.
 - **Not accepting external contributions.** This is a founder-governed transparency artifact — no external PRs.
 
 ## License · Trust · Security

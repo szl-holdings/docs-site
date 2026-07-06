@@ -1,13 +1,6 @@
 # a11oy Memory — provenance anchor
 
-> **a11oy Memory** is the provenance & receipt-anchoring vertical of [a11oy](/flagships/a11oy). *(Internal codename: `amaru`.)*
-
-<div class="quechua">
-<strong>Name origin.</strong> The internal codename <strong><em>amaru</em></strong> is Quechua for
-<strong>serpent</strong> (the Andean serpent of rivers and continuity). The metaphor is the unbroken
-chain: a11oy Memory threads governance receipts into a single, continuous, anchored line. Gloss:
-<a href="https://kaikki.org/eswiktionary/">kaikki.org Quechua lexicon</a>.
-</div>
+> **a11oy Memory** is the provenance & receipt-anchoring vertical of [a11oy](/flagships/a11oy).
 
 ## Overview
 

@@ -9,8 +9,8 @@ tables below are the authoritative reference.
   `/openapi.json` on the Space. The [killinchu API page](/api/killinchu) mirrors it.
 - **a11oy** — consumed as a TypeScript package, not a public HTTP API. Its typed surface is
   documented on the [flagship page](/flagships/a11oy).
-- **Provenance Anchor / Operator / Policy** (retired codenames *amaru* / *rosie* / *sentra*)
-  — roadmap roles, not released as packages or public HTTP APIs today.
+- **Provenance Anchor / Operator / Policy** — roadmap roles, not released as packages or public
+  HTTP APIs today.
 - **Auto-generated OpenAPI doc pages** for any future public HTTP service are **in development**;
   this index will render them as specs publish.
 :::
@@ -21,9 +21,9 @@ tables below are the authoritative reference.
 |----------|---------|-----------|
 | [killinchu](/api/killinchu) | FastAPI on HF Space — counter-UAS, decoders, receipts | [/api/killinchu/*](https://szlholdings-killinchu.hf.space/api/killinchu/v1/honest) |
 | [a11oy](/flagships/a11oy) | TypeScript package (no public HTTP) | [flagship page](/flagships/a11oy) |
-| Provenance Anchor *(codename amaru, retired)* | roadmap — not released | [flagship page](/flagships/amaru) |
-| Operator *(codename rosie, retired)* | roadmap — not released | [flagship page](/flagships/rosie) |
-| Policy *(codename sentra, retired)* | roadmap — not released | [flagship page](/flagships/sentra) |
+| Provenance Anchor | roadmap — not released | [flagship page](/flagships/memory) |
+| Operator | roadmap — not released | [flagship page](/flagships/operator) |
+| Policy | roadmap — not released | [flagship page](/flagships/sentinel) |
 
 ## Conventions
 

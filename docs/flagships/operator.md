@@ -1,13 +1,12 @@
 # a11oy Operator — receipt orchestration
 
-> **a11oy Operator** is the admission-control & receipt-DAG vertical of [a11oy](/flagships/a11oy). *(Internal codename: `rosie`.)*
+> **a11oy Operator** is the admission-control & receipt-DAG vertical of [a11oy](/flagships/a11oy).
 
 <div class="quechua">
-<strong>Name origin.</strong> The internal codename <em>rosie</em> is the acronym
+<strong>Name origin.</strong> <em>Operator</em> is an English role name — the
 <strong>R</strong>eceipt-<strong>O</strong>rchestrated <strong>S</strong>igned
-<strong>I</strong>ngress <strong>E</strong>nvironment. It is not a Quechua word — labelled
-honestly as an English acronym. Its structure, however, is pure Andean: the receipt DAG is
-modelled directly on the Inka <em>khipu</em>.
+<strong>I</strong>ngress <strong>E</strong>nvironment. Its structure, however, is pure Andean:
+the receipt DAG is modelled directly on the Inka <em>khipu</em>.
 </div>
 
 ## Overview
@@ -23,7 +22,7 @@ admission control for governed receipt streams.
 > ([Ouroboros Thesis DOI 10.5281/zenodo.20434276](https://doi.org/10.5281/zenodo.20434276)).
 
 **Anatomy mapping:** a11oy Operator is the operational [Khipu](/anatomy/#khipu) organ, fed by
-[Yawar](/anatomy/#yawar) and anchored externally by [a11oy Memory](/flagships/amaru).
+[Yawar](/anatomy/#yawar) and anchored externally by [a11oy Memory](/flagships/memory).
 
 ```mermaid
 flowchart TD

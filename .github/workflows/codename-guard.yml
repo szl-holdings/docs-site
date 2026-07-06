@@ -1,0 +1,63 @@
+name: Codename Guard
+
+# Grep-based doctrine gate for the public docs site.
+# Doctrine: no user-visible internal codenames (amaru / sentra / rosie / chaski)
+# may appear in the docs-site source or file names. The ONLY allowed occurrence
+# is the F7 theorem name "Chaski FIFO Ordering" (kept by doctrine).
+#
+# The org codename sweep (codename_sweep.py / G5) scans the HF Spaces; this
+# repo-local guard extends the same rule to docs.szlholdings.com so retired
+# codenames cannot regress into the published site.
+
+on:
+  workflow_dispatch: {}
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  codenames:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+
+      - name: Scan for retired internal codenames
+        run: |
+          set -euo pipefail
+          self='.github/workflows/codename-guard.yml'
+          fail=0
+
+          # 1. Hard-banned tokens in tracked file CONTENT (no exceptions).
+          hard=$(git grep -In -iE 'amaru|rosie|sentra' -- . ":(exclude)${self}" || true)
+          if [ -n "$hard" ]; then
+            echo "::error::Retired internal codename(s) found in docs source:"
+            echo "$hard"
+            fail=1
+          fi
+
+          # 2. "chaski" is allowed ONLY inside the phrase "Chaski FIFO Ordering".
+          chaski=$(git grep -In -iE 'chaski' -- . ":(exclude)${self}" \
+            | grep -viE 'Chaski FIFO Ordering' || true)
+          if [ -n "$chaski" ]; then
+            echo "::error::'chaski' found outside the allowed 'Chaski FIFO Ordering' theorem name:"
+            echo "$chaski"
+            fail=1
+          fi
+
+          # 3. Tracked FILE NAMES must not embed a codename.
+          names=$(git ls-files | grep -iE 'amaru|rosie|sentra|chaski' || true)
+          if [ -n "$names" ]; then
+            echo "::error::Retired internal codename(s) found in tracked file names:"
+            echo "$names"
+            fail=1
+          fi
+
+          if [ "$fail" -ne 0 ]; then
+            echo "Codename guard FAILED — purge the codenames above (use the public role names)."
+            exit 1
+          fi
+          echo "Codename guard passed — no retired codenames in the docs site."

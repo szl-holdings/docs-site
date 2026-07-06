@@ -51,7 +51,7 @@ export default withMermaid(defineConfig({
   },
 
   themeConfig: {
-    // Inca animated avatar (Amaru) as the navbar logo. Static szl-mark.svg
+    // Inca animated avatar as the navbar logo. Static szl-mark.svg
     // retained on disk at /img/szl-mark.svg (additive — not removed).
     logo: '/img/szl-avatar-animated.gif',
     siteTitle: 'SZL Holdings',
@@ -63,10 +63,10 @@ export default withMermaid(defineConfig({
         text: 'Flagships',
         items: [
           { text: 'a11oy — execution fabric', link: '/flagships/a11oy' },
-          { text: 'a11oy Memory — provenance', link: '/flagships/amaru' },
-          { text: 'a11oy Sentinel — drift detection', link: '/flagships/sentra' },
+          { text: 'a11oy Memory — provenance', link: '/flagships/memory' },
+          { text: 'a11oy Sentinel — drift detection', link: '/flagships/sentinel' },
           { text: 'killinchu — drone intelligence', link: '/flagships/killinchu' },
-          { text: 'a11oy Operator — receipt orchestration', link: '/flagships/rosie' }
+          { text: 'a11oy Operator — receipt orchestration', link: '/flagships/operator' }
         ]
       },
       {
@@ -114,10 +114,10 @@ export default withMermaid(defineConfig({
           items: [
             { text: 'Overview', link: '/flagships/' },
             { text: 'a11oy', link: '/flagships/a11oy' },
-            { text: 'a11oy Memory', link: '/flagships/amaru' },
-            { text: 'a11oy Sentinel', link: '/flagships/sentra' },
+            { text: 'a11oy Memory', link: '/flagships/memory' },
+            { text: 'a11oy Sentinel', link: '/flagships/sentinel' },
             { text: 'killinchu', link: '/flagships/killinchu' },
-            { text: 'a11oy Operator', link: '/flagships/rosie' }
+            { text: 'a11oy Operator', link: '/flagships/operator' }
           ]
         }
       ],
@@ -134,7 +134,7 @@ export default withMermaid(defineConfig({
           text: 'The 12 Organs',
           collapsed: false,
           items: [
-            { text: 'a11oy Memory — cortex', link: '/anatomy/#amaru' },
+            { text: 'a11oy Memory — cortex', link: '/anatomy/#memory' },
             { text: 'Yuyay — heart', link: '/anatomy/#yuyay' },
             { text: 'Yawar — blood', link: '/anatomy/#yawar' },
             { text: 'Hukulla — immune', link: '/anatomy/#hukulla' },

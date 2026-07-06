@@ -22,9 +22,9 @@ Coordinated v1.0.0 launch of the **two shipping flagships**. Per-flagship GitHub
 - Doctrine v11 compliance — kernel `c7c0ba17` (749 declarations / 14 axioms / 163 sorries); exactly 8 locked-proven formulas {F1,F4,F7,F11,F12,F18,F19,F22}; Λ unconditional = Conjecture 1 (machine-checked false, never a theorem); Khipu BFT = Conjecture 2 (Wave 23 `khipu_quorum_safety_conditional` conditional-only).
 
 ### Roadmap roles (not released)
-- **Provenance Anchor** *(internal codename amaru, retired)* — governance-receipt sync; Cardano hash-anchoring in development. Not released as a standalone service.
-- **Operator** *(internal codename rosie, retired)* — Khipu receipt-DAG console; sum invariant verified in lutar-lean. Roadmap.
-- **Policy** *(internal codename sentra, retired)* — deny-by-default posture-drift detector; live policy gate ships inside a11oy. Roadmap.
+- **Provenance Anchor** — governance-receipt sync; Cardano hash-anchoring in development. Not released as a standalone service.
+- **Operator** — Khipu receipt-DAG console; sum invariant verified in lutar-lean. Roadmap.
+- **Policy** — deny-by-default posture-drift detector; live policy gate ships inside a11oy. Roadmap.
 
 ### Tooling & security (per shipping repo)
 - SBOM (CycloneDX + SPDX) attached to each release; cosign keyless OIDC signing path documented.

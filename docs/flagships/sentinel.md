@@ -1,12 +1,11 @@
 # a11oy Sentinel — drift detector
 
-> **a11oy Sentinel** is the security-posture & observability vertical of [a11oy](/flagships/a11oy). *(Internal codename: `sentra`.)*
+> **a11oy Sentinel** is the security-posture & observability vertical of [a11oy](/flagships/a11oy).
 
 <div class="quechua">
-<strong>Name origin.</strong> The internal codename <em>sentra</em> is a coinage on the English
-<strong>sentry</strong> (the guard who watches a boundary), styled to sit alongside the Quechua
-organ names. It is not a Quechua word and is labelled honestly as such. Its job matches the name:
-a11oy Sentinel watches the cyber-posture surface and raises a flag when it drifts.
+<strong>Name origin.</strong> <em>Sentinel</em> is an English role name — the guard who watches a
+boundary. Its job matches the name: a11oy Sentinel watches the cyber-posture surface and raises
+a flag when it drifts.
 </div>
 
 ## Overview

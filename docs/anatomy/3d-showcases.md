@@ -5,7 +5,7 @@ review. They are **not deployed as live Spaces today** — the static screenshot
 honest, reviewable artifact. (See [Status](/status) for the live-surface inventory.)
 
 > Honesty note: earlier drafts embedded these as live Hugging Face Spaces. Those Spaces
-> (`szlholdings-anatomy-3d`, `szlholdings-rosie-3d`) are **not deployed**, so the live embeds
+> (`szlholdings-anatomy-3d`, `szlholdings-operator-3d`) are **not deployed**, so the live embeds
 > were removed rather than left as broken frames. The Three.js sources remain in the SZL
 > workspace; redeploying them as static Spaces is a roadmap item.
 
@@ -30,16 +30,16 @@ receipt-pulse propagation, and single-organ inspection. Screenshots from the loc
 ## Operator-DAG showcase {#operator-3d}
 
 A focused visualisation of the a11oy Operator receipt DAG (Operator is the receipt-orchestration
-role of a11oy; internal codename *rosie*, retired), the brain-jack mesh, and the
+role of a11oy), the brain-jack mesh, and the
 frontier-capability map across the ecosystem. Screenshots from the local build:
 
 | Default | Brain-jack mesh |
 |---|---|
-| ![Operator-3D default](/img/3d/rosie-default.png) | ![Operator-3D brain-jack mesh](/img/3d/rosie-brainjack.png) |
+| ![Operator-3D default](/img/3d/operator-default.png) | ![Operator-3D brain-jack mesh](/img/3d/operator-brainjack.png) |
 
 | Frontier map | Ecosystem |
 |---|---|
-| ![Operator-3D frontier](/img/3d/rosie-frontier.png) | ![Operator-3D ecosystem](/img/3d/rosie-ecosystem.png) |
+| ![Operator-3D frontier](/img/3d/operator-frontier.png) | ![Operator-3D ecosystem](/img/3d/operator-ecosystem.png) |
 
 **What you are looking at:** the brain-jack mesh shows the [PURIQ](/doctrine/puriq)
 `decide → act → reflect` decision flow; the frontier map highlights each flagship's
@@ -48,7 +48,7 @@ verified frontier capability.
 ## Source
 
 - **Anatomy-3D:** built with Three.js; source in the SZL workspace under `anatomy_3d_v2`.
-- **Operator-3D:** built with Three.js; source under `rosie_3d` (internal codename, retired).
+- **Operator-3D:** built with Three.js; source under `operator_3d`.
 - Neither is deployed as a live Space today; the canonical VitePress build is the single source
   of truth, and the screenshots above are the reviewable artifact until a static-Space redeploy
   lands on the roadmap.

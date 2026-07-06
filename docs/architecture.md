@@ -49,8 +49,8 @@ renderings of the spine, heart, and Khipu DAG.
 
 ## How a request flows
 
-1. A request enters through the Operator console surface (roadmap; internal codename *rosie*,
-   retired) or directly at a shipping flagship API (a11oy / killinchu).
+1. A request enters through the Operator console surface (roadmap) or directly at a shipping
+   flagship API (a11oy / killinchu).
 2. The **Λ-spine** scores it; the **Yuyay heart** applies the 13-axis conjunctive gate.
 3. The **Hukulla immune** layer can hard-stop (deny by default).
 4. Every accepted decision emits a **Khipu** receipt into the **Yawar** ledger.

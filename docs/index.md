@@ -39,14 +39,14 @@ features:
     details: The seven-layer governed agentic execution substrate under killinchu and all five approved problems. Policy, measurement, knowledge-graph, and QEC-integrity packages with a Lean-verified termination + Λ-monotonicity proof.
     link: /flagships/a11oy
   - title: Provenance Anchor (roadmap)
-    details: Cardano-anchored governance-receipt minting with Shor-encoded provenance and bounded-loop convergence (Banach contraction). Roadmap component (internal codename amaru, retired).
-    link: /flagships/amaru
+    details: Cardano-anchored governance-receipt minting with Shor-encoded provenance and bounded-loop convergence (Banach contraction). Roadmap component.
+    link: /flagships/memory
   - title: Operator — receipt orchestration
-    details: QEC-admission-controlled receipt DAG with CSS ingress and a kernel-verified summation invariant. The Khipu-indexed audit surface (internal codename rosie, retired).
-    link: /flagships/rosie
+    details: QEC-admission-controlled receipt DAG with CSS ingress and a kernel-verified summation invariant. The Khipu-indexed audit surface.
+    link: /flagships/operator
   - title: Policy — drift detector (roadmap)
-    details: Kitaev-surface posture-drift detection on a Λ-axis-governed observability fiber. Cyber-resilience domain pack (internal codename sentra, retired).
-    link: /flagships/sentra
+    details: Kitaev-surface posture-drift detection on a Λ-axis-governed observability fiber. Cyber-resilience domain pack.
+    link: /flagships/sentinel
 ---
 
 ## What is SZL?
@@ -81,15 +81,14 @@ components surfaced under honest role names. Each is cross-referenced to the Our
 |----------|------|--------|
 | **[a11oy](/flagships/a11oy)** | Governed agentic **execution fabric** (7 layers); English *alloy* — a blended, hardened substrate | **Shipping** |
 | **[killinchu](/flagships/killinchu)** | **Drone intelligence** — counter-UAS Λ-gate; Quechua *killinchu* = **kestrel** | **Shipping** |
-| **[Provenance Anchor](/flagships/amaru)** | Cardano + Shor-encoded receipt anchoring | Roadmap |
-| **[Operator](/flagships/rosie)** | **Receipt orchestration** — Khipu DAG + CSS ingress | Frontier |
-| **[Policy](/flagships/sentra)** | **Drift detector** — Kitaev-surface posture monitoring | Roadmap |
+| **[Provenance Anchor](/flagships/memory)** | Cardano + Shor-encoded receipt anchoring | Roadmap |
+| **[Operator](/flagships/operator)** | **Receipt orchestration** — Khipu DAG + CSS ingress | Frontier |
+| **[Policy](/flagships/sentinel)** | **Drift detector** — Kitaev-surface posture monitoring | Roadmap |
 
-> The internal codenames *amaru*, *rosie*, and *sentra* are retired; the honest, user-facing
-> names are **Provenance Anchor**, **Operator**, and **Policy**. Quechua glosses follow the
-> standard lexica at [kaikki.org Quechua](https://kaikki.org/eswiktionary/); *killinchu* =
-> "kestrel". `a11oy` is an SZL coinage (the alloy metaphor), not a Quechua word — labelled
-> honestly as such.
+> The honest, user-facing names for these roles are **Provenance Anchor**, **Operator**, and
+> **Policy**. Quechua glosses follow the standard lexica at
+> [kaikki.org Quechua](https://kaikki.org/eswiktionary/); *killinchu* = "kestrel". `a11oy` is
+> an SZL coinage (the alloy metaphor), not a Quechua word — labelled honestly as such.
 
 ## Core & proof
 

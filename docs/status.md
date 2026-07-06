@@ -11,7 +11,7 @@ Two flagships ship today and expose live `/healthz`:
 |---------|----------|----------------|
 | **a11oy** (governed execution fabric) | [szlholdings-a11oy.hf.space](https://szlholdings-a11oy.hf.space) | `GET /healthz` → doctrine v11 · 749/14/163 |
 | **killinchu** (drone-intelligence / counter-UAS) | [szlholdings-killinchu.hf.space](https://szlholdings-killinchu.hf.space) | `GET /api/killinchu/healthz` |
-| Anatomy-3D / Operator-3D (Three.js showcases) | not deployed | screenshots only — see [3D Showcases](/anatomy/3d-showcases); `szlholdings-anatomy-3d` / `szlholdings-rosie-3d` return HTTP 401 (no Space) |
+| Anatomy-3D / Operator-3D (Three.js showcases) | not deployed | screenshots only — see [3D Showcases](/anatomy/3d-showcases); `szlholdings-anatomy-3d` / `szlholdings-operator-3d` return HTTP 401 (no Space) |
 | **Hatun-MCP** (Model Context Protocol) | [szlholdings-hatun-mcp.hf.space](https://szlholdings-hatun-mcp.hf.space/mcp/) | `POST /mcp/` JSON-RPC `initialize` → 23 static tools. **Re-deploying** (see note). |
 
 Both shipping flagship `/healthz` endpoints return Doctrine v11 verbatim:
@@ -43,10 +43,10 @@ real-time source of truth.
   Spaces (a11oy/killinchu) expose tools as **HTTP catalogs** at `/api/<organ>/v1/mcp/tools`,
   not as an MCP transport.
 - **Roadmap surfaces not yet deployed (removed from the live table):** the Provenance Anchor,
-  Operator, and Policy components (internal codenames *amaru*, *rosie*, *sentra* — retired) have
-  **no live Space today** (`szlholdings-amaru/rosie/sentra.hf.space` return HTTP 404) and are
-  roadmap/frontier roles, not shipping services. The former `Rosie-3D` showcase is likewise not
-  deployed. They are documented honestly under [Flagships](/flagships/).
+  Operator, and Policy components have **no live Space today** (their retired standalone Space
+  hostnames return HTTP 404) and are roadmap/frontier roles, not shipping services. The former
+  Operator-3D showcase is likewise not deployed. They are documented honestly under
+  [Flagships](/flagships/).
 - **"MCP receipts server" Space:** **removed from this table** — `szlholdings-mcp-receipts-server.hf.space`
   is not deployed (HTTP 404) and has no backing repo. Receipt signing/verification is live today via
   each shipping flagship's `/khipu/sign` · `/khipu/verify` · `/khipu/pubkey` routes (a11oy verified).

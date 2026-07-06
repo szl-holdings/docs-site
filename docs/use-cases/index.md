@@ -5,9 +5,9 @@ of organs to a concrete scenario, with honest scope boundaries.
 
 | Use case | Flagships | What it demonstrates |
 |----------|-----------|----------------------|
-| [Warhacker mission packs](/use-cases/warhacker) | a11oy, amaru, rosie, sentra | Verifiable governance overlay on the UDS air-gap delivery stack |
+| [Warhacker mission packs](/use-cases/warhacker) | a11oy, memory, operator, sentinel | Verifiable governance overlay on the UDS air-gap delivery stack |
 | [Greene demo flow](/use-cases/greene-demo) | killinchu, a11oy | Counter-UAS decision support, end to end |
-| [Iron-Dome-but-the-brain](/use-cases/iron-dome-brain) | killinchu, rosie | A governed *decision* layer, not an effector — the brain, not the missile |
+| [Iron-Dome-but-the-brain](/use-cases/iron-dome-brain) | killinchu, operator | A governed *decision* layer, not an effector — the brain, not the missile |
 | [Sovereign AI for .gov](/use-cases/sovereign-gov) | full anatomy | Air-gapped, auditable, kernel-checked governed AI for government |
 
 ::: warning Scope discipline (Doctrine v11 §2, axis 8)

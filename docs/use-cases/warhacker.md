@@ -33,7 +33,7 @@ rendering a four-pane verification surface.
 ## Demo structure (7 slots × ~8.6 min)
 
 A live `kind` cluster (`szl-mesh`) runs the workflow on `uds-cli`, pulling a
-`MeshPointerManifest` and landing four cross-component SHAs (a11oy / amaru / rosie / sentra) in
+`MeshPointerManifest` and landing four cross-component SHAs (a11oy / memory / operator / sentinel) in
 **cosign-verifiable order**. The flow: opening (the gap) → live deploy → **live attestation-chain
 append** → operator console → **Lean kernel-checked theorem** that the chain is total-ordered and
 SHA-complete → governance gate → close. A line-5 extended-attestation is appended live on stage.
