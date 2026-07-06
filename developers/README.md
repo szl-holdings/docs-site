@@ -9,6 +9,12 @@ SZL Holdings builds a **formally-verified governance gate for agentic AI**. This
 developer-facing entry point: quickstart, full API reference, MCP integration, and runnable examples.
 Build your own "organ" on the same substrate the shipping flagships use.
 
+### ◇ Featured: the Holographic Estate
+
+The frontier tier rendered as one live 3D holographic lattice — ~50 governed surfaces, each lit
+by a live a11oy endpoint. Vendored WebGL2 with optional WebGPU; 0 runtime CDN; mobile-friendly.
+**[Open the Holographic Estate →](https://szlholdings-a11oy.hf.space/holographic)**
+
 ---
 
 ## The shipping flagships
