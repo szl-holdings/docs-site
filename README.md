@@ -25,8 +25,8 @@ It is where investors, design partners, and engineers go to understand what SZL 
 
 ## ◇ Featured: the Holographic Estate
 
-The frontier tier rendered as one live 3D holographic lattice — ~50 governed surfaces, each lit
-by a live a11oy endpoint. Vendored WebGL2 with optional WebGPU; 0 runtime CDN; mobile-friendly.
+The frontier tier rendered as one live 3D holographic lattice — 60+ governed surfaces (exact live
+count self-verifiable at `/api/a11oy/v1/frontier/surfaces`), each lit by a live a11oy endpoint. Vendored WebGL2 with optional WebGPU; 0 runtime CDN; mobile-friendly.
 
 **[Open the Holographic Estate →](https://szlholdings-a11oy.hf.space/holographic)**
 
