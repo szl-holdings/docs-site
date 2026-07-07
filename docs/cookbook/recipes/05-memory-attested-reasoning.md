@@ -1,16 +1,16 @@
 # Memory-attested reasoning
 
-> **Drive a11oy's memory cortex (internal codename *amaru* — retired) and read back the
+> **Drive a11oy's memory cortex (the a11oy Memory role) and read back the
 > DSSE-wrapped receipt chain — every inference carries its provenance, every memory carries its receipt.**
 >
 > **Headline number: 1 recall → N cited memories → 1 hash-chained DSSE receipt.**
 
-The **a11oy Memory** role — the memory cortex historically prototyped under the internal
-codename *amaru* — is shipped today **inside a11oy**, not as a separate Space. Its contract is
+The **a11oy Memory** role — the memory cortex — is shipped today **inside a11oy**, not as a
+separate Space. Its contract is
 unusual: it refuses to surface a recalled memory without also surfacing the receipt for the write
 that created it. This recipe drives the live a11oy memory path and shows the cited receipt chain.
 
-> **Honest scope.** There is no standalone `amaru` Space or repo (retired codename). The live
+> **Honest scope.** The a11oy Memory role has no standalone Space or repo. The live
 > memory cortex is `a11oy`'s `/api/a11oy/v2/unay/recall` and `/api/a11oy/v1/mcp/call` endpoints.
 > Cardano anchoring is demo-seeded, not on-chain mainnet. Live tick signatures are PLACEHOLDER;
 > the lake's `khipu/*.ndjson` carries a **real** ECDSA-P256 signature you can verify
@@ -68,7 +68,7 @@ curl -s -X POST $A11OY/api/a11oy/v2/unay/recall -d '{"query":"locked","k":5}' \
 ```
 
 Each recalled chunk emits its own `receipt_seq` — that sequence number is the citation index into
-the chain. The historical 7-chakra serpentine framing (root → … → crown) was the *amaru*
+the chain. The historical 7-chakra serpentine framing (root → … → crown) was the a11oy Memory
 prototype's internal scheduler; the shipping recall path exposes the same cited-receipt contract.
 
 ### Step 3 — Decode the DSSE payload
@@ -116,7 +116,7 @@ the loop from *claim* to *cryptographic provenance*.
 - **[01 — Verify a receipt end-to-end](01-verify-a-receipt-end-to-end.md)** — verify the receipts this cites.
 - **[10 — Cardano-anchored DSSE blood ledger](10-cardano-dsse-blood-ledger.md)** — anchor the chain.
 - **[08 — Receipt knot algebra](08-receipt-knot-algebra.md)** — the chain's topology.
-- Live: [a11oy](https://szlholdings-a11oy.hf.space) (hosts the a11oy Memory; codename *amaru* retired)
+- Live: [a11oy](https://szlholdings-a11oy.hf.space) (hosts the a11oy Memory)
 
 ## Cite this recipe
 

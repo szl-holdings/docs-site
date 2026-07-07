@@ -8,8 +8,8 @@ The doctrine is the source of truth: 749 declarations, 14 unique axioms, 163 tra
 kernel commit `c7c0ba17`, Λ = Conjecture 1, SLSA L1. This recipe pulls those numbers from every
 live source and proves they are consistent.
 
-> **Honest scope.** Only **a11oy** and **killinchu** ship live Spaces. There are no
-> `amaru` / `rosie` / `sentra` Spaces or repos (retired internal codenames); those roles ship
+> **Honest scope.** Only **a11oy** and **killinchu** ship live Spaces. The a11oy Memory /
+> Operator / Sentinel roles have no standalone Spaces or repos; they ship
 > *inside* a11oy. There is also **no live `/api/doctrine` route**. The doctrine is
 > exposed per-flagship at `/v1/honest` and canonically in the lake's
 > [`lake_index.json`](https://github.com/szl-holdings/szl-lake/blob/main/lake_index.json). This
@@ -49,7 +49,7 @@ print("lake:", idx["kernel_commit"], idx["declarations"], idx["axioms"], idx["so
 ```python
 import requests
 # Only the two shipping flagships expose a live /v1/honest. The a11oy Memory / Operator /
-# Sentinel verticals (codenames amaru / rosie / sentra — retired) ship inside a11oy and are NOT
+# Sentinel verticals ship inside a11oy and are NOT
 # separate Spaces; do not query them as standalone hosts.
 FLAGSHIPS = {
     "a11oy":     "https://szlholdings-a11oy.hf.space/api/a11oy/v1/honest",

@@ -93,7 +93,7 @@ three CRDs: `LambdaGate`, `KhipuReceipt`, `DoctrineLock`.
 
 ### Step 5 — Register with the Operator console
 
-The **Operator** role (internal codename *rosie* — retired; ships inside a11oy, not a standalone
+The **a11oy Operator** role (ships inside a11oy, not a standalone
 service) is the operator console / nervous system. Expose your organ's `/v1/*` surface and it
 appears in the mesh health board. Confirm with `curl https://szlholdings-a11oy.hf.space/api/a11oy/v1/mcp/tools`.
 

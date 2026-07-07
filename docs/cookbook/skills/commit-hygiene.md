@@ -34,7 +34,7 @@ Use the Conventional Commits format:
 
 ### Scopes (this project)
 
-Use the artifact or package slug: `szl-holdings`, `command`, `pulse`, `shared`, `api-server`, `mobile`, `sentra`, `aegis`, `counsel`, `terra`, etc.
+Use the artifact or package slug: `szl-holdings`, `command`, `pulse`, `shared`, `api-server`, `mobile`, `sentinel`, `aegis`, `counsel`, `terra`, etc.
 
 ### Examples
 

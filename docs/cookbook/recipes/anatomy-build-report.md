@@ -33,7 +33,7 @@ v3 is a ground-up organic rebuild of the SZL agent-body anatomy diagram. The pre
 |---|---|---|
 | BG | #F5F1E8 | Canvas background |
 | GOLD | #c89f47 | YUYAY, heart, vertebrae, RUWAY |
-| RUST | #a85a3a | YAWAR artery, SENTRA, toe-4 snowflake |
+| RUST | #a85a3a | YAWAR artery, SENTINEL, toe-4 snowflake |
 | INK | #1f1b16 | Body text, BRAIN label |
 | MUTED | #6b6258 | Secondary labels, CHAKI, doctrines |
 | MINT | #5b8a72 | HUKLLA, OVERWATCH, MAKI palm |
@@ -110,9 +110,9 @@ Each vertebra: organic 8-point catmull blob (GOLD fill, GOLD edge) + center dot 
 - 3 proposed gate-function dots on palm (dashed circles, very faint): chakra_maki_prior, chakra_maki_provenance, chakra_maki_quota
 - Left-margin annotation with leader line
 
-### ABDOMEN: SENTRA + RUWAY
-- SENTRA (sx = BX-0.60, sy = 11.44): organic 9-point catmull — kidney silhouette, RUST
-  - Labels: "SENTRA", "immune · 18 SLOC", "6 sigs + 1MB guard"
+### ABDOMEN: SENTINEL + RUWAY
+- SENTINEL (sx = BX-0.60, sy = 11.44): organic 9-point catmull — kidney silhouette, RUST
+  - Labels: "SENTINEL", "immune · 18 SLOC", "6 sigs + 1MB guard"
 - RUWAY (rx = BX+0.60, ry = 11.50): organic 8-point catmull — liver silhouette, GOLD
   - Labels: "RUWAY", "ceremonial write", "D-YAWAR-FLOW only"
 - Dashed rust connector between them with "pre-write inspect" annotation
@@ -200,7 +200,7 @@ The string "chakra" appears only as part of canonical kernel filenames:
 |---|---|---|
 | 0 | First v3 write | Basic organic shapes; brain was circle; some box-ish forms |
 | 1 | Visual review 1 | Brain too round; spine labels all left; MAKI fingers wrong direction |
-| Fix 1 | Script edit (10 replacements) | Brain BR 0.70→0.60; spine labels alternated L/R; palm moved; finger angles fixed; SENTRA/RUWAY moved lower; MAKI/CHAKI annotations repositioned |
+| Fix 1 | Script edit (10 replacements) | Brain BR 0.70→0.60; spine labels alternated L/R; palm moved; finger angles fixed; SENTINEL/RUWAY moved lower; MAKI/CHAKI annotations repositioned |
 | 2 | Visual review 2 | DECIDE arm joints too dark/heavy; OVERWATCH overlapping hatun-raid label |
 | Fix 2 | Script edit (4 replacements) | Joint fill MUTED+28 (was INK+10); OVERWATCH moved right; finger angles fine-tuned |
 | 3 | Visual review 3 | SHIP — all checks passed |

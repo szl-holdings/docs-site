@@ -32,11 +32,15 @@ See **[Trust architecture (deep dive)](/trust/trust-deep)** for the full inclusi
 
 ## Verify it yourself
 
-Receipts are plain JSON, verifiable without any SZL tooling. The full run artifacts are published
-under this site's repository at
-[`docs/trust/runs/E4-codex-kernel-2026-04-29/`](https://github.com/szl-holdings/docs-site/tree/main/docs/trust/runs/E4-codex-kernel-2026-04-29):
+Receipts are plain JSON, verifiable without any SZL tooling. The **raw run artifacts and the
+`verify.sh` script remain the CC-BY-4.0 registry of record** in the source repository
+[`szl-holdings/szl-trust`](https://github.com/szl-holdings/szl-trust) under
+[`runs/E4-codex-kernel-2026-04-29/`](https://github.com/szl-holdings/szl-trust/tree/main/runs/E4-codex-kernel-2026-04-29)
+— they are intentionally not re-hosted here so the audit registry has a single source of truth:
 
 ```bash
+git clone https://github.com/szl-holdings/szl-trust && cd szl-trust
+
 # Inspect the E4 Codex Kernel run
 cat runs/E4-codex-kernel-2026-04-29/run_manifest.json | jq '.deliverables'
 cat runs/E4-codex-kernel-2026-04-29/proof_ledger.jsonl | head -3 | jq '.'
@@ -44,11 +48,10 @@ cat runs/E4-codex-kernel-2026-04-29/proof_ledger.jsonl | head -3 | jq '.'
 # Verify mocked:false on all receipts
 cat runs/E4-codex-kernel-2026-04-29/trace.jsonl | jq '[.decision_receipt.mocked] | unique'
 # → [false]
-```
 
-The `verify.sh` script (also migrated to
-[`docs/trust/verify.sh`](https://github.com/szl-holdings/docs-site/blob/main/docs/trust/verify.sh))
-performs five checks in under 30 seconds with no SZL tooling.
+# Or run the one-shot verifier (5 checks, < 30s, no SZL tooling)
+./verify.sh
+```
 
 ## Scope (honest)
 

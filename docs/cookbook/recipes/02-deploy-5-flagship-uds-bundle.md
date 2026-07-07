@@ -9,8 +9,8 @@ cosign-signed [Unified Defense Stack (UDS)](https://github.com/szl-holdings/uds-
 bundles built on UDS Core v1.5.0. This recipe deploys them and runs the mesh health check.
 
 > **Honest scope.** Only a11oy and killinchu are published images in the bundle today. The
-> a11oy Memory, Operator, and Sentinel verticals (internal codenames *amaru*, *rosie*, *sentra* —
-> retired) are roadmap; their live equivalents ship **inside a11oy**, not as separate images.
+> a11oy Memory, Operator, and Sentinel verticals are roadmap; their live equivalents ship
+> **inside a11oy**, not as separate images.
 > Do not expect `cosign verify` / `kubectl exec` to succeed for those role names.
 
 > **Trademark note.** "UDS" references Defense Unicorns' Unified Defense Stack
@@ -86,17 +86,17 @@ kubectl -n szl get pods -w     # wait for 5/5 Running
 The bundle installs the three K8s-native CRDs. The `DoctrineLock` CRD pins the cluster to
 `c7c0ba17`; a Pepr policy fails CLOSED if any organ image declares a different anchor.
 
-### Step 4 — Confirm all 5 organs healthy and doctrine-aligned
+### Step 4 — Confirm the shipping organs are healthy and doctrine-aligned
 
 ```bash
-for o in a11oy sentra amaru killinchu rosie; do
+for o in a11oy killinchu; do
   kubectl -n szl exec deploy/$o -- curl -sf localhost:8080/api/$o/healthz >/dev/null \
     && echo "$o healthz OK"
 done
 ```
 
-The acceptance criterion is uniformity: **all five** report `v11 / 749 / 14 / 163` and kernel
-`c7c0ba17`. A mismatch is a doctrine-drift incident, not a warning.
+The acceptance criterion is uniformity: **every published organ** reports `v11 / 749 / 14 / 163`
+and kernel `c7c0ba17`. A mismatch is a doctrine-drift incident, not a warning.
 
 ### Step 5 — Smoke the live mesh path
 

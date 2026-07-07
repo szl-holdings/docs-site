@@ -49,9 +49,9 @@ Gibson-Ashby check for PIRWA schema:
 
 ---
 
-### SENTRA
+### SENTINEL
 **Status: MEDIUM PRIORITY — partial rewrite**  
-SENTRA's inspection logic is procedural (not schema-heavy), but it carries the 10 HUKLLA tripwire definitions. These tripwire definitions are schema — they describe what constitutes a violation.
+SENTINEL's inspection logic is procedural (not schema-heavy), but it carries the 10 HUKLLA tripwire definitions. These tripwire definitions are schema — they describe what constitutes a violation.
 
 Rewrite scope:
 - Extract: `HUKLLATripwire` class with `tripwire_id`, `description`, `shacl_shape_ref`
@@ -126,7 +126,7 @@ Rewrite scope:
 | CHAKANA | High (rigidity graph) | No | 2 | Required (self-referential) |
 | PIRWA | High (feature dict) | No | 3 | Required |
 | RUWAY | Medium (packet schema) | Low | 4 | Optional |
-| SENTRA | Medium (tripwire refs) | Imports HUKLLA | 5 | Optional |
+| SENTINEL | Medium (tripwire refs) | Imports HUKLLA | 5 | Optional |
 | YAWAR | Medium (packet types) | Imports RUWAY | 6 | Optional |
 | QILLQA | Low (meta-schema) | All | 7 | Optional |
 | CONTINUUM | Low (HashReceipt) | None | 8 | Optional |

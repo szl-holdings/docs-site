@@ -72,7 +72,7 @@ loop against `localhost` inside the cluster — both shipping organs (a11oy, kil
 
 ```bash
 # Only a11oy and killinchu publish images; the a11oy Memory / Operator / Sentinel verticals
-# (codenames amaru/rosie/sentra retired) ship inside a11oy, not as separate deployments.
+# ship inside a11oy, not as separate deployments.
 for o in a11oy killinchu; do
   kubectl -n szl exec deploy/$o -- curl -s localhost:8080/api/$o/v1/honest | jq -r .doctrine
 done

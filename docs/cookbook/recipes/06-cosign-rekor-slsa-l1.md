@@ -30,7 +30,7 @@ GHCR pull may require `read:packages`; the Rekor log lookups are fully public.
 
 ```bash
 ORG=ghcr.io/szl-holdings
-IMG=$ORG/amaru:uds-v0.2.0
+IMG=$ORG/a11oy:uds-v0.2.0
 
 cosign verify $IMG \
   --certificate-identity-regexp="^https://github.com/szl-holdings/" \
@@ -48,7 +48,7 @@ a Rekor bundle is attached.
 ### Step 1 — Verify the signature (keyless)
 
 ```bash
-for o in a11oy sentra amaru killinchu rosie; do
+for o in a11oy killinchu; do
   echo "== $o =="
   cosign verify ghcr.io/szl-holdings/$o:uds-v0.2.0 \
     --certificate-identity-regexp="^https://github.com/szl-holdings/" \
@@ -62,34 +62,33 @@ pins it to GitHub Actions. Both must match or verify fails — that is the trust
 
 ### Step 2 — Pull the public Rekor transparency-log entry
 
-Each flagship README publishes its Rekor log index. These are **real and public**:
+Each flagship README publishes its Rekor log index. The two shipping flagships publish these
+**real and public** Rekor log indices; the retired role-name images (a11oy Memory/Operator/Sentinel)
+are not standalone published images and are omitted here.
 
 | Flagship | Image digest (prefix) | Rekor log index |
 |---|---|---|
 | a11oy | `sha256:7301a4…ab88` | `1710355173` |
-| sentra | `sha256:360b96…b5ee` | `1710365350` |
-| amaru | `sha256:317cb1…4f9f` | `1710371397` |
 | killinchu | `sha256:dedfc3…718a` | `1710339915` |
-| rosie | `sha256:3d634e…cbaa` | `1710144169` |
 
 ```bash
-rekor-cli get --log-index 1710371397            # amaru
+rekor-cli get --log-index 1710355173            # a11oy
 # Or in a browser:
-#   https://search.sigstore.dev/?logIndex=1710371397
+#   https://search.sigstore.dev/?logIndex=1710355173
 ```
 
 You can also query the public Rekor API directly (no tools needed):
 
 ```bash
-curl -s "https://rekor.sigstore.dev/api/v1/log/entries?logIndex=1710371397" | jq 'keys'
+curl -s "https://rekor.sigstore.dev/api/v1/log/entries?logIndex=1710355173" | jq 'keys'
 # returns the entry UUID — proof the signature is in the immutable transparency log
 ```
 
 ### Step 3 — (Optional) Verify SLSA provenance
 
 ```bash
-slsa-verifier verify-image ghcr.io/szl-holdings/amaru:uds-v0.2.0 \
-  --source-uri github.com/szl-holdings/amaru \
+slsa-verifier verify-image ghcr.io/szl-holdings/a11oy:uds-v0.2.0 \
+  --source-uri github.com/szl-holdings/a11oy \
   --builder-id "https://github.com/slsa-framework/slsa-github-generator/.github/workflows/generator_container_slsa3.yml@refs/tags/v2.0.0"
 ```
 

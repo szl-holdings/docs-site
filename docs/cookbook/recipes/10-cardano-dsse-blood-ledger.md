@@ -4,7 +4,7 @@
 >
 > **Headline number: N receipts → 1 Merkle root → 1 on-chain metadatum.**
 
-The memory cortex (a11oy Memory; internal codename *amaru* — retired, now inside a11oy)
+The memory cortex (the a11oy Memory role, inside a11oy)
 calls its receipt chain the *yawar* (blood) ledger. Anchoring its Merkle root on Cardano L1
 gives an independent, public proof-of-existence. This is **hash anchoring only** — not a token,
 not custodial, not a transfer of value.
@@ -36,7 +36,7 @@ python3 -m pip install requests          # demo path
 import hashlib, json, urllib.request
 
 LAKE = "https://huggingface.co/datasets/SZLHOLDINGS/szl-lake/resolve/main"
-lines = urllib.request.urlopen(f"{LAKE}/khipu/amaru_receipts.ndjson", timeout=30).read().splitlines()
+lines = urllib.request.urlopen(f"{LAKE}/khipu/a11oy_receipts.ndjson", timeout=30).read().splitlines()
 leaves = [hashlib.sha256(l).digest() for l in lines if l.strip()]
 
 def merkle_root(leaves):
@@ -112,7 +112,7 @@ receipt — itself verifiable by recipe 01.
 
 - **[01 — Verify a receipt end-to-end](01-verify-a-receipt-end-to-end.md)** — verify before anchoring.
 - **[05 — Memory-attested reasoning](05-memory-attested-reasoning.md)** — the chain you're anchoring.
-- Live: [a11oy](https://szlholdings-a11oy.hf.space) (hosts the a11oy Memory; codename *amaru* retired) · [CIP-20](https://cips.cardano.org/cip/CIP-20)
+- Live: [a11oy](https://szlholdings-a11oy.hf.space) (hosts the a11oy Memory) · [CIP-20](https://cips.cardano.org/cip/CIP-20)
 
 ## Cite this recipe
 

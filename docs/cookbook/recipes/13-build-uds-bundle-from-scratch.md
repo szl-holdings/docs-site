@@ -8,7 +8,7 @@ Recipe 02 *deploys* the published bundle. This recipe *builds* one, so you can p
 organ (**[recipe 07](07-build-your-own-organ.md)**) alongside the shipping flagships.
 
 > **Honest scope.** Only **a11oy** and **killinchu** publish GHCR images today. The a11oy Memory /
-> Operator / Sentinel verticals (internal codenames *amaru* / *rosie* / *sentra* — retired) do
+> Operator / Sentinel verticals do
 > **not** have separate published images; they ship inside a11oy. The single-organ example below
 > uses the real `a11oy` image.
 
@@ -87,8 +87,8 @@ The mesh contract is three K8s-native CRDs (from
 ### Step 3 — Grow to the shipping bundle
 
 Add the second shipping flagship (and your own organ from recipe 07) as packages. Order matters
-only for readability; the mesh is peer-to-peer. The codename organs (amaru/rosie/sentra) are **not**
-separate published images — their roles ship inside a11oy, so there is nothing to add for them:
+only for readability; the mesh is peer-to-peer. The a11oy Memory / Operator / Sentinel roles are **not**
+separate published images — they ship inside a11oy, so there is nothing to add for them:
 
 ```yaml
 packages:

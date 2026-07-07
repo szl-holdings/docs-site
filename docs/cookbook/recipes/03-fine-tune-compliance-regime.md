@@ -1,6 +1,6 @@
 # Fine-tune a customer compliance regime
 
-> **Take the doctrine pretrain set, project new receipts through the a11oy Sentinel's σ-algebra of governance signals (internal codename *sentra* — retired; live equivalent ships inside a11oy), and emit a customer-specific Λ-extension that runs as an overlay — without touching the locked kernel.**
+> **Take the doctrine pretrain set, project new receipts through the a11oy Sentinel's σ-algebra of governance signals (ships inside a11oy), and emit a customer-specific Λ-extension that runs as an overlay — without touching the locked kernel.**
 >
 > **Headline number: 1 customer regime, 0 changes to 749/14/163.**
 
@@ -9,7 +9,7 @@ A "compliance regime" in SZL is **not** a model fine-tune that mutates the kerne
 the receipt-bus σ-algebra that *tightens* gates for your context (e.g., EU AI Act high-risk,
 NIST AI RMF; CMMC alignment is roadmap). This recipe builds and tests one.
 
-> **Honest scope.** There is no standalone `sentra` Space or repo (retired codename). The live
+> **Honest scope.** The a11oy Sentinel has no standalone Space or repo. The live
 > policy/drift inspector is exposed inside `a11oy` via `/api/a11oy/v1/mcp/call` (tool `a11oy_gate`).
 > Λ axis scores come from the live `killinchu` gate. An overlay is *your* engineering policy on
 > top of these signals — never a change to the locked kernel.
@@ -34,7 +34,7 @@ No kernel write access required (and none is possible — that is the design).
 ```python
 import requests
 
-# a11oy Sentinel (codename sentra retired) ships inside a11oy.
+# a11oy Sentinel ships inside a11oy.
 A11OY = "https://szlholdings-a11oy.hf.space/api/a11oy"
 
 # A customer regime = a set of axis floors + required gates, applied as an overlay.
@@ -122,7 +122,7 @@ to put a tail bound on the regime's empirical risk.
 - **[09 — PAC-Bayes confidence margin](09-pac-bayes-confidence-margin.md)** — bound the regime's risk.
 - **[12 — Doctrine ledger query](12-doctrine-ledger-query.md)** — read the locked priors.
 - **[01 — Verify a receipt end-to-end](01-verify-a-receipt-end-to-end.md)**
-- Live: [a11oy gate](https://szlholdings-a11oy.hf.space) (hosts the a11oy Sentinel; codename *sentra* retired) · [killinchu Λ axes](https://szlholdings-killinchu.hf.space/api/killinchu/v1/lambda)
+- Live: [a11oy gate](https://szlholdings-a11oy.hf.space) (hosts the a11oy Sentinel) · [killinchu Λ axes](https://szlholdings-killinchu.hf.space/api/killinchu/v1/lambda)
 
 ## Cite this recipe
 
