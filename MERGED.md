@@ -22,7 +22,7 @@ The table below tracks the true current state of each planned move.
 |-----------------------|-------------|-----------------------------------------|-------------------|
 | `docs/developers/` | [szl-holdings/developers](https://github.com/szl-holdings/developers) | **Migrated** — 8 pages (quickstart, api_reference, mcp_integration, graphql, substrate_packages, sdk_drop_in, verify, willay_api) + `index.md` + 5 runnable `EXAMPLES/` | **Active**, now **deprecated** (banner → this site); NOT archived |
 | `docs/cookbook/recipes/` + `docs/cookbook/skills/` | [szl-holdings/szl-cookbook](https://github.com/szl-holdings/szl-cookbook) | **Migrated** — 25 recipe pages + `index.md`, and 9 claude-code skill pages | **Active**, now **deprecated** (banner → this site); NOT archived |
-| `docs/trust/` | [szl-holdings/szl-trust](https://github.com/szl-holdings/szl-trust) | **Migrated** — `index.md`, `trust-deep.md`, `verify.sh`, and the full `runs/E4-codex-kernel-2026-04-29/` artifact set | **Active**, now **deprecated** (banner → this site); NOT archived |
+| `docs/trust/` | [szl-holdings/szl-trust](https://github.com/szl-holdings/szl-trust) | **Migrated** — `index.md` (transparency overview) + `trust-deep.md` (deep dive). The raw `runs/E4-codex-kernel-2026-04-29/` artifact set and `verify.sh` are **intentionally not re-hosted** — they stay the single-source CC-BY-4.0 audit registry in the source repo (doctrine Invariant 9); `docs/trust/index.md` links there to clone + run `verify.sh` | **Active**, now **deprecated** (banner → this site); NOT archived |
 | `investor/` | [szl-holdings/investor-public-summary] | **Planned — stub only** | State **unverified** — repo not resolvable via API on 2026-07-06; do not claim "archived" until confirmed |
 
 ## What was migrated in Wave D
@@ -35,10 +35,14 @@ The table below tracks the true current state of each planned move.
    recipe library (23 numbered recipes + `anatomy-build-report` + `chakra-unification`) plus the
    nine claude-code `SKILL.md` patterns. A generated `recipes/index.md` lists them; the existing
    cookbook overview links to it.
-3. **szl-trust** → `docs/trust/` — the transparency-layer overview, the `TRUST_DEEP.md` deep
-   dive, `verify.sh`, and the E4 Codex Kernel run artifacts (`run_manifest.json`,
-   `proof_ledger.jsonl`, `trace.jsonl`, `deployment_contract.json`, etc.). Wired into the Trust
-   nav + sidebar.
+3. **szl-trust** → `docs/trust/` — the transparency-layer overview (`index.md`) and the
+   `TRUST_DEEP.md` deep dive, wired into the Trust nav + sidebar. The raw E4 Codex Kernel run
+   artifacts (`run_manifest.json`, `proof_ledger.jsonl`, `trace.jsonl`,
+   `deployment_contract.json`, etc.) and `verify.sh` are **deliberately left in the source repo**
+   as the single audit registry of record: doctrine Invariant 9 requires every committed
+   `*_receipt.json` to carry `doctrine:v11` + Λ = Conjecture 1, and the CC-BY-4.0 registry
+   should have exactly one source of truth. `docs/trust/index.md` points readers to
+   `szl-holdings/szl-trust` to clone the run and execute `verify.sh`.
 
 The site was rebuilt with `vitepress build docs` after migration — **build passes**.
 
