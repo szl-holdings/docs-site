@@ -10,6 +10,11 @@ description = "SZL known false-positives"
 # cosign / sigstore PUBLIC keys are safe to commit (public verification material).
 regexes = [
   '''-----BEGIN PUBLIC KEY-----[\s\S]*?-----END PUBLIC KEY-----''',
+  # Public org cosign key FINGERPRINT (not a secret) referenced in developer docs,
+  # e.g. `szlholdings-cosign-d3028f8a`. It is public verification material and the
+  # matching private key is never committed. Added 2026-07-06 during the developers
+  # docs migration (generic-api-key heuristic false positive on the fingerprint).
+  '''szlholdings-cosign-[0-9a-f]{6,}''',
 ]
 paths = [
   '''cosign\.pub''',

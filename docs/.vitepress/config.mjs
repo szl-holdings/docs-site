@@ -81,17 +81,21 @@ export default withMermaid(defineConfig({
       {
         text: 'Build',
         items: [
+          { text: 'Developer Hub', link: '/developers/' },
           { text: 'SDKs', link: '/sdks/' },
           { text: 'API Reference', link: '/api/' },
           { text: 'UDS — Unified Demo Surface (Coming Soon · Jun 16)', link: '/uds/' },
           { text: 'UDS — Deploy & Hand-off', link: '/uds' },
           { text: 'Cookbook', link: '/cookbook/' },
+          { text: 'Cookbook — Recipes', link: '/cookbook/recipes/' },
           { text: 'Use Cases', link: '/use-cases/' }
         ]
       },
       {
         text: 'Trust',
         items: [
+          { text: 'Trust — Transparency Layer', link: '/trust/' },
+          { text: 'Trust — Deep Dive', link: '/trust/trust-deep' },
           { text: 'Evidence', link: '/evidence/' },
           { text: 'Proof — Lean · Lake · DOIs', link: '/proof' },
           { text: 'Thesis Lineage — v1 → v22', link: '/lineage' },
@@ -181,7 +185,33 @@ export default withMermaid(defineConfig({
           text: 'Cookbook',
           items: [
             { text: 'Overview', link: '/cookbook/' },
-            { text: 'anatomy-evolved-v1', link: '/cookbook/anatomy-evolved-v1' }
+            { text: 'anatomy-evolved-v1', link: '/cookbook/anatomy-evolved-v1' },
+            { text: 'Recipes (full library)', link: '/cookbook/recipes/' }
+          ]
+        }
+      ],
+      '/developers/': [
+        {
+          text: 'Developer Hub',
+          items: [
+            { text: 'Overview', link: '/developers/' },
+            { text: 'Quickstart', link: '/developers/quickstart' },
+            { text: 'API Reference', link: '/developers/api_reference' },
+            { text: 'MCP Integration', link: '/developers/mcp_integration' },
+            { text: 'GraphQL', link: '/developers/graphql' },
+            { text: 'Substrate Packages', link: '/developers/substrate_packages' },
+            { text: 'SDK Drop-in', link: '/developers/sdk_drop_in' },
+            { text: 'Verify a receipt', link: '/developers/verify' },
+            { text: 'Willay API', link: '/developers/willay_api' }
+          ]
+        }
+      ],
+      '/trust/': [
+        {
+          text: 'Trust',
+          items: [
+            { text: 'Transparency Layer', link: '/trust/' },
+            { text: 'Trust — Deep Dive', link: '/trust/trust-deep' }
           ]
         }
       ],
