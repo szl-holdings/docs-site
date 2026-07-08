@@ -7,7 +7,7 @@
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg?style=flat-square)](LICENSE) [![Build](https://github.com/szl-holdings/docs-site/actions/workflows/deploy-pages.yml/badge.svg?branch=main)](https://github.com/szl-holdings/docs-site/actions/workflows/deploy-pages.yml) [![Doctrine v11](https://img.shields.io/badge/Doctrine-v11_LOCKED-3b82f6?style=flat-square)](https://github.com/szl-holdings/.github/tree/main/doctrine) [![SLSA](https://img.shields.io/badge/SLSA-Build_L1_honest_%C2%B7_L2_roadmap-22c55e?style=flat-square)](https://slsa.dev/spec/v1.0/levels)
 
-[Docs](https://szl-holdings.github.io/docs-site) · [Quickstart](https://szl-holdings.github.io/docs-site/quickstart) · [Live demo](https://szl-holdings.github.io/docs-site) · [SZL Holdings](https://a-11-oy.com)
+[Docs](https://szl-holdings.github.io/docs-site) · [Quickstart](https://szl-holdings.github.io/docs-site/quickstart) · [Live demo](https://szl-holdings.github.io/docs-site) · [Verify a receipt](https://a-11-oy.com/verify) · [SZL Holdings](https://a-11-oy.com)
 
 </div>
 
@@ -28,7 +28,7 @@ It is where investors, design partners, and engineers go to understand what SZL 
 The frontier tier rendered as one live 3D holographic lattice — 70+ governed surfaces (exact live
 count self-verifiable at `/api/a11oy/v1/frontier/surfaces`), each lit by a live a11oy endpoint. Vendored WebGL2 with optional WebGPU; 0 runtime CDN; mobile-friendly.
 
-**[Open the Holographic Estate →](https://szlholdings-a11oy.hf.space/holographic)**
+**[Open the Holographic Estate →](https://a-11-oy.com/holographic)**
 
 ## ⚡ Quick start (30 seconds)
 
