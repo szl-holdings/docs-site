@@ -19,9 +19,9 @@ It is where investors, design partners, and engineers go to understand what SZL 
 
 **[Open the live demo →](https://szl-holdings.github.io/docs-site)**
 
-[![demo screenshot](https://raw.githubusercontent.com/szl-holdings/szl-brand/main/kit/logos/png/kanchay-512.png)](https://szl-holdings.github.io/docs-site)
+[![SZL Holdings kanchay mark](https://raw.githubusercontent.com/szl-holdings/szl-brand/main/kit/logos/png/kanchay-512.png)](https://szl-holdings.github.io/docs-site)
 
-<sub>_Screenshot: SZL Holdings kanchay mark — replace with a live capture of the running surface._</sub>
+<sub>_The SZL Holdings kanchay brand mark — click through to the live docs site above._</sub>
 
 ## ◇ Featured: the Holographic Estate
 
