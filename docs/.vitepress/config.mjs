@@ -282,4 +282,3 @@ export default withMermaid(defineConfig({
     theme: 'neutral'
   }
 }))
-
