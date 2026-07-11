@@ -158,4 +158,3 @@ for (const file of files) {
 
 const trustFilesPublished = publishTrustEvidence()
 console.log(`fix-relative-paths: rewrote ${changed} HTML file(s) of ${files.length} total; ${cssChanged} CSS file(s) for base-absolute asset URLs; published ${trustFilesPublished} raw trust evidence file(s).`)
-
