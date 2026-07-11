@@ -191,4 +191,3 @@ echo "  Doctrine v11 · 749/14/163 · c7c0ba17 · Λ = Conjecture 1"
 echo "  Trust ceiling = 0.97 — never 1.0 by doctrine"
 echo "  No SZL tooling required for this verification."
 echo "================================================================"
-
