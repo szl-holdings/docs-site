@@ -1,5 +1,12 @@
 # szl-trust
 
+> **Canonical successor:** [`docs/trust/`](../docs/trust/) contains the published
+> documentation, the canonicalized [`verify.sh`](../docs/trust/verify.sh), and the
+> byte-identical [E4 artifact set](../docs/trust/runs/E4-codex-kernel-2026-04-29/).
+> See [migration provenance](../docs/trust/MIGRATION_PROVENANCE.md) for pinned source
+> identity and per-file SHA-256 values. This compatibility README is not a second
+> evidence authority.
+
 <!-- series-a-badges (Doctrine v11) -->
 [![Dependabot](https://img.shields.io/badge/Dependabot-enabled-025E8C?style=flat-square&logo=dependabot&logoColor=white)](https://github.com/szl-holdings/szl-trust/security/dependabot)  
 [![SLSA](https://img.shields.io/badge/SLSA-L1_honest-eab308?style=flat-square)](https://slsa.dev/spec/v1.0/levels)
@@ -7,7 +14,7 @@
 
 **Trust runtime with hash-chained proof ledgers from real production runs.**
 
-[![Doctrine v11](https://img.shields.io/badge/Doctrine-v11-3b82f6?style=flat-square)](https://github.com/szl-holdings/.github/tree/main/doctrine) [![License: CC-BY-4.0](https://img.shields.io/badge/license-CC--BY--4.0-C8B26A?style=flat-square)](./LICENSE)
+[![Doctrine v11](https://img.shields.io/badge/Doctrine-v11-3b82f6?style=flat-square)](https://github.com/szl-holdings/.github/tree/main/doctrine) [![License: CC-BY-4.0](https://img.shields.io/badge/license-CC--BY--4.0-C8B26A?style=flat-square)](https://github.com/szl-holdings/szl-trust/blob/1f021cc6204d3eea272e246a8d81405511e924a1/LICENSE)
 
 [![DOI 10.5281/zenodo.20434276 (v18.0)](https://img.shields.io/badge/DOI-zenodo.20434276_v18.0-805AD5?style=flat-square&logo=doi)](https://doi.org/10.5281/zenodo.20434276)
 
@@ -83,7 +90,7 @@ cat runs/E4-codex-kernel-2026-04-29/trace.jsonl | jq '[.decision_receipt.mocked]
 
 ## Citation
 
-See [CITATION.cff](./CITATION.cff) for machine-readable metadata. Quick reference:
+See [CITATION.cff](https://github.com/szl-holdings/szl-trust/blob/1f021cc6204d3eea272e246a8d81405511e924a1/CITATION.cff) for machine-readable metadata. Quick reference:
 
 ```
 S. P. Lutar Jr., "szl-trust — Trust runtime with hash-chained proof ledgers from real production runs,"
@@ -103,4 +110,5 @@ Doctrine v11 honest scoping:
 
 ## License · Trust · Security
 
-[CC-BY-4.0](./LICENSE). Artifacts may be used and redistributed with attribution to SZL Holdings. No credentials or sensitive data are included. Security disclosures: [security@szlholdings.com](mailto:security@szlholdings.com) — see [SECURITY.md](./SECURITY.md).
+[CC-BY-4.0](https://github.com/szl-holdings/szl-trust/blob/1f021cc6204d3eea272e246a8d81405511e924a1/LICENSE). Artifacts may be used and redistributed with attribution to SZL Holdings. No credentials or sensitive data are included. Security disclosures: [security@szlholdings.com](mailto:security@szlholdings.com) — see [SECURITY.md](https://github.com/szl-holdings/szl-trust/blob/1f021cc6204d3eea272e246a8d81405511e924a1/SECURITY.md).
+
