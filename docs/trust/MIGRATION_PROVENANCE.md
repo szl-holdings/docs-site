@@ -1,6 +1,6 @@
 # szl-trust migration provenance
 
-Status: **candidate patch; not yet published to GitHub**
+Status: **candidate GitHub branch; not yet merged or publicly deployed**
 
 This receipt binds the canonical docs-site copy to
 `szl-holdings/szl-trust@1f021cc6204d3eea272e246a8d81405511e924a1`.
@@ -39,9 +39,8 @@ be recorded separately from the immutable artifact-integrity result.
 ## Lifecycle boundary
 
 - The predecessor is `deprecated`, not `archived`.
-- No GitHub mutation or public deployment is asserted by this file.
+- No default-branch merge or public deployment is asserted by this file.
 - Archive only after this patch is merged, the canonical raw links return HTTP 200,
   inbound links are repointed, and rollback links have been smoke-tested.
 - The original repository remains the provenance source pinned above; the docs site is
   the canonical discoverability and verification surface.
-
