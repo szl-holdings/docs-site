@@ -96,6 +96,7 @@ export default withMermaid(defineConfig({
         items: [
           { text: 'Trust — Transparency Layer', link: '/trust/' },
           { text: 'Trust — Deep Dive', link: '/trust/trust-deep' },
+          { text: 'Trust — Migration Provenance', link: '/trust/MIGRATION_PROVENANCE' },
           { text: 'Evidence', link: '/evidence/' },
           { text: 'Proof — Lean · Lake · DOIs', link: '/proof' },
           { text: 'Thesis Lineage — v1 → v22', link: '/lineage' },
@@ -211,7 +212,8 @@ export default withMermaid(defineConfig({
           text: 'Trust',
           items: [
             { text: 'Transparency Layer', link: '/trust/' },
-            { text: 'Trust — Deep Dive', link: '/trust/trust-deep' }
+            { text: 'Trust — Deep Dive', link: '/trust/trust-deep' },
+            { text: 'Migration Provenance', link: '/trust/MIGRATION_PROVENANCE' }
           ]
         }
       ],
@@ -280,3 +282,4 @@ export default withMermaid(defineConfig({
     theme: 'neutral'
   }
 }))
+
