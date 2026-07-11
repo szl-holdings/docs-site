@@ -111,4 +111,3 @@ Doctrine v11 honest scoping:
 ## License · Trust · Security
 
 [CC-BY-4.0](https://github.com/szl-holdings/szl-trust/blob/1f021cc6204d3eea272e246a8d81405511e924a1/LICENSE). Artifacts may be used and redistributed with attribution to SZL Holdings. No credentials or sensitive data are included. Security disclosures: [security@szlholdings.com](mailto:security@szlholdings.com) — see [SECURITY.md](https://github.com/szl-holdings/szl-trust/blob/1f021cc6204d3eea272e246a8d81405511e924a1/SECURITY.md).
-
