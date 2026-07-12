@@ -32,26 +32,31 @@ See **[Trust architecture (deep dive)](/trust/trust-deep)** for the full inclusi
 
 ## Verify it yourself
 
-Receipts are plain JSON, verifiable without any SZL tooling. The **raw run artifacts and the
-`verify.sh` script remain the CC-BY-4.0 registry of record** in the source repository
-[`szl-holdings/szl-trust`](https://github.com/szl-holdings/szl-trust) under
-[`runs/E4-codex-kernel-2026-04-29/`](https://github.com/szl-holdings/szl-trust/tree/main/runs/E4-codex-kernel-2026-04-29)
-— they are intentionally not re-hosted here so the audit registry has a single source of truth:
+Receipts are plain JSON, verifiable without proprietary SZL tooling. The canonical
+docs-site copy now contains the one-shot [`verify.sh`](https://github.com/szl-holdings/docs-site/blob/main/docs/trust/verify.sh)
+and the byte-identical [E4 run artifact set](https://github.com/szl-holdings/docs-site/tree/main/docs/trust/runs/E4-codex-kernel-2026-04-29).
+The immutable source commit, per-file SHA-256 values, and migration boundary are recorded in
+[Migration provenance](https://github.com/szl-holdings/docs-site/blob/main/docs/trust/MIGRATION_PROVENANCE.md).
 
 ```bash
-git clone https://github.com/szl-holdings/szl-trust && cd szl-trust
+git clone https://github.com/szl-holdings/docs-site && cd docs-site
 
-# Inspect the E4 Codex Kernel run
-cat runs/E4-codex-kernel-2026-04-29/run_manifest.json | jq '.deliverables'
-cat runs/E4-codex-kernel-2026-04-29/proof_ledger.jsonl | head -3 | jq '.'
+# Inspect the canonical E4 Codex Kernel copy
+jq '.deliverables' docs/trust/runs/E4-codex-kernel-2026-04-29/run_manifest.json
+head -3 docs/trust/runs/E4-codex-kernel-2026-04-29/proof_ledger.jsonl | jq '.'
 
-# Verify mocked:false on all receipts
-cat runs/E4-codex-kernel-2026-04-29/trace.jsonl | jq '[.decision_receipt.mocked] | unique'
+# Verify mocked:false on every trace receipt
+jq -s '[.[].decision_receipt.mocked] | unique' \
+  docs/trust/runs/E4-codex-kernel-2026-04-29/trace.jsonl
 # → [false]
 
-# Or run the one-shot verifier (5 checks, < 30s, no SZL tooling)
-./verify.sh
+# Run the one-shot verifier; it prefers the colocated canonical receipt
+bash docs/trust/verify.sh
 ```
+
+The predecessor repository remains readable for provenance and rollback. Its lifecycle is
+`deprecated`, not `archived`, until the owner-authorized GitHub mutation and post-archive
+smoke tests are complete.
 
 ## Scope (honest)
 

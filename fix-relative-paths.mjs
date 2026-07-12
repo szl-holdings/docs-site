@@ -29,10 +29,48 @@
 // Idempotent and deterministic. Runs automatically after `vitepress build`
 // (wired into the docs:build script).
 
-import { readFileSync, writeFileSync, readdirSync, statSync } from 'node:fs'
-import { join, relative, sep } from 'node:path'
+import {
+  copyFileSync,
+  existsSync,
+  mkdirSync,
+  readFileSync,
+  readdirSync,
+  statSync,
+  writeFileSync
+} from 'node:fs'
+import { dirname, join, relative, sep } from 'node:path'
+import { fileURLToPath } from 'node:url'
 
-const DIST = new URL('./docs/.vitepress/dist/', import.meta.url).pathname
+const ROOT = dirname(fileURLToPath(import.meta.url))
+const DIST = join(ROOT, 'docs', '.vitepress', 'dist')
+const TRUST_SOURCE = join(ROOT, 'docs', 'trust')
+const TRUST_RAW_FILES = [
+  'verify.sh',
+  'runs/E4-codex-kernel-2026-04-29/decision_receipt.json',
+  'runs/E4-codex-kernel-2026-04-29/deployment_contract.json',
+  'runs/E4-codex-kernel-2026-04-29/final_state.json',
+  'runs/E4-codex-kernel-2026-04-29/final_table_preview.json',
+  'runs/E4-codex-kernel-2026-04-29/proof_ledger.jsonl',
+  'runs/E4-codex-kernel-2026-04-29/run_identity.json',
+  'runs/E4-codex-kernel-2026-04-29/run_manifest.json',
+  'runs/E4-codex-kernel-2026-04-29/run_summary.json',
+  'runs/E4-codex-kernel-2026-04-29/secrets_status.json',
+  'runs/E4-codex-kernel-2026-04-29/trace.jsonl',
+  'runs/E4-codex-kernel-2026-04-29/version_lineage.json'
+]
+
+function publishTrustEvidence() {
+  for (const rel of TRUST_RAW_FILES) {
+    const source = join(TRUST_SOURCE, rel)
+    if (!existsSync(source)) {
+      throw new Error(`missing canonical trust asset: ${rel}`)
+    }
+    const target = join(DIST, 'trust', rel)
+    mkdirSync(dirname(target), { recursive: true })
+    copyFileSync(source, target)
+  }
+  return TRUST_RAW_FILES.length
+}
 
 function walk(dir, out = []) {
   for (const name of readdirSync(dir)) {
@@ -118,4 +156,5 @@ for (const file of files) {
   }
 }
 
-console.log(`fix-relative-paths: rewrote ${changed} HTML file(s) of ${files.length} total; ${cssChanged} CSS file(s) for base-absolute asset URLs.`)
+const trustFilesPublished = publishTrustEvidence()
+console.log(`fix-relative-paths: rewrote ${changed} HTML file(s) of ${files.length} total; ${cssChanged} CSS file(s) for base-absolute asset URLs; published ${trustFilesPublished} raw trust evidence file(s).`)
