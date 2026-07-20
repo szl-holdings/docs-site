@@ -35,7 +35,7 @@ jobs:
           exit-code: '0'  # Don't fail on scan (gate in grype job)
 
       - name: Upload Trivy SARIF to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@99df26d4f13ea111d4ec1a7dddef6063f76b97e9 # v4
+        uses: github/codeql-action/upload-sarif@7188fc363630916deb702c7fdcf4e481b751f97a # v4
         with:
           sarif_file: trivy-results.sarif
 
@@ -59,7 +59,7 @@ jobs:
           output-format: sarif
 
       - name: Upload Grype SARIF
-        uses: github/codeql-action/upload-sarif@99df26d4f13ea111d4ec1a7dddef6063f76b97e9 # v4
+        uses: github/codeql-action/upload-sarif@7188fc363630916deb702c7fdcf4e481b751f97a # v4
         # anchore/scan-action only writes results.sarif when vulnerabilities are found;
         # when 0 HIGH/CRITICAL matches exist the scan passes cleanly and no file is created.
         # Guard the upload so a clean scan does not fail the workflow.
