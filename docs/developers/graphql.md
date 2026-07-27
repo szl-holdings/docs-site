@@ -1,34 +1,35 @@
 <!-- SPDX-License-Identifier: Apache-2.0 -->
 # GraphQL — the unified SZL surface
 
-The **SZL GraphQL Gateway** gives you one typed endpoint over the SZL substrate — the two
-shipping flagships (a11oy, killinchu) plus the roadmap roles (Provenance Anchor, Operator,
-Policy). Every query and mutation is signed into
-a Khipu receipt chain — so the GraphQL surface is itself an auditable log.
-Doctrine v11 · Apache-2.0.
+The **SZL GraphQL Gateway** is the roadmap design for one typed endpoint over the
+SZL substrate — the shipping flagships (a11oy and killinchu) plus planned
+Provenance Anchor, Operator, and Policy roles. The design requires every query
+and mutation to enter the same governed receipt chain as the underlying REST
+surfaces. Doctrine v11 · Apache-2.0.
 
-> **⚠️ STATUS: ROADMAP — NOT YET DEPLOYED.** The gateway source exists in
-> [`szl-holdings/graphql-gateway`](https://github.com/szl-holdings/graphql-gateway) (Strawberry +
-> FastAPI), but **no public Space is live yet** — the URLs below currently return `404`. Do **not**
-> demo these as live endpoints. Until the Space ships, query the flagships directly via their REST
-> surfaces in [API_REFERENCE.md](./API_REFERENCE.md). This page documents the *planned* unified schema.
+> **⚠️ STATUS: ROADMAP — NOT YET DEPLOYED OR PUBLISHED AS A STANDALONE REPOSITORY.**
+> There is currently no public `szl-holdings/graphql-gateway` repository and no
+> live GraphQL Space. The URLs and schema below are design targets, not executable
+> production endpoints. Use the live REST and MCP contracts documented in
+> [API_REFERENCE.md](./API_REFERENCE.md) and [MCP_INTEGRATION.md](./MCP_INTEGRATION.md).
 
 - Planned endpoint (not live): `https://szlholdings-graphql-gateway.hf.space/graphql`
 - Planned explorer (not live): `https://szlholdings-graphql-gateway.hf.space/graphiql`
 - Planned SDL (not live): `https://szlholdings-graphql-gateway.hf.space/graphql/sdl`
 
-Built with **Strawberry** (code-first) + **FastAPI**, **Apollo Federation v2**
-ready — each flagship can publish its own subgraph and the gateway composes them.
+The proposed implementation is code-first GraphQL over FastAPI and is intended
+to remain compatible with Apollo Federation v2 if independent flagship
+subgraphs are introduced.
 
 ---
 
-## Schema (excerpt)
+## Schema (design excerpt)
 
 ```graphql
 type Flagship { id: ID!, name: String!, healthz: HealthStatus!, doctrine: Doctrine!, wireD: WireDStatus!, signedReceipts: [Receipt!]! }
 type Receipt { hash: String!, prevHash: String, payload: JSON!, signature: String!, signedAt: DateTime!, organ: String! }
 type Doctrine { version: String!, declarations: Int!, axioms: Int!, sorries: Int!, lockedAt: String! }
-type Formula { id: String!, name: String!, statement: String!, leanProved: Boolean!, sorryTagged: Boolean! }
+type Formula { id: ID!, name: String!, statement: String!, leanProved: Boolean!, sorryTagged: Boolean! }
 type Mesh { flagships: [Flagship!]!, totalReceipts: Int!, chainIntegrity: Boolean!, slos: [SLO!]! }
 
 type Query {
@@ -36,7 +37,7 @@ type Query {
   flagship(id: ID!): Flagship
   receipt(hash: String!): Receipt
   formulas: [Formula!]!
-  formula(id: String!): Formula
+  formula(id: ID!): Formula
   recall(query: String!, organ: String): [RecallResult!]!
 }
 type Mutation {
@@ -45,7 +46,7 @@ type Mutation {
 }
 ```
 
-## Example queries
+## Example design queries
 
 Mesh overview:
 
@@ -60,11 +61,10 @@ query Mesh {
 }
 ```
 
-A single flagship + its signed receipts:
+A single flagship and its receipts:
 
 ```graphql
 query Flagship {
-  # "a11oy" ships live today; the Provenance Anchor role is roadmap
   flagship(id: "a11oy") {
     name
     wireD { enabled keyid }
@@ -73,18 +73,17 @@ query Flagship {
 }
 ```
 
-Sign a payload (returns a Khipu receipt):
+A proposed signing mutation:
 
 ```graphql
 mutation Sign {
-  # organ "a11oy" is live today; the Operator role is roadmap
   sign(payload: { action: "demo", note: "hello mesh" }, organ: "a11oy") {
     hash prevHash signature signedAt organ
   }
 }
 ```
 
-## Apollo Client snippet
+## Client sketch — not runnable until the gateway ships
 
 ```ts
 import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
@@ -104,35 +103,34 @@ const { data } = await client.query({
     }
   `,
 });
-console.log(data.mesh.flagships);
 ```
 
-`curl` will work too once the gateway is deployed (it returns `404` today — roadmap):
+The following command is retained only as a proposed wire-format example. It is
+expected to return `404` until a reviewed gateway implementation is actually
+published.
 
 ```bash
-# ROADMAP — endpoint not live yet (404). Shown for the planned schema.
 curl -s https://szlholdings-graphql-gateway.hf.space/graphql \
   -H 'content-type: application/json' \
   -d '{"query":"{ mesh { totalReceipts chainIntegrity } }"}'
 ```
 
-## MCP vs GraphQL — when to use which
+## MCP vs GraphQL
 
-| | **Hatun-MCP** | **GraphQL Gateway** |
+| | **Hatun-MCP / a11oy MCP REST** | **GraphQL Gateway design** |
 |---|---|---|
-| Best for | LLM agents / tool-calling clients (Claude, Cursor) | apps, dashboards, scripts, typed clients |
-| Protocol | MCP Streamable HTTP + SSE (`2025-03-26`) | GraphQL over HTTP |
-| Shape | governed tools, tool-call semantics | typed schema, query exactly the fields you need |
-| Discovery | `/api/a11oy/v1/mcp/tools` | introspection / `/graphql/sdl` / `/graphiql` |
-| Governance | Yuyay-13 gate + Khipu receipts (DSSE-signed) | Khipu receipt signed on every query/mutation |
-| Federation | n/a | Apollo Federation v2 (per-flagship subgraphs) |
-| Endpoint | `/api/a11oy/v1/mcp/*` (live REST) | `…/graphql` (roadmap) |
-| Live today? | ✅ REST surface live (`/api/a11oy/v1/mcp/tools`) | ❌ not yet deployed (404) |
+| Best for | LLM agents and tool-calling clients | apps, dashboards, scripts, typed clients |
+| Protocol | MCP-compatible governed REST/tool surface | GraphQL over HTTP |
+| Discovery | `/api/a11oy/v1/mcp/tools` | introspection / SDL / explorer |
+| Governance | current receipt and policy controls | must preserve the same controls |
+| Live today? | REST surface is operational | not deployed |
 
-Rule of thumb: **agents → MCP, software → GraphQL.** Today only the MCP REST surface is live;
-the GraphQL gateway is roadmap. Both are designed to write to the same Khipu audit chain.
+Current rule: **agents and software should use the published REST/MCP contracts.**
+GraphQL remains a design document until source, CI, deployment, and immutable
+runtime evidence exist.
 
-See also: [MCP_INTEGRATION.md](./MCP_INTEGRATION.md), [API_REFERENCE.md](./API_REFERENCE.md).
+See also: [MCP_INTEGRATION.md](./MCP_INTEGRATION.md),
+[API_REFERENCE.md](./API_REFERENCE.md).
 
 ---
 
