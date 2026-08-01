@@ -23,15 +23,12 @@ export default withMermaid(defineConfig({
 
   transformHead({ page, title, description }) {
     const canonical = canonicalPage(page)
-    const socialTitle = page === 'index.md'
-      ? `SZL Holdings · ${title}`
-      : `${title} · SZL Holdings`
     return [
       ['link', { rel: 'canonical', href: canonical }],
       ['meta', { property: 'og:url', content: canonical }],
-      ['meta', { property: 'og:title', content: socialTitle }],
+      ['meta', { property: 'og:title', content: title }],
       ['meta', { property: 'og:description', content: description }],
-      ['meta', { name: 'twitter:title', content: socialTitle }],
+      ['meta', { name: 'twitter:title', content: title }],
       ['meta', { name: 'twitter:description', content: description }]
     ]
   },

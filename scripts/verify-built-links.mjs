@@ -39,10 +39,7 @@ for (const file of htmlFiles) {
     const documentTitle = html.match(/<title>([^<]+)<\/title>/)?.[1]
     const openGraphTitle = html.match(/<meta\s+property="og:title"\s+content="([^"]+)">/)?.[1]
     const twitterTitle = html.match(/<meta\s+name="twitter:title"\s+content="([^"]+)">/)?.[1]
-    const expectedSocialTitle = rel === 'index.html'
-      ? 'SZL Holdings · Governed AI that can show its work'
-      : documentTitle
-    if (!documentTitle || openGraphTitle !== expectedSocialTitle || twitterTitle !== expectedSocialTitle) {
+    if (!documentTitle || openGraphTitle !== documentTitle || twitterTitle !== documentTitle) {
       missing.push(`${rel} -> page-specific social title mismatch`)
     }
   }
