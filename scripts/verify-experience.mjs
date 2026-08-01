@@ -15,6 +15,15 @@ const forbiddenSubpathContracts = [
   '.well-known/security.txt',
   'examples/mcp_claude_config.json'
 ]
+const forbiddenSourceContracts = [
+  'developers/EXAMPLES/mcp_claude_config.json'
+]
+const forbiddenMcpClientMarkers = [
+  'mcp-remote',
+  '"mcpServers"',
+  "'method':'initialize'",
+  '"method":"initialize"'
+]
 const brandRepository = 'https://github.com/szl-holdings/szl-brand'
 const brandRevision = '5b43015b66f254ee08330b39adcc1acb4d0c219d'
 const liveBase = 'https://holdings.a-11-oy.com/docs-site/'
@@ -33,6 +42,24 @@ const expectedAssets = new Map([
 function fail(message) {
   console.error(`experience-contract: ${message}`)
   process.exitCode = 1
+}
+
+function collectDocumentationSources(directory, relative = '') {
+  const sources = []
+  for (const entry of readdirSync(directory, { withFileTypes: true })) {
+    const entryRelative = relative ? `${relative}/${entry.name}` : entry.name
+    const entryPath = join(directory, entry.name)
+    if (entry.isDirectory()) {
+      if (entryRelative === '.vitepress/cache' || entryRelative === '.vitepress/dist') continue
+      sources.push(...collectDocumentationSources(entryPath, entryRelative))
+      continue
+    }
+    if (!entry.isFile()) continue
+    if (/\.(?:css|html?|js|json|md|mjs|txt|ya?ml)$/i.test(entry.name)) {
+      sources.push({ path: entryPath, relative: entryRelative })
+    }
+  }
+  return sources
 }
 
 for (const file of [...expectedAssets.keys(), 'manifest.json']) {
@@ -132,7 +159,7 @@ for (const marker of [
 ]) {
   if (!mcpIntegration.includes(marker)) fail(`MCP truth-boundary marker missing: ${marker}`)
 }
-for (const forbidden of ['mcp-remote', '"mcpServers"', "'method':'initialize'", '"method":"initialize"']) {
+for (const forbidden of forbiddenMcpClientMarkers) {
   if (mcpIntegration.includes(forbidden)) fail(`unavailable MCP client configuration is published: ${forbidden}`)
 }
 if (!themeIndex.includes("./kanchay/vitepress.css")) fail('KANCHAY adapter is not wired into VitePress')
@@ -149,6 +176,20 @@ for (const file of requiredPublic) {
 for (const file of forbiddenSubpathContracts) {
   if (existsSync(join(root, 'docs', 'public', file))) {
     fail(`subpath bundle must not claim an origin-wide or unavailable contract: ${file}`)
+  }
+}
+for (const file of forbiddenSourceContracts) {
+  if (existsSync(join(root, 'docs', file))) {
+    fail(`documentation source publishes an unavailable client contract: ${file}`)
+  }
+}
+
+for (const source of collectDocumentationSources(join(root, 'docs'))) {
+  const content = readFileSync(source.path, 'utf8')
+  for (const marker of forbiddenMcpClientMarkers) {
+    if (content.includes(marker)) {
+      fail(`unavailable MCP client configuration marker ${marker} in docs/${source.relative}`)
+    }
   }
 }
 
