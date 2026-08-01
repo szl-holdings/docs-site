@@ -63,6 +63,10 @@ function setTagAttribute(tag, name, value) {
   return tag.replace(/>$/, ` ${name}="${value}">`)
 }
 
+function removeTagAttribute(tag, name) {
+  return tag.replace(new RegExp(`\\s${name}(?:="[^"]*")?(?=\\s|>)`), '')
+}
+
 function fixAccessibleChrome(html) {
   let switches = 0
   let landmarks = 0
@@ -75,6 +79,9 @@ function fixAccessibleChrome(html) {
     )
   })
   if (/<main\b/.test(html)) {
+    html = html.replace(/<div\b[^>]*\bVPContent\b[^>]*>/, (tag) =>
+      removeTagAttribute(removeTagAttribute(tag, 'role'), 'aria-label')
+    )
     html = html.replace(/<main\b[^>]*>/, (tag) => {
       landmarks++
       return setTagAttribute(tag, 'aria-label', 'Primary content')
@@ -88,6 +95,16 @@ function fixAccessibleChrome(html) {
         'Primary content'
       )
     })
+    if (landmarks === 0) {
+      html = html.replace(/<div\b[^>]*\bid="app"[^>]*>/, (tag) => {
+        landmarks++
+        return setTagAttribute(
+          setTagAttribute(tag, 'role', 'main'),
+          'aria-label',
+          'Primary content'
+        )
+      })
+    }
   }
   return { html, landmarks, switches }
 }
