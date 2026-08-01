@@ -15,6 +15,12 @@ const requiredPublic = [
 ]
 const brandRepository = 'https://github.com/szl-holdings/szl-brand'
 const brandRevision = '5b43015b66f254ee08330b39adcc1acb4d0c219d'
+const liveBase = 'https://holdings.a-11-oy.com/docs-site/'
+const retiredPublicLocations = [
+  'docs.szlholdings.com',
+  'szl-holdings.github.io/docs-site',
+  'http://holdings.a-11-oy.com'
+]
 const expectedAssets = new Map([
   ['system.css', 'kit/tokens/szl-design-system.css'],
   ['tokens.json', 'kit/tokens/COLOR_TOKENS.json'],
@@ -99,8 +105,8 @@ const publicTruthFiles = [
 ]
 
 for (const file of publicTruthFiles) {
-  const content = readFileSync(join(root, file), 'utf8')
-  if (/docs\.szlholdings\.com|szl-holdings\.github\.io\/docs-site|http:\/\/holdings\.a-11-oy\.com/i.test(content)) {
+  const content = readFileSync(join(root, file), 'utf8').toLowerCase()
+  if (retiredPublicLocations.some((location) => content.includes(location))) {
     fail(`stale or insecure public documentation URL in ${file}`)
   }
 }
@@ -137,7 +143,14 @@ if (process.argv.includes('--dist')) {
       const builtHome = readFileSync(builtHomePath, 'utf8')
       if (!builtHome.includes('Governed AI that can show its work')) fail('built homepage is stale')
       if (/fonts\.googleapis|fonts\.gstatic/.test(builtHome)) fail('built homepage contains a runtime font CDN')
-      if (!builtHome.includes('https://holdings.a-11-oy.com/docs-site/')) fail('built homepage canonical host is stale')
+      const canonicalHref = builtHome.match(/<link\s+rel="canonical"\s+href="([^"]+)"\s*\/?>/)?.[1]
+      let canonicalUrl
+      try {
+        canonicalUrl = new URL(canonicalHref)
+      } catch {
+        fail('built homepage canonical URL is missing or malformed')
+      }
+      if (canonicalUrl?.href !== liveBase) fail('built homepage canonical URL is stale')
       if (!builtHome.includes('aria-label="Toggle color theme"')) fail('built appearance controls lack accessible names')
       if (!builtHome.includes('role="main"') || !builtHome.includes('aria-label="Primary content"')) {
         fail('built homepage lacks a primary-content landmark')
