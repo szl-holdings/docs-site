@@ -1,10 +1,10 @@
 # UDS — Unified Demo Surface
 
-::: warning Coming Soon — June 16, 2026
-The **Unified Demo Surface (UDS)** launches at **Warhacker, San Diego — June 16, 2026**.
-This page documents the surface that is being wired now; the public, end-to-end demo
-goes live on June 16. Until then, the individual flagship surfaces and the
-[Hatun-MCP](#mcp-governed-tools) server are the live entry points.
+::: warning Roadmap — public launch not witnessed
+The **Unified Demo Surface (UDS)** is not a publicly witnessed end-to-end deployment.
+This page documents the surface being wired. Until a deployment is independently
+verified, use the individual flagship REST surfaces or the authenticated
+[Hatun-MCP](#mcp-governed-tools) runtime with the evidence boundary below.
 :::
 
 UDS is the single, governed demo surface that fans a customer request out across the
@@ -30,17 +30,20 @@ chain.
 
 ## MCP-governed tools
 
-Until UDS opens publicly, the governed entry point is the **Hatun-MCP** server
-(streamable-HTTP, 16 governed tools) at
-`https://szlholdings-hatun-mcp.hf.space/mcp/`. State-changing tools require an API
-key plus a 2-person Yuyay approval. See the [MCP usage notes](/api/) and the
-[flagship pages](/flagships/) for the live, today-available surfaces.
+Until UDS opens publicly, the dedicated **Hatun-MCP** service reports a ready
+Streamable HTTP runtime at `https://szlholdings-hatun-mcp.hf.space/`. Its public
+[server card](https://szlholdings-hatun-mcp.hf.space/.well-known/mcp/server-card.json)
+requires API-key authentication and is the source of truth for the current catalog; no
+tool count is frozen here. This release has not witnessed an authenticated client session.
+See the [MCP integration guide](/developers/mcp_integration) and the
+[flagship pages](/flagships/) for the evidence states of today-available surfaces.
 
 ## Honesty labels
 
-- **UDS public demo is not yet live** — it opens June 16, 2026. The consensus
-  primitive (`/api/killinchu/uds/v1/mission/execute`, `/consensus/verify`) is the
-  surface being wired; this page will flip from *Coming Soon* to *Live* on launch.
+- **UDS public demo is not yet live** — no public launch is claimed without an
+  independently witnessed deployment. The consensus primitive
+  (`/api/killinchu/uds/v1/mission/execute`, `/consensus/verify`) is the surface being
+  wired; this page changes state only after that evidence exists.
 - Per-organ signatures are **real ECDSA-P256-SHA256** over the DSSE PAE — verifiable
   with `cosign verify-blob --key <organ>.pub`.
 - Drone positions used in UDS killinchu demos are **deterministic simulated** (seeded),

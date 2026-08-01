@@ -20,9 +20,7 @@ const forbiddenSourceContracts = [
 ]
 const forbiddenMcpClientMarkers = [
   'mcp-remote',
-  '"mcpServers"',
-  "'method':'initialize'",
-  '"method":"initialize"'
+  '"mcpServers"'
 ]
 const brandRepository = 'https://github.com/szl-holdings/szl-brand'
 const brandRevision = '5b43015b66f254ee08330b39adcc1acb4d0c219d'
@@ -125,6 +123,10 @@ if (existsSync(manifestPath)) {
 const config = readFileSync(join(root, 'docs', '.vitepress', 'config.mjs'), 'utf8')
 const home = readFileSync(join(root, 'docs', 'index.md'), 'utf8')
 const mcpIntegration = readFileSync(join(root, 'docs', 'developers', 'mcp_integration.md'), 'utf8')
+const apiReference = readFileSync(join(root, 'docs', 'developers', 'api_reference.md'), 'utf8')
+const quickstart = readFileSync(join(root, 'docs', 'developers', 'quickstart.md'), 'utf8')
+const statusPage = readFileSync(join(root, 'docs', 'status.md'), 'utf8')
+const udsPage = readFileSync(join(root, 'docs', 'uds', 'index.md'), 'utf8')
 const themeIndex = readFileSync(join(root, 'docs', '.vitepress', 'theme', 'index.js'), 'utf8')
 const customCss = readFileSync(join(root, 'docs', '.vitepress', 'theme', 'custom.css'), 'utf8')
 const publicTruthFiles = [
@@ -154,13 +156,43 @@ for (const marker of ['Investor', 'Developer', 'Evaluator', 'data-state="real">R
 for (const marker of [
   '/api/a11oy/v1/mcp/tools',
   '/api/a11oy/v1/mcp/call',
+  'https://szlholdings-a11oy.hf.space/mcp/',
+  'https://szlholdings-killinchu.hf.space/mcp/',
+  'a11oy and killinchu native MCP — protocol witnessed',
+  'successful JSON-RPC',
+  'Hatun-MCP — runtime ready, authentication required',
+  'RUNTIME READY · AUTH REQUIRED · CLIENT SESSION NOT WITNESSED',
   'No drop-in Claude Desktop or Cursor configuration is published yet',
-  'Do not point an MCP bridge at `/mcp/`'
+  'No generic bridge command is asserted here'
 ]) {
   if (!mcpIntegration.includes(marker)) fail(`MCP truth-boundary marker missing: ${marker}`)
 }
 for (const forbidden of forbiddenMcpClientMarkers) {
   if (mcpIntegration.includes(forbidden)) fail(`unavailable MCP client configuration is published: ${forbidden}`)
+}
+for (const [file, content] of [['docs/status.md', statusPage], ['docs/uds/index.md', udsPage]]) {
+  for (const marker of ['server-card.json', 'API-key authentication', 'authenticated client session']) {
+    if (!content.toLowerCase().includes(marker.toLowerCase())) {
+      fail(`Hatun evidence marker missing from ${file}: ${marker}`)
+    }
+  }
+  for (const staleClaim of ['23 static tools', '16 governed tools', 'Re-deploying']) {
+    if (content.includes(staleClaim)) fail(`stale Hatun claim in ${file}: ${staleClaim}`)
+  }
+}
+for (const [file, content] of [
+  ['docs/developers/api_reference.md', apiReference],
+  ['docs/developers/quickstart.md', quickstart]
+]) {
+  for (const marker of ['same-origin', '/mcp/', 'MCP integration']) {
+    if (!content.includes(marker)) fail(`native MCP evidence marker missing from ${file}: ${marker}`)
+  }
+  for (const staleClaim of ['roadmap, not live', 'returns **HTTP 405**', 'HTML landing page', 'JSON-RPC `/mcp/` transport is roadmap']) {
+    if (content.includes(staleClaim)) fail(`stale native MCP claim in ${file}: ${staleClaim}`)
+  }
+}
+for (const staleUdsClaim of ['Coming Soon — June 16, 2026', 'goes live on June 16', 'it opens June 16, 2026']) {
+  if (udsPage.includes(staleUdsClaim)) fail(`stale UDS launch claim: ${staleUdsClaim}`)
 }
 if (!themeIndex.includes("./kanchay/vitepress.css")) fail('KANCHAY adapter is not wired into VitePress')
 for (const marker of [':root:not(.dark)', '--text: var(--color-gray-900)', '--link: var(--color-yuyay-700)']) {

@@ -12,7 +12,7 @@ Two flagships ship today and expose live `/healthz`:
 | **a11oy** (governed execution fabric) | [szlholdings-a11oy.hf.space](https://szlholdings-a11oy.hf.space) | `GET /healthz` → doctrine v11 · 749/14/163 |
 | **killinchu** (drone-intelligence / counter-UAS) | [szlholdings-killinchu.hf.space](https://szlholdings-killinchu.hf.space) | `GET /api/killinchu/healthz` |
 | Anatomy-3D / Operator-3D (Three.js showcases) | not deployed | screenshots only — see [3D Showcases](/anatomy/3d-showcases); `szlholdings-anatomy-3d` / `szlholdings-operator-3d` return HTTP 401 (no Space) |
-| **Hatun-MCP** (Model Context Protocol) | [szlholdings-hatun-mcp.hf.space](https://szlholdings-hatun-mcp.hf.space/mcp/) | `POST /mcp/` JSON-RPC `initialize` → 23 static tools. **Re-deploying** (see note). |
+| **Hatun-MCP** (Model Context Protocol) | [szlholdings-hatun-mcp.hf.space](https://szlholdings-hatun-mcp.hf.space/) | `GET /readyz` → runtime ready, receipt chain verified, signer configured; API-key authentication required. Authenticated client session not witnessed by this release. |
 
 Both shipping flagship `/healthz` endpoints return Doctrine v11 verbatim:
 `749 declarations / 14 unique axioms / 163 tracked sorries`, locked at `c7c0ba17`.
@@ -36,12 +36,17 @@ real-time source of truth.
 
 ## Known honest-status items
 
-- **Hatun-MCP (`szlholdings-hatun-mcp.hf.space/mcp/`):** the fleet's only spec-compliant
-  Streamable HTTP MCP server (23 static tools). The hosted Space is being re-deployed from
-  [szl-holdings/hatun-mcp](https://github.com/szl-holdings/hatun-mcp) (a Dockerfile fix restores
-  the build); until it returns `200`, run the server locally per its README. The shipping flagship
-  Spaces (a11oy/killinchu) expose tools as **HTTP catalogs** at `/api/<organ>/v1/mcp/tools`,
-  not as an MCP transport.
+- **Hatun-MCP (`szlholdings-hatun-mcp.hf.space`):** the public
+  [server card](https://szlholdings-hatun-mcp.hf.space/.well-known/mcp/server-card.json),
+  [readiness](https://szlholdings-hatun-mcp.hf.space/readyz), and
+  [build information](https://szlholdings-hatun-mcp.hf.space/api/build-info) report an
+  authenticated Streamable HTTP runtime with a ready receipt chain and configured signer.
+  The server card is authoritative for the current catalog; this page does not hard-code a
+  tool count. This release did not perform an authenticated `initialize`/`tools/list`, so it
+  does not claim a witnessed Hatun client session. Separately, the a11oy and killinchu
+  same-origin `/mcp/` endpoints returned successful public `initialize` and `tools/list`
+  responses in the current release. Their live catalogs are authoritative and they are not
+  the authenticated Hatun runtime.
 - **Roadmap surfaces not yet deployed (removed from the live table):** the Provenance Anchor,
   Operator, and Policy components have **no live Space today** (their retired standalone Space
   hostnames return HTTP 404) and are roadmap/frontier roles, not shipping services. The former

@@ -27,10 +27,11 @@ curl -s https://szlholdings-a11oy.hf.space/healthz | python3 -m json.tool
 You should see `"doctrine": "v11"` and `"numbers": {"declarations": 749, "axioms": 14, "sorries": 163}`.
 That is the same number proved in Lean and cited everywhere — honest counters.
 
-## 2. List the MCP tools (live REST surface)
+## 2. List the governed tools (live REST surface)
 
-The live MCP surface today is a simple REST catalog (the JSON-RPC `/mcp/` transport is roadmap —
-see [MCP integration](./mcp_integration.md)):
+The REST catalog is the simplest integration path. A same-origin JSON-RPC `/mcp/`
+transport is also live and protocol-witnessed; see [MCP integration](./mcp_integration.md)
+for the distinct evidence and client-compatibility boundary.
 
 ```bash
 # list the governed tools (live)
@@ -42,8 +43,9 @@ curl -s -X POST https://szlholdings-a11oy.hf.space/api/a11oy/v1/mcp/call \
   -d '{"tool":"lambda_score","args":{}}' | python3 -m json.tool
 ```
 
-You'll get a catalog of **4 governed tools** today. See [MCP integration](./mcp_integration.md)
-for the planned Claude Desktop / Cursor JSON-RPC wiring (roadmap).
+The response is the source of truth for the current catalog. See
+[MCP integration](./mcp_integration.md) for the native transport and the separately
+authenticated Hatun runtime; no generic Claude Desktop or Cursor configuration is claimed.
 
 ## 3. Dispatch a governed command (sign a payload)
 
