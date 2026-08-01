@@ -148,6 +148,7 @@ for (const file of publicTruthFiles) {
 
 if (/fonts\.googleapis|fonts\.gstatic/.test(config)) fail('runtime font CDN is forbidden')
 if (!config.includes("base: '/docs-site/'")) fail('VitePress base is not the canonical Pages path')
+if (/^\s*mpa:\s*true/m.test(config)) fail('VitePress static mpa mode must remain disabled for interactive docs')
 if (/href: '\.\/(?:img|site\.webmanifest)/.test(config)) fail('nested-page head assets are relative')
 for (const marker of ['transformHead({ page, title, description })', 'property: \'og:title\'', 'name: \'twitter:card\'']) {
   if (!config.includes(marker)) fail(`metadata marker missing: ${marker}`)
@@ -265,9 +266,15 @@ if (process.argv.includes('--dist')) {
   if (!existsSync(dist)) {
     fail('built output directory is missing')
   } else {
+    const assetDir = join(dist, 'assets')
+    if (!existsSync(assetDir)) fail('built assets directory is missing')
+    const assetFiles = readdirSync(assetDir)
+      .filter((name) => /\.(?:css|js|mjs)$/.test(name))
+      .map((name) => name.toLowerCase())
     for (const file of ['index.html', ...requiredPublic]) {
       if (!existsSync(join(dist, file))) fail(`built output missing: ${file}`)
     }
+    if (!assetFiles.some((name) => name.endsWith('.js'))) fail('built output missing JS assets')
     for (const file of forbiddenSubpathContracts) {
       if (existsSync(join(dist, file))) fail(`built output contains a forbidden subpath contract: ${file}`)
     }
@@ -289,6 +296,8 @@ if (process.argv.includes('--dist')) {
       if (!builtHome.includes('role="main"') || !builtHome.includes('aria-label="Primary content"')) {
         fail('built homepage lacks a primary-content landmark')
       }
+      const hasModuleBootstrap = /<script[^>]*type=["']module["'][^>]*src=["'][^"']+\.js["'][^>]*>/i.test(builtHome)
+      if (!hasModuleBootstrap) fail('built homepage misses module bootstrap script')
     }
   }
 }
