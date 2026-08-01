@@ -45,7 +45,7 @@ Both shipping flagships return Doctrine v11 verbatim from `/healthz`: `749 decla
 ## Examples at a glance
 
 - [`python_quickstart.py`](https://github.com/szl-holdings/docs-site/blob/main/docs/developers/EXAMPLES/python_quickstart.py) — sign a payload, verify, build a Khipu chain
-- MCP JSON-RPC config — intentionally withheld until the live transport accepts JSON-RPC; use the REST MCP surface documented in the API reference
+- Client-specific MCP configuration — intentionally withheld until the target client completes a witnessed session; the native transports are protocol-witnessed and the REST surface remains the simplest integration path
 - [`policy_filter_example.py`](https://github.com/szl-holdings/docs-site/blob/main/docs/developers/EXAMPLES/policy_filter_example.py) — submit a payload, get verdict + receipt
 - [`operator_command_example.py`](https://github.com/szl-holdings/docs-site/blob/main/docs/developers/EXAMPLES/operator_command_example.py) — dispatch a personal-aide command
 - [`willay_quickstart.py`](https://github.com/szl-holdings/docs-site/blob/main/docs/developers/EXAMPLES/willay_quickstart.py) — a Willay gated turn
@@ -61,7 +61,7 @@ You can verify any receipt against the organ's public key (`/khipu/pubkey`). Dep
 ## Related repos
 
 - **[szl-holdings/platform](https://github.com/szl-holdings/platform)** — substrate monorepo (`packages/`)
-- **[szl-holdings/hatun-mcp](https://github.com/szl-holdings/hatun-mcp)** — the doctrine-aware MCP server (the fleet's only spec-compliant Streamable HTTP MCP transport)
+- **[szl-holdings/hatun-mcp](https://github.com/szl-holdings/hatun-mcp)** — the doctrine-aware, authenticated Streamable HTTP MCP gateway
 - **[szl-holdings/lutar-lean](https://github.com/szl-holdings/lutar-lean)** — Lean 4 / Mathlib formalization (749/14/163)
 - **DOI** [10.5281/zenodo.20434308](https://doi.org/10.5281/zenodo.20434308) · **ORCID** [0009-0001-0110-4173](https://orcid.org/0009-0001-0110-4173)
 

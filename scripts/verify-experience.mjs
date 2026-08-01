@@ -125,6 +125,8 @@ const home = readFileSync(join(root, 'docs', 'index.md'), 'utf8')
 const mcpIntegration = readFileSync(join(root, 'docs', 'developers', 'mcp_integration.md'), 'utf8')
 const apiReference = readFileSync(join(root, 'docs', 'developers', 'api_reference.md'), 'utf8')
 const quickstart = readFileSync(join(root, 'docs', 'developers', 'quickstart.md'), 'utf8')
+const developerHub = readFileSync(join(root, 'docs', 'developers', 'index.md'), 'utf8')
+const compliancePage = readFileSync(join(root, 'docs', 'compliance.md'), 'utf8')
 const statusPage = readFileSync(join(root, 'docs', 'status.md'), 'utf8')
 const udsPage = readFileSync(join(root, 'docs', 'uds', 'index.md'), 'utf8')
 const themeIndex = readFileSync(join(root, 'docs', '.vitepress', 'theme', 'index.js'), 'utf8')
@@ -191,12 +193,45 @@ for (const [file, content] of [
     if (content.includes(staleClaim)) fail(`stale native MCP claim in ${file}: ${staleClaim}`)
   }
 }
+if (!developerHub.includes('target client completes a witnessed session')) {
+  fail('developer hub does not bind client configuration to a witnessed session')
+}
+for (const staleClaim of ['until the live transport accepts JSON-RPC', "fleet's only spec-compliant"]) {
+  if (developerHub.includes(staleClaim)) fail(`stale MCP claim in docs/developers/index.md: ${staleClaim}`)
+}
 for (const staleUdsClaim of ['Coming Soon — June 16, 2026', 'goes live on June 16', 'it opens June 16, 2026']) {
   if (udsPage.includes(staleUdsClaim)) fail(`stale UDS launch claim: ${staleUdsClaim}`)
 }
 if (!themeIndex.includes("./kanchay/vitepress.css")) fail('KANCHAY adapter is not wired into VitePress')
 for (const marker of [':root:not(.dark)', '--text: var(--color-gray-900)', '--link: var(--color-yuyay-700)']) {
   if (!customCss.includes(marker)) fail(`light appearance token binding missing: ${marker}`)
+}
+for (const marker of [
+  '.dot {',
+  'inline-size: .65rem',
+  'block-size: .65rem',
+  'border-radius: var(--radius-full)',
+  'background: currentColor',
+  '.dot.green',
+  '.dot.amber',
+  '.dot.gray'
+]) {
+  if (!customCss.includes(marker)) fail(`status-indicator style missing: ${marker}`)
+}
+const statusIndicators = [...compliancePage.matchAll(/<span\b[^>]*>/g)]
+  .map((match) => match[0])
+  .filter((tag) => /\bclass=(['"])dot (?:green|amber|gray)\1/.test(tag))
+for (const state of ['green', 'amber', 'gray']) {
+  const stateIndicators = statusIndicators.filter((tag) => {
+    const classValue = tag.match(/\bclass=(['"])([^'"]*)\1/)?.[2] ?? ''
+    return classValue.split(/\s+/).includes('dot') && classValue.split(/\s+/).includes(state)
+  })
+  if (stateIndicators.length === 0) {
+    fail(`accessible compliance status indicator missing: ${state}`)
+  }
+  if (stateIndicators.some((tag) => !/\baria-hidden=(['"])true\1/.test(tag))) {
+    fail(`compliance status indicator is exposed to assistive technology: ${state}`)
+  }
 }
 for (const marker of ['button.VPSwitchAppearance', "setAttribute('aria-label'", "setAttribute('role', 'main'"]) {
   if (!themeIndex.includes(marker)) fail(`accessible chrome marker missing: ${marker}`)

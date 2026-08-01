@@ -9,12 +9,12 @@ posture; where a repository badge disagrees, this page is correct.
 
 | Control | Status | Note |
 |---------|--------|------|
-| **SLSA level** | <span class="dot green"></span> **L1 (honest)** | Provenance is generated. **NOT** L3-verified. "SLSA L3" is a banned claim. |
-| **cosign signing** | <span class="dot amber"></span> **PENDING** | Sigstore/cosign CI not yet wired. Receipts carry a real SHA-256 Merkle digest; the DSSE envelope is **`PLACEHOLDER`** (unsigned) until signing lands. |
-| **SBOM** | <span class="dot green"></span> generated | SBOM workflow runs per repo. |
-| **CodeQL** | <span class="dot green"></span> on every push | Security scanning to `main`. |
-| **DCO** | <span class="dot green"></span> enforced | Developer Certificate of Origin on commits. |
-| **OpenSSF Scorecard** | <span class="dot green"></span> 7.0 (a11oy, 2026-05-28) | [report](https://securityscorecards.dev/viewer/?uri=github.com/szl-holdings/a11oy) |
+| **SLSA level** | <span class="dot green" aria-hidden="true"></span> **L1 (honest)** | Provenance is generated. **NOT** L3-verified. "SLSA L3" is a banned claim. |
+| **cosign signing** | <span class="dot amber" aria-hidden="true"></span> **PENDING** | Sigstore/cosign CI not yet wired. Receipts carry a real SHA-256 Merkle digest; the DSSE envelope is **`PLACEHOLDER`** (unsigned) until signing lands. |
+| **SBOM** | <span class="dot green" aria-hidden="true"></span> generated | SBOM workflow runs per repo. |
+| **CodeQL** | <span class="dot green" aria-hidden="true"></span> on every push | Security scanning to `main`. |
+| **DCO** | <span class="dot green" aria-hidden="true"></span> enforced | Developer Certificate of Origin on commits. |
+| **OpenSSF Scorecard** | <span class="dot green" aria-hidden="true"></span> 7.0 (a11oy, 2026-05-28) | [report](https://securityscorecards.dev/viewer/?uri=github.com/szl-holdings/a11oy) |
 
 ::: warning The single most important honesty disclosure
 **SLSA is L1, not L3. cosign signing is PENDING.** Every Khipu receipt's `signature` field reads
@@ -37,10 +37,10 @@ roadmap; this site states the path, not a badge.
 
 | Framework | Status | Architectural readiness |
 |-----------|--------|-------------------------|
-| **FedRAMP** | <span class="dot gray"></span> roadmap target | Air-gap + audit-trail design aligns to control families |
-| **SOC 2** | <span class="dot gray"></span> roadmap target | Receipt ledger provides the evidence trail |
-| **IL5** | <span class="dot gray"></span> roadmap target | Sovereign / air-gapped deployment model |
-| **CMMC** | <span class="dot gray"></span> roadmap target | HUKLLA tripwires (T05–T08) map to access/egress controls |
+| **FedRAMP** | <span class="dot gray" aria-hidden="true"></span> roadmap target | Air-gap + audit-trail design aligns to control families |
+| **SOC 2** | <span class="dot gray" aria-hidden="true"></span> roadmap target | Receipt ledger provides the evidence trail |
+| **IL5** | <span class="dot gray" aria-hidden="true"></span> roadmap target | Sovereign / air-gapped deployment model |
+| **CMMC** | <span class="dot gray" aria-hidden="true"></span> roadmap target | HUKLLA tripwires (T05–T08) map to access/egress controls |
 
 ## Security contact
 

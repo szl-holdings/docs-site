@@ -61,6 +61,24 @@
   white-space: nowrap;
 }
 
+.dot {
+  display: inline-block;
+  inline-size: .65rem;
+  block-size: .65rem;
+  margin-inline-end: .35rem;
+  border-radius: var(--radius-full);
+  vertical-align: .05em;
+  color: var(--color-gray-500);
+  background: currentColor;
+  box-shadow: 0 0 0 1px var(--vp-c-bg), 0 0 0 2px color-mix(in srgb, currentColor 40%, transparent);
+}
+.dot.green { color: var(--color-success); }
+.dot.amber { color: var(--color-warning); }
+.dot.gray { color: var(--color-gray-500); }
+.dark .dot.green { color: var(--color-success-light); }
+.dark .dot.amber { color: var(--color-warning-light); }
+.dark .dot.gray { color: var(--color-gray-300); }
+
 .quechua {
   border-left: 3px solid var(--color-hatun-400);
   background: var(--vp-c-bg-soft);
