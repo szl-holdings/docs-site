@@ -97,6 +97,7 @@ if (existsSync(manifestPath)) {
 
 const config = readFileSync(join(root, 'docs', '.vitepress', 'config.mjs'), 'utf8')
 const home = readFileSync(join(root, 'docs', 'index.md'), 'utf8')
+const mcpIntegration = readFileSync(join(root, 'docs', 'developers', 'mcp_integration.md'), 'utf8')
 const themeIndex = readFileSync(join(root, 'docs', '.vitepress', 'theme', 'index.js'), 'utf8')
 const customCss = readFileSync(join(root, 'docs', '.vitepress', 'theme', 'custom.css'), 'utf8')
 const publicTruthFiles = [
@@ -122,6 +123,17 @@ for (const marker of ['transformHead({ page, title, description })', 'property: 
 }
 for (const marker of ['Investor', 'Developer', 'Evaluator', 'data-state="real">REAL', 'data-state="roadmap">ROADMAP']) {
   if (!home.includes(marker)) fail(`homepage truth/audience marker missing: ${marker}`)
+}
+for (const marker of [
+  '/api/a11oy/v1/mcp/tools',
+  '/api/a11oy/v1/mcp/call',
+  'No drop-in Claude Desktop or Cursor configuration is published yet',
+  'Do not point an MCP bridge at `/mcp/`'
+]) {
+  if (!mcpIntegration.includes(marker)) fail(`MCP truth-boundary marker missing: ${marker}`)
+}
+for (const forbidden of ['mcp-remote', '"mcpServers"', "'method':'initialize'", '"method":"initialize"']) {
+  if (mcpIntegration.includes(forbidden)) fail(`unavailable MCP client configuration is published: ${forbidden}`)
 }
 if (!themeIndex.includes("./kanchay/vitepress.css")) fail('KANCHAY adapter is not wired into VitePress')
 for (const marker of [':root:not(.dark)', '--text: var(--color-gray-900)', '--link: var(--color-yuyay-700)']) {
