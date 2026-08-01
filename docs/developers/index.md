@@ -9,8 +9,9 @@ developer-facing entry point: quickstart, full API reference, MCP integration, a
 Build your own "organ" on the same substrate the shipping flagships use.
 
 > **Migrated here from [`szl-holdings/developers`](https://github.com/szl-holdings/developers).**
-> This is the canonical published home of the developer docs. The source repo remains active
-> during the consolidation but is now marked deprecated in favor of this site.
+> That repository is **archived and read-only**. This section is the active successor and canonical
+> published home for developer documentation; new links and corrections belong here, not in the
+> archived repository.
 
 ## ◇ Featured: the Holographic Estate
 
@@ -28,6 +29,13 @@ Two flagships ship today with live `/healthz`:
 | **killinchu** | Defense vertical — counter-UAS / drone intelligence | `https://szlholdings-killinchu.hf.space` |
 
 Both shipping flagships return Doctrine v11 verbatim from `/healthz`: `749 declarations / 14 unique axioms / 163 tracked sorries`, locked at `c7c0ba17`. Λ uniqueness is **Conjecture 1 (NOT a theorem)** — stated honestly. SLSA **L1 (honest)**.
+
+::: warning Availability is evidence, not branding
+The URLs above are the documented production bases. Treat a timed-out or non-successful probe as
+**UNAVAILABLE** and preserve the returned failure reason. A **LIVE** label requires a source and
+observation time; it does not imply continuous availability. Examples in this section are
+**SAMPLE** unless they explicitly identify a live response or a **SIMULATED** fixture.
+:::
 
 ## Pages
 
