@@ -16,7 +16,12 @@ function repairAccessibleChrome() {
     }
   }
   const content = document.querySelector('.VPContent')
-  if (content && !content.closest('main')) {
+  const nativeMain = content?.querySelector('main')
+  if (nativeMain) {
+    nativeMain.setAttribute('aria-label', 'Primary content')
+    content.removeAttribute('role')
+    content.removeAttribute('aria-label')
+  } else if (content) {
     content.setAttribute('role', 'main')
     content.setAttribute('aria-label', 'Primary content')
   }

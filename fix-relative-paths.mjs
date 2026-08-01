@@ -74,14 +74,21 @@ function fixAccessibleChrome(html) {
       'Toggle color theme'
     )
   })
-  html = html.replace(/<div\b[^>]*\bVPContent\b[^>]*>/g, (tag) => {
-    landmarks++
-    return setTagAttribute(
-      setTagAttribute(tag, 'role', 'main'),
-      'aria-label',
-      'Primary content'
-    )
-  })
+  if (/<main\b/.test(html)) {
+    html = html.replace(/<main\b[^>]*>/, (tag) => {
+      landmarks++
+      return setTagAttribute(tag, 'aria-label', 'Primary content')
+    })
+  } else {
+    html = html.replace(/<div\b[^>]*\bVPContent\b[^>]*>/, (tag) => {
+      landmarks++
+      return setTagAttribute(
+        setTagAttribute(tag, 'role', 'main'),
+        'aria-label',
+        'Primary content'
+      )
+    })
+  }
   return { html, landmarks, switches }
 }
 

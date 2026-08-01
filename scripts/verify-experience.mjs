@@ -114,7 +114,7 @@ for (const file of publicTruthFiles) {
 if (/fonts\.googleapis|fonts\.gstatic/.test(config)) fail('runtime font CDN is forbidden')
 if (!config.includes("base: '/docs-site/'")) fail('VitePress base is not the canonical Pages path')
 if (/href: '\.\/(?:img|site\.webmanifest)/.test(config)) fail('nested-page head assets are relative')
-for (const marker of ['transformHead({ page })', 'property: \'og:title\'', 'name: \'twitter:card\'']) {
+for (const marker of ['transformHead({ page, title, description })', 'property: \'og:title\'', 'name: \'twitter:card\'']) {
   if (!config.includes(marker)) fail(`metadata marker missing: ${marker}`)
 }
 for (const marker of ['Investor', 'Developer', 'Evaluator', 'data-state="real">REAL', 'data-state="roadmap">ROADMAP']) {

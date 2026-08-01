@@ -21,11 +21,18 @@ export default withMermaid(defineConfig({
   lastUpdated: true,
   appearance: 'dark',
 
-  transformHead({ page }) {
+  transformHead({ page, title, description }) {
     const canonical = canonicalPage(page)
+    const socialTitle = page === 'index.md'
+      ? `SZL Holdings · ${title}`
+      : `${title} · SZL Holdings`
     return [
       ['link', { rel: 'canonical', href: canonical }],
-      ['meta', { property: 'og:url', content: canonical }]
+      ['meta', { property: 'og:url', content: canonical }],
+      ['meta', { property: 'og:title', content: socialTitle }],
+      ['meta', { property: 'og:description', content: description }],
+      ['meta', { name: 'twitter:title', content: socialTitle }],
+      ['meta', { name: 'twitter:description', content: description }]
     ]
   },
 
@@ -36,12 +43,8 @@ export default withMermaid(defineConfig({
     ['meta', { name: 'color-scheme', content: 'dark light' }],
     ['meta', { property: 'og:type', content: 'website' }],
     ['meta', { property: 'og:site_name', content: 'SZL Holdings' }],
-    ['meta', { property: 'og:title', content: 'SZL Holdings · Governed AI that can show its work' }],
-    ['meta', { property: 'og:description', content: 'Product, developer, and evidence documentation for the SZL governed-AI stack.' }],
     ['meta', { property: 'og:image', content: `${liveBase}img/szl-docs-social.png` }],
     ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
-    ['meta', { name: 'twitter:title', content: 'SZL Holdings · Governed AI that can show its work' }],
-    ['meta', { name: 'twitter:description', content: 'Product, developer, and evidence documentation for the SZL governed-AI stack.' }],
     ['meta', { name: 'twitter:image', content: `${liveBase}img/szl-docs-social.png` }]
   ],
 

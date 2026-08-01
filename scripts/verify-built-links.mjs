@@ -29,6 +29,12 @@ for (const file of htmlFiles) {
   const rel = relative(root, file).replaceAll('\\', '/')
   const pageUrl = new URL(`${basePath}${rel}`, liveOrigin)
   const html = readFileSync(file, 'utf8')
+  const nativeMainCount = [...html.matchAll(/<main\b/g)].length
+  const roleMainCount = [...html.matchAll(/\srole="main"/g)].length
+  const primaryLabelCount = [...html.matchAll(/aria-label="Primary content"/g)].length
+  if (nativeMainCount + roleMainCount !== 1 || primaryLabelCount !== 1) {
+    missing.push(`${rel} -> expected exactly one labeled primary-content landmark`)
+  }
 
   for (const match of html.matchAll(/(?:href|src)="([^"]+)"/g)) {
     const raw = match[1]
