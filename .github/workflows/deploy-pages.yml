@@ -8,10 +8,8 @@ name: deploy-docs-pages
 # markdown-it-mathjax3 to ^4.3.2 (satisfies the peer) and regenerate the
 # lockfile. No --legacy-peer-deps / --force bandaid is used.
 #
-# Founder one-time action: repo Settings -> Pages -> Source = "GitHub Actions".
-# Then (optional) set a custom domain docs.szlholdings.com (see DNS plan).
-#
-# Doctrine v11 LOCKED 749/14/163 locked_at c7c0ba17. Author: Yachay.
+# Canonical public URL: https://holdings.a-11-oy.com/docs-site/.
+# DNS and Pages policy are managed outside this source workflow.
 
 on:
   push:
@@ -34,6 +32,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
+          persist-credentials: false
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v6
         with:
           node-version: 20
@@ -41,14 +40,9 @@ jobs:
       - name: Install deps
         run: npm ci --no-audit --no-fund
       - name: Build docs
-        run: |
-          node node_modules/vitepress/bin/vitepress.js build docs
-          node fix-relative-paths.mjs
-      - name: Add .nojekyll and CNAME
-        run: |
-          touch docs/.vitepress/dist/.nojekyll
-          # Custom domain (enable once DNS CNAME docs.szlholdings.com is set):
-          # echo "docs.szlholdings.com" > docs/.vitepress/dist/CNAME
+        run: npm run docs:build
+      - name: Add .nojekyll
+        run: touch docs/.vitepress/dist/.nojekyll
       - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6
       - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5
         with:

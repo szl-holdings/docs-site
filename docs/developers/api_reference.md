@@ -70,7 +70,7 @@ Base: `https://szlholdings-a11oy.hf.space`
 ### MCP — honest live status
 The **live, working** MCP surface is `GET /api/a11oy/v1/mcp/tools` (JSON catalog, **4 tools** today) and
 `POST /api/a11oy/v1/mcp/call`. The Streamable-HTTP JSON-RPC server at `/mcp/` (the "16-tool Hatun-MCP"
-described in [MCP_INTEGRATION.md](./MCP_INTEGRATION.md)) is **NOT yet served as a JSON-RPC transport** —
+described in [MCP integration](./mcp_integration.md)) is **NOT yet served as a JSON-RPC transport** —
 a `POST /mcp/` `initialize`/`tools/list` returns **HTTP 405** on the deployed Space; `GET /mcp/` serves
 an HTML landing page. Use the `/api/a11oy/v1/mcp/*` REST surface until the JSON-RPC transport ships.
 

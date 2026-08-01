@@ -1,0 +1,40 @@
+{
+  "$schema": "urn:szl:design-system-bundle:v1",
+  "assets": [
+    {
+      "bytes": 23330,
+      "path": "system.css",
+      "sha256": "ea983b2324921ae8bd35e5b777253cfb71283b2073978237cf47f851fe758af8",
+      "source_path": "kit/tokens/szl-design-system.css"
+    },
+    {
+      "bytes": 5567,
+      "path": "tokens.json",
+      "sha256": "2087ab67b5ec3df2d1c78e966fc52485ec599d43daf07dc2a2420181ae56d92b",
+      "source_path": "kit/tokens/COLOR_TOKENS.json"
+    },
+    {
+      "bytes": 1475,
+      "path": "metadata.schema.json",
+      "sha256": "812e160ef5d583f98845fa2413ab547c4e71e1eca2b9ec040645437244e7fa0a",
+      "source_path": "kit/contracts/public-metadata.schema.json"
+    },
+    {
+      "bytes": 4824,
+      "path": "vitepress.css",
+      "sha256": "86561a2d9902d2ded950c45939802f1003b62166690d390438259c50bcec8100",
+      "source_path": "kit/adapters/vitepress.css"
+    }
+  ],
+  "contract": "szl.design-system/v1",
+  "integrity": {
+    "algorithm": "sha256",
+    "root": "152ff983953d9fb240aba144c2556f9af50fe9e047185bafe6dcdf54d2934e1a"
+  },
+  "name": "KANCHAY",
+  "source": {
+    "repository": "https://github.com/szl-holdings/szl-brand",
+    "revision": "5b43015b66f254ee08330b39adcc1acb4d0c219d"
+  },
+  "version": "1.1.0"
+}

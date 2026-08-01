@@ -30,7 +30,7 @@ That is the same number proved in Lean and cited everywhere — honest counters.
 ## 2. List the MCP tools (live REST surface)
 
 The live MCP surface today is a simple REST catalog (the JSON-RPC `/mcp/` transport is roadmap —
-see [MCP_INTEGRATION.md](./MCP_INTEGRATION.md)):
+see [MCP integration](./mcp_integration.md)):
 
 ```bash
 # list the governed tools (live)
@@ -42,7 +42,7 @@ curl -s -X POST https://szlholdings-a11oy.hf.space/api/a11oy/v1/mcp/call \
   -d '{"tool":"lambda_score","args":{}}' | python3 -m json.tool
 ```
 
-You'll get a catalog of **4 governed tools** today. See [MCP_INTEGRATION.md](./MCP_INTEGRATION.md)
+You'll get a catalog of **4 governed tools** today. See [MCP integration](./mcp_integration.md)
 for the planned Claude Desktop / Cursor JSON-RPC wiring (roadmap).
 
 ## 3. Dispatch a governed command (sign a payload)
@@ -77,7 +77,7 @@ curl -s https://szlholdings-a11oy.hf.space/khipu/pubkey | python3 -m json.tool
 # fingerprint_sha256: a4d73120c312d94bdd6cbdfa6f3d629cfff4b85e7addde5f9c3fd4c02341eb30
 ```
 
-Run [`EXAMPLES/python_quickstart.py`](./EXAMPLES/python_quickstart.py) to do steps 3–4 in code and
+Run [`EXAMPLES/python_quickstart.py`](https://github.com/szl-holdings/docs-site/blob/main/docs/developers/EXAMPLES/python_quickstart.py) to do steps 3–4 in code and
 build a two-link Khipu chain locally.
 
 ## 5. See the Λ-gate make a decision (live, inside a11oy)
@@ -94,13 +94,13 @@ curl -s -X POST https://szlholdings-a11oy.hf.space/api/a11oy/v1/mcp/call \
 
 > The standalone Policy filter Space is **not deployed** (HTTP 404) — it is a roadmap role.
 > The live, enforcing decision today is a11oy's Λ-gate
-> (`a11oy_gate` tool / `/api/a11oy/v1/mcp/call`). See [API_REFERENCE.md](./API_REFERENCE.md)
+> (`a11oy_gate` tool / `/api/a11oy/v1/mcp/call`). See [API reference](./api_reference.md)
 > for the canonical live routes.
 
 ## Next steps
 
-- **Build your own organ:** [SUBSTRATE_PACKAGES.md](./SUBSTRATE_PACKAGES.md)
-- **Full endpoint map:** [API_REFERENCE.md](./API_REFERENCE.md)
+- **Build your own organ:** [Substrate packages](./substrate_packages.md)
+- **Full endpoint map:** [API reference](./api_reference.md)
 - **Deploy airgapped:** UDS Zarf bundles in [szl-holdings/uds-bundles](https://github.com/szl-holdings/uds-bundles)
 
 *Signed Yachay `<yachay@szlholdings.dev>` · Co-Authored-By: Perplexity Computer Agent · Apache-2.0*

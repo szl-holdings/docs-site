@@ -11,7 +11,7 @@ surfaces. Doctrine v11 · Apache-2.0.
 > There is currently no public `szl-holdings/graphql-gateway` repository and no
 > live GraphQL Space. The URLs and schema below are design targets, not executable
 > production endpoints. Use the live REST and MCP contracts documented in
-> [API_REFERENCE.md](./API_REFERENCE.md) and [MCP_INTEGRATION.md](./MCP_INTEGRATION.md).
+> [API reference](./api_reference.md) and [MCP integration](./mcp_integration.md).
 
 - Planned endpoint (not live): `https://szlholdings-graphql-gateway.hf.space/graphql`
 - Planned explorer (not live): `https://szlholdings-graphql-gateway.hf.space/graphiql`
@@ -129,8 +129,8 @@ Current rule: **agents and software should use the published REST/MCP contracts.
 GraphQL remains a design document until source, CI, deployment, and immutable
 runtime evidence exist.
 
-See also: [MCP_INTEGRATION.md](./MCP_INTEGRATION.md),
-[API_REFERENCE.md](./API_REFERENCE.md).
+See also: [MCP integration](./mcp_integration.md),
+[API reference](./api_reference.md).
 
 ---
 

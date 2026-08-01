@@ -6,7 +6,7 @@
 
 The Inka khipu is a knotted-cord record whose primary cord value equals the sum of its pendant
 values. SZL reads a receipt DAG as exactly that structure, and the
-[knot-calculus-v1](knot-calculus-v1/) recipe in this repo ships a **runnable** TypeScript
+[knot-calculus-v1](https://github.com/szl-holdings/szl-cookbook/tree/main/recipes/knot-calculus-v1) recipe in `szl-cookbook` ships a **runnable** TypeScript
 implementation. This recipe explains the algebra and how to run it.
 
 > **Honest scope.** The Reidemeister invariance for receipt chains is **Conjecture R1/R2/R3** in
@@ -44,7 +44,7 @@ npx tsx tests/demo.ts
 A receipt DAG is a three-tier pendant-cord tree: decisions → organ pendants → root. The invariant
 is *sum-of-sums*: each pendant value equals the sum of its decision values, and the root equals the
 sum of the pendants. The check is `verifySumInvariant` in
-[`code/src/khipu-receipt.ts`](knot-calculus-v1/code/src/khipu-receipt.ts); the Lean obligation is
+[`code/src/khipu-receipt.ts`](https://github.com/szl-holdings/szl-cookbook/blob/main/recipes/knot-calculus-v1/code/src/khipu-receipt.ts); the Lean obligation is
 **TH11** `khipuReceipt_checksum_invariant` (two routine `sorry`s).
 
 ### Step 2 — The knot-invariant tag
@@ -100,7 +100,7 @@ does not.
 
 - **[09 — PAC-Bayes confidence margin](09-pac-bayes-confidence-margin.md)** — the demo's step 3.
 - **[01 — Verify a receipt end-to-end](01-verify-a-receipt-end-to-end.md)**
-- Code: [knot-calculus-v1](knot-calculus-v1/) (runnable TypeScript in this repo)
+- Code: [knot-calculus-v1](https://github.com/szl-holdings/szl-cookbook/tree/main/recipes/knot-calculus-v1) (runnable TypeScript in `szl-cookbook`)
 
 ## Cite this recipe
 

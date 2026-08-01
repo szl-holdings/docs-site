@@ -62,7 +62,7 @@ Add a server via the `mcp-remote` bridge (point it at a canonical live endpoint)
 }
 ```
 
-A drop-in copy is in [`EXAMPLES/mcp_claude_config.json`](./EXAMPLES/mcp_claude_config.json).
+A published drop-in copy is available as [`mcp_claude_config.json`](/examples/mcp_claude_config.json).
 Restart Claude Desktop; you should see the SZL tools in the tools menu.
 
 ## Cursor

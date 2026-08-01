@@ -19,11 +19,11 @@ Doctrine v11 (749 / 14 / 163) · Apache-2.0 · maintained by Yachay
 Use one of the paths that is actually published:
 
 1. Call the live a11oy REST/MCP contracts documented in
-   [API_REFERENCE.md](./API_REFERENCE.md) and
-   [MCP_INTEGRATION.md](./MCP_INTEGRATION.md).
+   [API reference](./api_reference.md) and
+   [MCP integration](./mcp_integration.md).
 2. Build directly from the governed source packages in the existing
    [`szl-holdings/platform`](https://github.com/szl-holdings/platform/tree/main/packages)
-   monorepo, following [SUBSTRATE_PACKAGES.md](./SUBSTRATE_PACKAGES.md).
+   monorepo, following [Substrate packages](./substrate_packages.md).
 3. Use the reviewed recipes in
    [`szl-holdings/szl-cookbook`](https://github.com/szl-holdings/szl-cookbook)
    when a concrete integration example is available.
