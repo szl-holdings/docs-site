@@ -7,9 +7,11 @@ const root = process.cwd()
 const theme = join(root, 'docs', '.vitepress', 'theme', 'kanchay')
 const manifestPath = join(theme, 'manifest.json')
 const requiredPublic = [
-  'robots.txt',
   'sitemap.xml',
-  'site.webmanifest',
+  'site.webmanifest'
+]
+const forbiddenSubpathContracts = [
+  'robots.txt',
   '.well-known/security.txt',
   'examples/mcp_claude_config.json'
 ]
@@ -96,6 +98,7 @@ if (existsSync(manifestPath)) {
 const config = readFileSync(join(root, 'docs', '.vitepress', 'config.mjs'), 'utf8')
 const home = readFileSync(join(root, 'docs', 'index.md'), 'utf8')
 const themeIndex = readFileSync(join(root, 'docs', '.vitepress', 'theme', 'index.js'), 'utf8')
+const customCss = readFileSync(join(root, 'docs', '.vitepress', 'theme', 'custom.css'), 'utf8')
 const publicTruthFiles = [
   'README.md',
   'MERGED.md',
@@ -121,12 +124,20 @@ for (const marker of ['Investor', 'Developer', 'Evaluator', 'data-state="real">R
   if (!home.includes(marker)) fail(`homepage truth/audience marker missing: ${marker}`)
 }
 if (!themeIndex.includes("./kanchay/vitepress.css")) fail('KANCHAY adapter is not wired into VitePress')
+for (const marker of [':root:not(.dark)', '--text: var(--color-gray-900)', '--link: var(--color-yuyay-700)']) {
+  if (!customCss.includes(marker)) fail(`light appearance token binding missing: ${marker}`)
+}
 for (const marker of ['button.VPSwitchAppearance', "setAttribute('aria-label'", "setAttribute('role', 'main'"]) {
   if (!themeIndex.includes(marker)) fail(`accessible chrome marker missing: ${marker}`)
 }
 
 for (const file of requiredPublic) {
   if (!existsSync(join(root, 'docs', 'public', file))) fail(`public contract missing: ${file}`)
+}
+for (const file of forbiddenSubpathContracts) {
+  if (existsSync(join(root, 'docs', 'public', file))) {
+    fail(`subpath bundle must not claim an origin-wide or unavailable contract: ${file}`)
+  }
 }
 
 if (process.argv.includes('--dist')) {
@@ -136,6 +147,9 @@ if (process.argv.includes('--dist')) {
   } else {
     for (const file of ['index.html', ...requiredPublic]) {
       if (!existsSync(join(dist, file))) fail(`built output missing: ${file}`)
+    }
+    for (const file of forbiddenSubpathContracts) {
+      if (existsSync(join(dist, file))) fail(`built output contains a forbidden subpath contract: ${file}`)
     }
     if (!existsSync(join(dist, 'img', 'szl-docs-social.png'))) fail('built social preview is missing')
     const builtHomePath = join(dist, 'index.html')

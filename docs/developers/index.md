@@ -45,7 +45,7 @@ Both shipping flagships return Doctrine v11 verbatim from `/healthz`: `749 decla
 ## Examples at a glance
 
 - [`python_quickstart.py`](https://github.com/szl-holdings/docs-site/blob/main/docs/developers/EXAMPLES/python_quickstart.py) — sign a payload, verify, build a Khipu chain
-- [`mcp_claude_config.json`](/examples/mcp_claude_config.json) — published drop-in Claude Desktop config
+- MCP JSON-RPC config — intentionally withheld until the live transport accepts JSON-RPC; use the REST MCP surface documented in the API reference
 - [`policy_filter_example.py`](https://github.com/szl-holdings/docs-site/blob/main/docs/developers/EXAMPLES/policy_filter_example.py) — submit a payload, get verdict + receipt
 - [`operator_command_example.py`](https://github.com/szl-holdings/docs-site/blob/main/docs/developers/EXAMPLES/operator_command_example.py) — dispatch a personal-aide command
 - [`willay_quickstart.py`](https://github.com/szl-holdings/docs-site/blob/main/docs/developers/EXAMPLES/willay_quickstart.py) — a Willay gated turn

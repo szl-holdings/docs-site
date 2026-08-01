@@ -1,5 +1,31 @@
 /* docs-site additions only. Canonical tokens and primitives live in ./kanchay/. */
 
+/* VitePress represents light appearance by removing `.dark`. Bind KANCHAY's
+   semantic surface tokens to that actual state without editing the verified
+   upstream bundle. */
+:root:not(.dark) {
+  --bg: var(--color-gray-50);
+  --bg-deep: #eef1f6;
+  --surface: var(--color-white);
+  --surface-alt: #fbfcfe;
+  --surface-raised: var(--color-white);
+  --border: var(--color-gray-200);
+  --border-subtle: color-mix(in srgb, var(--color-gray-300) 50%, transparent);
+  --hairline: color-mix(in srgb, var(--color-silver-500) 30%, transparent);
+  --text: var(--color-gray-900);
+  --text-sub: var(--color-gray-600);
+  --text-ghost: var(--color-gray-500);
+  --accent: var(--color-coral-500);
+  --accent-hover: var(--color-coral-400);
+  --accent-press: #a8442f;
+  --accent-ink: var(--color-white);
+  --premium: var(--color-hatun-700);
+  --link: var(--color-yuyay-700);
+  --link-hover: var(--color-yuyay-800);
+  --focus: var(--color-yuyay-600);
+  color-scheme: light;
+}
+
 .VPHome { overflow: hidden; }
 .VPHero { position: relative; }
 .VPHero::after {

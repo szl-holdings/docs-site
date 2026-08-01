@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://holdings.a-11-oy.com/docs-site/sitemap.xml

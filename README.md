@@ -193,6 +193,10 @@ base ambiguity that previously produced broken sibling links.
 - **Checked artifact:** the build is bound to `/docs-site/` and its local link graph is verified
   before upload. DNS and Pages HTTPS policy are managed outside this source repository and are
   not inferred from a successful build.
+- **Origin-wide contracts:** this subpath bundle deliberately does not claim to publish
+  `/robots.txt` or `/.well-known/security.txt`. Those standard locations must be served by the
+  owner of `https://holdings.a-11-oy.com/`; a file beneath `/docs-site/` would not satisfy crawler
+  or security-contact discovery.
 
 ---
 

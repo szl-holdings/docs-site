@@ -62,7 +62,9 @@ Add a server via the `mcp-remote` bridge (point it at a canonical live endpoint)
 }
 ```
 
-A published drop-in copy is available as [`mcp_claude_config.json`](/examples/mcp_claude_config.json).
+No drop-in JSON-RPC configuration is published yet. The currently verified a11oy integration is
+the REST MCP surface described in the [API reference](./api_reference.md); publishing an
+`mcp-remote` configuration waits until the live transport accepts JSON-RPC rather than HTML/405.
 Restart Claude Desktop; you should see the SZL tools in the tools menu.
 
 ## Cursor

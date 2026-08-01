@@ -35,6 +35,17 @@ for (const file of htmlFiles) {
   if (nativeMainCount + roleMainCount !== 1 || primaryLabelCount !== 1) {
     missing.push(`${rel} -> expected exactly one labeled primary-content landmark`)
   }
+  if (rel !== '404.html') {
+    const documentTitle = html.match(/<title>([^<]+)<\/title>/)?.[1]
+    const openGraphTitle = html.match(/<meta\s+property="og:title"\s+content="([^"]+)">/)?.[1]
+    const twitterTitle = html.match(/<meta\s+name="twitter:title"\s+content="([^"]+)">/)?.[1]
+    const expectedSocialTitle = rel === 'index.html'
+      ? 'SZL Holdings · Governed AI that can show its work'
+      : documentTitle
+    if (!documentTitle || openGraphTitle !== expectedSocialTitle || twitterTitle !== expectedSocialTitle) {
+      missing.push(`${rel} -> page-specific social title mismatch`)
+    }
+  }
 
   for (const match of html.matchAll(/(?:href|src)="([^"]+)"/g)) {
     const raw = match[1]
