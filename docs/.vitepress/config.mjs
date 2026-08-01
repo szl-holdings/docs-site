@@ -12,7 +12,6 @@ function canonicalPage(page) {
 
 export default withMermaid(defineConfig({
   base: '/docs-site/',
-  mpa: true,
   cleanUrls: false,
   lang: 'en-US',
   title: 'SZL Holdings',
