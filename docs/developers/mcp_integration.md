@@ -1,131 +1,107 @@
-# MCP Integration — Claude Desktop & Cursor
+# MCP integration — verified interfaces and evidence states
 
-The SZL governed-tool surface is now served **directly by the live application Spaces**
-themselves, as a real JSON-RPC (Model Context Protocol) endpoint at the same-origin path
-`/mcp/`. Each Space exposes a focused, **verified** set of governed tools. Every tool call runs
-through the same pipeline a direct HTTP caller gets: retrieve context → tool call →
-policy check → kernel check → **signed receipt**.
+SZL exposes governed tools through three interfaces. The a11oy REST surface and the
+same-origin a11oy and killinchu MCP transports are directly callable today. The separate
+Hatun-MCP service reports a ready, authenticated Streamable HTTP runtime. Those states are
+not interchangeable, and none alone proves that a specific desktop client completed a
+session.
 
-Canonical live endpoints:
+## a11oy REST surface — available now
 
-- **a11oy:** `https://szlholdings-a11oy.hf.space/mcp/`
-- **killinchu:** `https://szlholdings-killinchu.hf.space/mcp/`
+The canonical a11oy integration is:
 
-Protocol version `2024-11-05`, JSON-RPC 2.0 over HTTP. `GET /mcp/` returns a discovery card
-(server name, `canonical: true`, the live tool list); `POST /mcp/` handles
-`initialize` / `tools/list` / `tools/call` / `ping`.
+- `GET https://szlholdings-a11oy.hf.space/api/a11oy/v1/mcp/tools` — discover the
+  live tool catalog.
+- `POST https://szlholdings-a11oy.hf.space/api/a11oy/v1/mcp/call` — invoke a
+  governed tool.
 
-> **Status (2026-06-06):** `a11oy` and `killinchu` now serve a real, spec-shaped MCP transport
-> at their own same-origin `/mcp/`. Point your MCP client at one of the canonical endpoints
-> above. The earlier standalone `szlholdings-hatun-mcp.hf.space` / `mcp-receipts-server` Spaces
-> are **retired** — do not point clients at them. The live tool list is whatever
-> `GET /mcp/` reports; it is the source of truth (currently 5 governed tools per Space:
-> `retrieve_context`, `policy_check`, `trust_score`, `sign_receipt`, `verify_receipt`).
-
-> **Two gotchas:**
-> 1. The URL **must end with a trailing slash**: `/mcp/` (a bare `/mcp` is also handled, but
->    prefer the trailing slash for client compatibility).
-> 2. The `Accept` header should include `application/json`.
-
----
-
-## Quick check (no client setup)
-
-Open the consumer "Ask & Act" page in a browser to see the full loop — one button, a per-hop
-trace timeline, and a chained signed receipt you can re-verify and tamper-test:
-
-- a11oy: `https://szlholdings-a11oy.hf.space/ask-and-act`
-- killinchu: `https://szlholdings-killinchu.hf.space/ask-and-act`
-
-## Claude Desktop
-
-Claude Desktop reads `claude_desktop_config.json`:
-- macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
-- Windows: `%APPDATA%\Claude\claude_desktop_config.json`
-
-Add a server via the `mcp-remote` bridge (point it at a canonical live endpoint):
-
-```json
-{
-  "mcpServers": {
-    "szl-a11oy": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "mcp-remote",
-        "https://szlholdings-a11oy.hf.space/mcp/",
-        "--header",
-        "Accept: application/json"
-      ]
-    }
-  }
-}
-```
-
-A drop-in copy is in [`EXAMPLES/mcp_claude_config.json`](./EXAMPLES/mcp_claude_config.json).
-Restart Claude Desktop; you should see the SZL tools in the tools menu.
-
-## Cursor
-
-Cursor supports MCP via **Settings → MCP → Add new server**. Use the same `mcp-remote` command, or
-point Cursor's `~/.cursor/mcp.json` at:
-
-```json
-{
-  "mcpServers": {
-    "szl-killinchu": {
-      "command": "npx",
-      "args": ["-y", "mcp-remote", "https://szlholdings-killinchu.hf.space/mcp/",
-               "--header", "Accept: application/json"]
-    }
-  }
-}
-```
-
-## Verify it works from the CLI
+The tool catalog is the source of truth for the names and capabilities currently
+available. See the [API reference](./api_reference.md) for the full route contract and
+the [quickstart](./quickstart.md) for an end-to-end example.
 
 ```bash
-# 0) discovery card (server name, canonical flag, live tool list)
-curl -s https://szlholdings-a11oy.hf.space/mcp/ -H 'Accept: application/json'
+# Discover the currently available governed tools.
+curl -s https://szlholdings-a11oy.hf.space/api/a11oy/v1/mcp/tools \
+  -H 'Accept: application/json'
 
-# 1) initialize
-curl -s https://szlholdings-a11oy.hf.space/mcp/ \
+# Invoke one tool through the live REST contract.
+curl -s -X POST https://szlholdings-a11oy.hf.space/api/a11oy/v1/mcp/call \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json' \
-  -d '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2024-11-05","capabilities":{},"clientInfo":{"name":"cli","version":"0.1"}}}'
-
-# 2) list the tools
-curl -s https://szlholdings-a11oy.hf.space/mcp/ \
-  -H 'Content-Type: application/json' \
-  -H 'Accept: application/json' \
-  -d '{"jsonrpc":"2.0","id":2,"method":"tools/list","params":{}}'
+  -d '{"tool":"lambda_score","args":{}}'
 ```
 
-Expect the server's own name, protocol `2024-11-05`, and the live tool list reported by the
-discovery card.
+## a11oy and killinchu native MCP — protocol witnessed
 
-## What the tools do
+The application Spaces publish same-origin Streamable HTTP endpoints:
 
-The live governed tools are:
+- `https://szlholdings-a11oy.hf.space/mcp/`
+- `https://szlholdings-killinchu.hf.space/mcp/`
 
-- `retrieve_context` — keyword retrieval over the in-image governance corpus.
-- `policy_check` — runs the deny-by-default policy gate over a proposed action.
-- `trust_score` — an advisory trust score (a geometric mean over multiple axes). This is an
-  advisory/heuristic signal (Conjecture 1), **not** a proven-unique guarantee.
-- `sign_receipt` — produces a signed receipt for a payload.
-- `verify_receipt` — verifies a receipt's signature and hash chain.
+For this release, both endpoints returned JSON discovery cards and successful JSON-RPC
+`initialize` and `tools/list` responses using protocol revision `2024-11-05`. The live
+discovery cards and `tools/list` responses remain authoritative for each catalog; this
+documentation does not freeze a volatile tool count.
 
-Every tool call is governed (deny-by-default) and emits a signed receipt — so an MCP client gets
-the same provenance handling as a direct HTTP caller.
+That is a protocol witness, not a blanket client-compatibility claim. Desktop clients can
+differ in transport and authentication support, so publish a client-specific setup only
+after that exact client completes initialization.
 
-## Security & honesty notes
+## Hatun-MCP — runtime ready, authentication required
 
-- **a11oy** signs receipts with an **in-image ephemeral ECDSA-P256** key generated at server boot.
-  It resets on each rebuild and is verifiable against the Space's `/cosign.pub`.
-- **killinchu** signs receipts with a **persistent cosign ECDSA-P256-SHA256** key, verifiable
-  offline against the Space's `/cosign.pub`.
-- Signatures are **REAL** when the server has a signing key; when a key is unavailable the receipt
-  is **honestly labeled `UNSIGNED`** — never faked.
-- All tool invocations are recorded with hash-chained, tamper-evident receipts.
+The dedicated Hatun service publishes these read-only runtime contracts:
+
+- [server card](https://szlholdings-hatun-mcp.hf.space/.well-known/mcp/server-card.json)
+  — declares the live catalog and required API-key authentication.
+- [readiness](https://szlholdings-hatun-mcp.hf.space/readyz) — reports the receipt chain
+  and signer readiness state.
+- [build information](https://szlholdings-hatun-mcp.hf.space/api/build-info) — reports
+  the observed source revision, transport, and protocol revision.
+
+The server card is the source of truth for the current tool set; this documentation does
+not freeze a volatile tool count. This release has **not** completed an authenticated
+`initialize` and `tools/list` session with an operator credential, so the precise evidence
+label is **RUNTIME READY · AUTH REQUIRED · CLIENT SESSION NOT WITNESSED**. Runtime metadata
+is not promoted into an end-to-end client claim.
+
+## Claude Desktop and Cursor
+
+No drop-in Claude Desktop or Cursor configuration is published yet. Those clients
+need both a compatible transport and an authorized credential. Publishing a generic
+configuration before an authenticated client session is witnessed would erase that
+boundary.
+
+No generic bridge command is asserted here. A reviewed client configuration will be
+published only after that client completes a clean session; a Hatun configuration also
+requires credential onboarding.
+
+## Roadmap acceptance gate
+
+Desktop-client setup moves from unwitnessed to available only when all of these are true
+on the deployed service:
+
+1. `initialize`, `tools/list`, `tools/call`, and `ping` pass through the target client.
+2. The advertised protocol version and tool schemas match the live responses.
+3. Governed calls preserve the same policy, kernel, and receipt semantics as the REST
+   surface.
+4. Claude Desktop and Cursor complete a clean setup from the published configuration.
+5. The documentation and downloadable configuration are bound to that witnessed
+   deployment.
+
+Until then, use the live REST routes above, connect to the witnessed same-origin
+transports through a client that natively supports their contract, or use Hatun only
+through authorized operator onboarding. This boundary is deliberate: a familiar
+configuration snippet is not evidence that a client session works.
+
+## Security and response truth
+
+- Treat the live tool catalog as authoritative; do not hard-code a tool count in client
+  integrations.
+- Inspect each response's receipt and verification fields rather than assuming a signing
+  mode.
+- Do not send secrets in tool arguments unless the specific tool contract explicitly
+  admits them.
+- Keep caller-side logs and receipts subject to the same data-handling policy as the
+  original payload.
 
 *Co-Authored-By: Perplexity Computer Agent · Apache-2.0*

@@ -1,12 +1,13 @@
 # PAC-Bayes confidence margin
 
-> **Put a non-vacuous, distribution-free upper bound on your governance head's risk using the McAllester-1999 PAC-Bayes inequality — the runnable implementation ships in this repo.**
+> **Put a non-vacuous, distribution-free upper bound on your governance head's risk using the McAllester-1999 PAC-Bayes inequality — the runnable implementation is pinned below.**
 >
 > **Headline number: n=100,000, KL=0.5, δ=0.05, R̂=0.05 → risk bound ≈ 0.057 (non-vacuous).**
 
 How confident can you be that a passing Λ-gate generalizes beyond the sample you measured it on?
-PAC-Bayes answers with a tail bound. The implementation is real:
-[`recipes/knot-calculus-v1/code/src/pac-bayes-bound.ts`](knot-calculus-v1/code/src/pac-bayes-bound.ts).
+PAC-Bayes answers with a tail bound. The implementation is real and linked at an immutable
+`szl-cookbook` revision:
+[`recipes/knot-calculus-v1/code/src/pac-bayes-bound.ts`](https://github.com/szl-holdings/szl-cookbook/blob/1be98cc0fed44fba98bfb89a1056c6f3364ae736/recipes/knot-calculus-v1/code/src/pac-bayes-bound.ts).
 
 > **Honest scope.** The closed-form arithmetic is proved in Lean (**TH13**
 > `governanceHead_PACBayes_bound`); the probabilistic `Pr ≥ 1−δ` quantifier is the documented
@@ -29,6 +30,9 @@ R(Q) \le \hat{R}(Q) + \sqrt{\frac{\mathrm{KL}(Q\,\|\,P) + \ln\!\frac{2\sqrt{n}}{
 ## Prerequisites
 
 ```bash
+git clone https://github.com/szl-holdings/szl-cookbook.git
+cd szl-cookbook
+git checkout 1be98cc0fed44fba98bfb89a1056c6f3364ae736
 cd recipes/knot-calculus-v1/code && npm install
 ```
 
@@ -108,7 +112,7 @@ LLM-scale heads.
 
 - **[03 — Fine-tune a compliance regime](03-fine-tune-compliance-regime.md)** — produces R̂ and KL.
 - **[08 — Receipt knot algebra](08-receipt-knot-algebra.md)** — same demo program.
-- Code: [pac-bayes-bound.ts](knot-calculus-v1/code/src/pac-bayes-bound.ts)
+- Code: [pac-bayes-bound.ts](https://github.com/szl-holdings/szl-cookbook/blob/1be98cc0fed44fba98bfb89a1056c6f3364ae736/recipes/knot-calculus-v1/code/src/pac-bayes-bound.ts)
 
 ## Cite this recipe
 

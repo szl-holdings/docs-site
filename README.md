@@ -7,7 +7,7 @@
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg?style=flat-square)](LICENSE) [![Build](https://github.com/szl-holdings/docs-site/actions/workflows/deploy-pages.yml/badge.svg?branch=main)](https://github.com/szl-holdings/docs-site/actions/workflows/deploy-pages.yml) [![Doctrine v11](https://img.shields.io/badge/Doctrine-v11_LOCKED-3b82f6?style=flat-square)](https://github.com/szl-holdings/.github/tree/main/doctrine) [![SLSA](https://img.shields.io/badge/SLSA-Build_L1_honest_%C2%B7_L2_roadmap-22c55e?style=flat-square)](https://slsa.dev/spec/v1.0/levels)
 
-[Docs](https://szl-holdings.github.io/docs-site) · [Quickstart](https://szl-holdings.github.io/docs-site/quickstart) · [Live demo](https://szl-holdings.github.io/docs-site) · [Verify a receipt](https://a-11-oy.com/verify) · [SZL Holdings](https://a-11-oy.com)
+[Docs](https://holdings.a-11-oy.com/docs-site/) · [Quickstart](https://holdings.a-11-oy.com/docs-site/quickstart.html) · [Evidence](https://holdings.a-11-oy.com/docs-site/evidence/) · [Verify a receipt](https://a-11-oy.com/verify) · [SZL Holdings](https://a-11-oy.com)
 
 </div>
 
@@ -15,18 +15,20 @@
 
 It is where investors, design partners, and engineers go to understand what SZL does, try it in minutes, and verify the claims for themselves — all in plain language with deep technical docs one click away.
 
-## ▶️ Live demo
+## ▶️ Live documentation
 
-**[Open the live demo →](https://szl-holdings.github.io/docs-site)**
+**[Open the live documentation →](https://holdings.a-11-oy.com/docs-site/)**
 
-[![SZL Holdings kanchay mark](https://raw.githubusercontent.com/szl-holdings/szl-brand/main/kit/logos/png/kanchay-512.png)](https://szl-holdings.github.io/docs-site)
+[![SZL Holdings kanchay mark](https://raw.githubusercontent.com/szl-holdings/szl-brand/5b43015b66f254ee08330b39adcc1acb4d0c219d/kit/logos/png/kanchay-512.png)](https://holdings.a-11-oy.com/docs-site/)
 
 <sub>_The SZL Holdings kanchay brand mark — click through to the live docs site above._</sub>
 
 ## ◇ Featured: the Holographic Estate
 
-The frontier tier rendered as one live 3D holographic lattice — 70+ governed surfaces (exact live
-count self-verifiable at `/api/a11oy/v1/frontier/surfaces`), each lit by a live a11oy endpoint. Vendored WebGL2 with optional WebGPU; 0 runtime CDN; mobile-friendly.
+The Holographic Estate visualizes governed public surfaces as a 3D lattice. Treat the live
+frontier API as the source for current inventory; this README does not hard-code a volatile count
+or imply that every governed surface is reachable. Vendored WebGL2 with optional WebGPU; zero
+runtime CDN; mobile-friendly.
 
 **[Open the Holographic Estate →](https://a-11-oy.com/holographic)**
 
@@ -35,12 +37,12 @@ count self-verifiable at `/api/a11oy/v1/frontier/surfaces`), each lit by a live 
 ```bash
 git clone https://github.com/szl-holdings/docs-site.git
 cd docs-site
-make quickstart   # or: see docs.szlholdings.com/quickstart
+make quickstart   # or: open https://holdings.a-11-oy.com/docs-site/quickstart.html
 ```
 
 ## 🔍 How it works
 
-In two sentences: this component is part of SZL's governed-AI mesh — it enforces policy and emits signed, replayable audit receipts so every AI action can be verified after the fact. The full mathematical foundation, formal proofs, and protocol details are documented below and in the [technical docs](https://szl-holdings.github.io/docs-site).
+In two sentences: this component is part of SZL's governed-AI mesh — it enforces policy and emits signed, replayable audit receipts so every AI action can be verified after the fact. The full mathematical foundation, formal proofs, and protocol details are documented below and in the [technical docs](https://holdings.a-11-oy.com/docs-site/).
 
 ---
 
@@ -58,7 +60,7 @@ In two sentences: this component is part of SZL's governed-AI mesh — it enforc
 
 <!-- CII Best Practices badge (founder-action required): register at https://bestpractices.coreinfrastructure.org/ to obtain a project ID, then replace this comment with the live badge. -->
 
-The source for the SZL Holdings documentation portal (target: `docs.szlholdings.com`).
+The source for the live [SZL Holdings documentation portal](https://holdings.a-11-oy.com/docs-site/).
 It documents the two SZL products (a11oy command platform + killinchu drones & vessels), the PURIQ
 doctrine and master formula, the twelve anatomy organs plus the Killinchu bridge, the
 Doctrine v11/v12 LOCKED contract numbers, the evidence ledger (DOIs, replay hash, Lean
@@ -78,7 +80,7 @@ The brief allowed VitePress, Docusaurus, or MkDocs Material. We chose **VitePres
 | Mermaid diagrams | `vitepress-plugin-mermaid` integrates Mermaid into fenced ` ```mermaid ` blocks. Used for anatomy data-flow and DAG diagrams. |
 | Copy-button + syntax highlighting | Built in (Shiki). Every code block gets a copy button and accurate highlighting with no configuration. |
 | 3D iframes | Pages are plain markdown + HTML, so embedding the `*.static.hf.space` 3D showcases as `<iframe>` is trivial. |
-| Fast static output, easy hosting | Vite-powered build emits a flat static bundle deployable to any static host (S3, the pplx.app preview, GitHub Pages, Cloudflare). |
+| Fast static output, easy hosting | Vite-powered build emits a flat static bundle deployable beneath a static path prefix through GitHub Pages or another static host. |
 | Lightweight | A Vue/Vite single-toolchain stack — far smaller dependency surface than Docusaurus (React + Webpack/Docusaurus core) and no Python runtime like MkDocs. Faster cold builds, simpler CI. |
 
 Docusaurus was rejected as heavier than needed for a docs-only site (React app shell,
@@ -169,34 +171,32 @@ re-locked at a new version, update all three pages together and bump the version
 
 ---
 
-## Deploy & the relocatable-build design
+## Deploy & the canonical-path build design
 
-The build emits a static bundle at `docs/.vitepress/dist/`. Two settings make that bundle
-**fully relocatable** — it renders correctly no matter what path prefix it is served under,
-including an unpredictable proxy sub-path (the `pplx.app` preview):
+The build emits a static bundle at `docs/.vitepress/dist/` for the canonical GitHub Pages
+`/docs-site/` prefix. The release fails closed when generated local navigation leaves that base
+or points to an absent file:
 
-1. **`base: './'` + `mpa: true`** in `config.mjs`. MPA (multi-page app) mode disables
-   VitePress's client-side SPA router, so every page is fully static HTML and there is no
-   router that can 404 when the served path does not match a fixed `base`. The relative
-   base makes every asset reference relative rather than rooted at `/`.
-2. **`fix-relative-paths.mjs`** runs automatically after `vitepress build` (wired into the
-   `docs:build` script). VitePress's `base: './'` emits `./asset` references that are only
-   correct for root-level pages; this post-processor rewrites them to the correct
-   `../`-depth for each nested page (e.g. `flagships/a11oy.html` gets `../assets/...`). The
-   result is a bundle every page of which resolves its own assets relative to its own
-   location.
+1. **`base: '/docs-site/'` + `mpa: true`** in `config.mjs`. The exact public path is part of
+   the source contract, and every page is emitted as independently readable static HTML.
+2. **`fix-relative-paths.mjs`** adds pre-hydration accessibility attributes and publishes the
+   checked raw trust assets without rewriting VitePress navigation.
+3. **`scripts/verify-built-links.mjs`** crawls every generated `href` and `src` that targets
+   the canonical host, rejects paths outside `/docs-site/`, and requires the target file to exist.
 
-This was a deliberate trade: MPA loses VitePress's instant in-page SPA navigation (each
-nav click is a real page load), which is an acceptable cost for a documentation site that
-must survive being served behind an opaque proxy.
+MPA loses VitePress's instant in-page SPA navigation; each navigation is a normal page load.
+That trade keeps the published documentation independently inspectable and removes the relative-
+base ambiguity that previously produced broken sibling links.
 
-- **Current preview host:** the Perplexity `deploy_website` flow uploads
-  `docs/.vitepress/dist/` and serves it at a `pplx.app` proxy URL.
-- **Production target:** `docs.szlholdings.com` at the domain root. Because the build is
-  relocatable, it works at root as-is. If you prefer the lighter SPA experience at the
-  production root, you may set `base: '/'`, `mpa: false`, `cleanUrls: true`, remove the
-  `fix-relative-paths.mjs` step, and rebuild — the SPA build is correct when served from a
-  known root.
+- **Canonical public host:** `https://holdings.a-11-oy.com/docs-site/`, deployed from protected
+  `main` through GitHub Pages Actions.
+- **Checked artifact:** the build is bound to `/docs-site/` and its local link graph is verified
+  before upload. DNS and Pages HTTPS policy are managed outside this source repository and are
+  not inferred from a successful build.
+- **Origin-wide contracts:** this subpath bundle deliberately does not claim to publish
+  `/robots.txt` or `/.well-known/security.txt`. Those standard locations must be served by the
+  owner of `https://holdings.a-11-oy.com/`; a file beneath `/docs-site/` would not satisfy crawler
+  or security-contact discovery.
 
 ---
 
@@ -231,4 +231,3 @@ Cite this work via [`CITATION.cff`](CITATION.cff). Math foundations: [szl-papers
 **SZL estate:** [a11oy console](https://a-11-oy.com) · [LLM Router](https://github.com/szl-holdings/szl-router) · [Receipt format spec](https://github.com/szl-holdings/governed-receipt-spec) · [🤗 SZLHOLDINGS](https://huggingface.co/SZLHOLDINGS)
 
 <sub>Λ Conjecture 1 (not a theorem) · 749/14/163 v11 LOCKED (kernel `c7c0ba17`) · SLSA Build L1 honest (cosign keyless-signed, Rekor-anchored images) · L2 verified-provenance on the roadmap; L3 / FedRAMP / Iron Bank / CMMC not claimed · locked-proven formulas = 8 {F1,F4,F7,F11,F12,F18,F19,F22} (`locked_count_eight`) · Section 889 = 5 vendors · [SZL Holdings](https://a-11-oy.com) · Apache-2.0 code · CC-BY-4.0 papers</sub>
-

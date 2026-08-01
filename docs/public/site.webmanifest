@@ -1,0 +1,12 @@
+{
+  "name": "SZL Holdings Documentation",
+  "short_name": "SZL Docs",
+  "description": "Product, developer, and evidence documentation for the SZL governed-AI stack.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#030f29",
+  "theme_color": "#030f29",
+  "icons": [
+    { "src": "./img/szl-mark.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

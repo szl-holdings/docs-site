@@ -83,7 +83,8 @@ echo "$RECEIPT" | curl -s -X POST "$BASE/../verify" \
 
 ## The recipe (Python)
 
-See the runnable Python file: [`recipes/02-willay-gated-turn.py`](./02-willay-gated-turn.py)
+The complete executable example is included below. The similarly named upstream cookbook file is
+currently reserved but empty, so this page does not present that path as runnable evidence.
 
 ```python
 import json, urllib.request

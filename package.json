@@ -1,13 +1,14 @@
 {
   "name": "szl-docs-site",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "SZL Holdings unified documentation site",
   "private": true,
   "type": "module",
   "scripts": {
     "docs:dev": "vitepress dev docs",
-    "docs:build": "vitepress build docs && node fix-relative-paths.mjs",
-    "docs:preview": "vitepress preview docs"
+    "docs:build": "vitepress build docs && node fix-relative-paths.mjs && node scripts/verify-experience.mjs --dist && node scripts/verify-built-links.mjs",
+    "docs:preview": "vitepress preview docs",
+    "test:experience": "node scripts/verify-experience.mjs"
   },
   "devDependencies": {
     "mermaid": "^11.16.0",

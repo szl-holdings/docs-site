@@ -63,16 +63,17 @@ Base: `https://szlholdings-a11oy.hf.space`
 | GET | `/api/a11oy/v1/puriq/formulas` | PURIQ formula catalog (master formula + axes). 8 PROVED ({F1,F4,F7,F11,F12,F18,F19,F22}) recompute live with a fresh Khipu receipt chain. |
 | GET | `/api/a11oy/v1/puriq/formulas/{id}` | One formula, recomputed live (e.g. `/F1`, `/F11`, `/F12`, `/F18`, `/F19`). |
 | POST | `/api/a11oy/v2/unay/recall` | Unay memory recall (semantic lookup over governed memory). |
-| GET | `/api/a11oy/v1/mcp/tools` · POST `/api/a11oy/v1/mcp/call` | **Canonical live MCP surface** — JSON tool catalog + tool invocation (currently 4 governed tools: `a11oy_gate`, `lambda_score`, …). |
+| GET | `/api/a11oy/v1/mcp/tools` · POST `/api/a11oy/v1/mcp/call` | **Canonical live REST tool surface** — the response is authoritative for the current catalog. |
 | GET | `/viz/khipu` · `/viz/doctrine` · `/viz/router` | Live Three.js visualizations. |
-| GET | `/mcp/` | Hatun-MCP **landing page** (HTML). The Streamable-HTTP JSON-RPC transport is **roadmap, not live** — see honest note below. |
+| GET · POST | `/mcp/` | Same-origin MCP transport: JSON discovery plus JSON-RPC `initialize`, `tools/list`, and governed tool calls. |
 
 ### MCP — honest live status
-The **live, working** MCP surface is `GET /api/a11oy/v1/mcp/tools` (JSON catalog, **4 tools** today) and
-`POST /api/a11oy/v1/mcp/call`. The Streamable-HTTP JSON-RPC server at `/mcp/` (the "16-tool Hatun-MCP"
-described in [MCP_INTEGRATION.md](./MCP_INTEGRATION.md)) is **NOT yet served as a JSON-RPC transport** —
-a `POST /mcp/` `initialize`/`tools/list` returns **HTTP 405** on the deployed Space; `GET /mcp/` serves
-an HTML landing page. Use the `/api/a11oy/v1/mcp/*` REST surface until the JSON-RPC transport ships.
+The REST surface remains live at `GET /api/a11oy/v1/mcp/tools` and
+`POST /api/a11oy/v1/mcp/call`. The separate same-origin `/mcp/` transport also returned a
+JSON discovery card and successful JSON-RPC `initialize` and `tools/list` responses in the
+current release witness. The live response is authoritative for the catalog; no tool count
+is frozen here. Hatun-MCP is a third, authenticated runtime with a separate evidence state.
+See [MCP integration](./mcp_integration.md) before selecting a transport.
 
 ---
 

@@ -15,7 +15,8 @@
 > founder action. The org still contains **37 repositories (33 active, 4 archived)**; there is
 > no verified "45 → 19" reduction.
 
-This repository is the single published docs site (`docs.szlholdings.com`), built with VitePress.
+This repository is the single published docs site
+([`https://holdings.a-11-oy.com/docs-site/`](https://holdings.a-11-oy.com/docs-site/)), built with VitePress.
 The table below tracks the true current state of each planned move.
 
 | Directory (published) | Source Repo | Migration status (verified 2026-07-06) | Source repo state |
