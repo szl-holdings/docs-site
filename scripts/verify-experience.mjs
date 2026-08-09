@@ -4,6 +4,7 @@ import { basename, join } from 'node:path'
 import process from 'node:process'
 
 const root = process.cwd()
+const readme = readFileSync(join(root, 'README.md'), 'utf8')
 const theme = join(root, 'docs', '.vitepress', 'theme', 'kanchay')
 const manifestPath = join(theme, 'manifest.json')
 const requiredPublic = [
@@ -128,6 +129,7 @@ const quickstart = readFileSync(join(root, 'docs', 'developers', 'quickstart.md'
 const developerHub = readFileSync(join(root, 'docs', 'developers', 'index.md'), 'utf8')
 const compliancePage = readFileSync(join(root, 'docs', 'compliance.md'), 'utf8')
 const statusPage = readFileSync(join(root, 'docs', 'status.md'), 'utf8')
+const pagesWorkflow = readFileSync(join(root, '.github', 'workflows', 'deploy-pages.yml'), 'utf8')
 const udsPage = readFileSync(join(root, 'docs', 'uds', 'index.md'), 'utf8')
 const themeIndex = readFileSync(join(root, 'docs', '.vitepress', 'theme', 'index.js'), 'utf8')
 const customCss = readFileSync(join(root, 'docs', '.vitepress', 'theme', 'custom.css'), 'utf8')
@@ -149,6 +151,31 @@ for (const file of publicTruthFiles) {
 if (/fonts\.googleapis|fonts\.gstatic/.test(config)) fail('runtime font CDN is forbidden')
 if (!config.includes("base: '/docs-site/'")) fail('VitePress base is not the canonical Pages path')
 if (/^\s*mpa:\s*true/m.test(config)) fail('VitePress static mpa mode must remain disabled for interactive docs')
+for (const staleMarker of ["mpa: true", "MPA loses VitePress's instant in-page SPA navigation"]) {
+  if (readme.includes(staleMarker)) fail(`README retains the retired non-interactive architecture: ${staleMarker}`)
+}
+for (const marker of [
+  'npm run deployment:write',
+  'npm run deployment:verify',
+  'node scripts/witness-deployment.mjs',
+  'pages: write',
+  'id-token: write'
+]) {
+  if (!pagesWorkflow.includes(marker)) fail(`Pages source-binding step missing: ${marker}`)
+}
+for (const marker of ['deployment.json', 'exact protected', 'SHA-256 inventory/root digest']) {
+  if (!statusPage.includes(marker)) fail(`public deployment-evidence explanation missing: ${marker}`)
+}
+for (const marker of ['Observed at **', 'Provider state', 'Evidence state', '**UNAVAILABLE**']) {
+  if (!statusPage.includes(marker)) fail(`public runtime observation marker missing: ${marker}`)
+}
+for (const staleMarker of [
+  'Two flagships ship today and expose live',
+  'runtime ready, receipt chain verified, signer configured',
+  'same-origin `/mcp/` endpoints returned successful public'
+]) {
+  if (statusPage.includes(staleMarker)) fail(`status page retains a stale live-runtime claim: ${staleMarker}`)
+}
 if (/href: '\.\/(?:img|site\.webmanifest)/.test(config)) fail('nested-page head assets are relative')
 for (const marker of ['transformHead({ page, title, description })', 'property: \'og:title\'', 'name: \'twitter:card\'']) {
   if (!config.includes(marker)) fail(`metadata marker missing: ${marker}`)

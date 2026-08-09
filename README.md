@@ -177,22 +177,26 @@ The build emits a static bundle at `docs/.vitepress/dist/` for the canonical Git
 `/docs-site/` prefix. The release fails closed when generated local navigation leaves that base
 or points to an absent file:
 
-1. **`base: '/docs-site/'` + `mpa: true`** in `config.mjs`. The exact public path is part of
-   the source contract, and every page is emitted as independently readable static HTML.
+1. **`base: '/docs-site/'` with the hydrated VitePress client** in `config.mjs`. The exact public
+   path is part of the source contract, while search, mobile navigation, appearance controls,
+   and keyboard interaction remain operational after the initial static HTML renders.
 2. **`fix-relative-paths.mjs`** adds pre-hydration accessibility attributes and publishes the
    checked raw trust assets without rewriting VitePress navigation.
 3. **`scripts/verify-built-links.mjs`** crawls every generated `href` and `src` that targets
    the canonical host, rejects paths outside `/docs-site/`, and requires the target file to exist.
-
-MPA loses VitePress's instant in-page SPA navigation; each navigation is a normal page load.
-That trade keeps the published documentation independently inspectable and removes the relative-
-base ambiguity that previously produced broken sibling links.
+4. **`scripts/deployment-manifest.mjs`** inventories the final upload bytes after all build
+   rewrites, binds them to protected `main` plus the exact Pages workflow revision, and refuses
+   unprotected, stale, malformed, or overwritten evidence.
+5. **`scripts/witness-deployment.mjs`** reads the public `deployment.json` and critical live
+   files back from the canonical host with exact SHA-256 and byte-count checks.
 
 - **Canonical public host:** `https://holdings.a-11-oy.com/docs-site/`, deployed from protected
   `main` through GitHub Pages Actions.
 - **Checked artifact:** the build is bound to `/docs-site/` and its local link graph is verified
-  before upload. DNS and Pages HTTPS policy are managed outside this source repository and are
-  not inferred from a successful build.
+  before upload. The live [deployment manifest](https://holdings.a-11-oy.com/docs-site/deployment.json)
+  records the exact protected source and uploaded file inventory; the workflow witnesses the
+  critical public bytes before reporting success. DNS and Pages HTTPS policy are managed outside
+  this source repository and are not inferred from a successful build.
 - **Origin-wide contracts:** this subpath bundle deliberately does not claim to publish
   `/robots.txt` or `/.well-known/security.txt`. Those standard locations must be served by the
   owner of `https://holdings.a-11-oy.com/`; a file beneath `/docs-site/` would not satisfy crawler
