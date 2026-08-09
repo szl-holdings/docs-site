@@ -8,7 +8,10 @@
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs && node fix-relative-paths.mjs && node scripts/verify-experience.mjs --dist && node scripts/verify-built-links.mjs",
     "docs:preview": "vitepress preview docs",
-    "test:experience": "node scripts/verify-experience.mjs"
+    "test:experience": "node scripts/verify-experience.mjs",
+    "test:deployment": "node --test scripts/test-deployment-manifest.mjs scripts/test-protected-source.mjs",
+    "deployment:write": "node scripts/write-deployment-manifest.mjs",
+    "deployment:verify": "node scripts/verify-deployment-manifest.mjs"
   },
   "devDependencies": {
     "mermaid": "^11.16.1",
