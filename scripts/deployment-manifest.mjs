@@ -193,9 +193,15 @@ export function buildManifest(distPath, context) {
 export function writeManifest(distPath, context) {
   const root = resolve(distPath)
   const path = resolve(root, MANIFEST_NAME)
-  assert(!existsSync(path), `${MANIFEST_NAME} already exists; refusing to overwrite release evidence`)
   const manifest = buildManifest(root, context)
-  writeFileSync(path, `${JSON.stringify(manifest, null, 2)}\n`, { encoding: 'utf8', flag: 'wx' })
+  try {
+    writeFileSync(path, `${JSON.stringify(manifest, null, 2)}\n`, { encoding: 'utf8', flag: 'wx' })
+  } catch (error) {
+    if (error?.code === 'EEXIST') {
+      throw new Error(`${MANIFEST_NAME} already exists; refusing to overwrite release evidence`)
+    }
+    throw error
+  }
   return manifest
 }
 
