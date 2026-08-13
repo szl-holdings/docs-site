@@ -1,18 +1,22 @@
-# Use Cases
+# Use cases — evidence before deployment claims
 
-How the SZL anatomy is deployed against real missions. Each use case ties a flagship and a set
-of organs to a concrete scenario, with honest scope boundaries.
+Use cases describe intended workflows and historical demonstrations. They do not establish a
+current deployment, customer use, signed runtime receipt, or formal guarantee. Verify source,
+runtime, proof, and artifact evidence independently.
 
-| Use case | Flagships | What it demonstrates |
-|----------|-----------|----------------------|
-| [Warhacker mission packs](/use-cases/warhacker) | a11oy, memory, operator, sentinel | Verifiable governance overlay on the UDS air-gap delivery stack |
-| [Greene demo flow](/use-cases/greene-demo) | killinchu, a11oy | Counter-UAS decision support, end to end |
-| [Iron-Dome-but-the-brain](/use-cases/iron-dome-brain) | killinchu, operator | A governed *decision* layer, not an effector — the brain, not the missile |
-| [Sovereign AI for .gov](/use-cases/sovereign-gov) | full anatomy | Air-gapped, auditable, kernel-checked governed AI for government |
+| Use case | Evidence posture |
+|---|---|
+| [Investor and developer evaluation](/investors/) | Current documentation journey; deployed source identity comes from `/deployment.json` |
+| [Greene counter-UAS demonstration](/use-cases/greene-demo) | Source/historical flow; recheck killinchu route readiness beyond health |
+| [Sovereign-government deployment](/use-cases/sovereign-gov) | Design and admission checklist; UDS artifact/deployment **UNAVAILABLE** |
+| [Warhacker / UDS briefing](/use-cases/warhacker) | Historical briefing plan; no current cluster or attestation witness |
+| [Iron Dome Brain](/use-cases/iron-dome-brain) | Conceptual decision-support architecture; no autonomous lethal authority |
 
-::: warning Scope discipline (Doctrine v11 §2, axis 8)
-SZL ships **delivery + verification + governance** — decision support with cryptographic proof.
-**No autonomous lethal action.** Where a use case touches a kinetic domain (counter-UAS, defense),
-SZL is the governed *brain* that produces an auditable recommendation; the effector and the
-human-in-the-loop are out of scope by design.
-:::
+## Promotion rule
+
+A use case becomes operational only when it binds immutable source/image revisions, current route
+and auth results, raw outputs, artifact-specific verification, failure/rollback tests, protected
+deployment evidence, and independent live readback. Until then use **MODELED**, **HISTORICAL**,
+**ROADMAP**, or **UNAVAILABLE**.
+
+See [/status](/status), [/compliance](/compliance), and [/evidence/](/evidence/).

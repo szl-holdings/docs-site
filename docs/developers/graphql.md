@@ -2,7 +2,7 @@
 # GraphQL — the unified SZL surface
 
 The **SZL GraphQL Gateway** is the roadmap design for one typed endpoint over the
-SZL substrate — the shipping flagships (a11oy and killinchu) plus planned
+SZL substrate — the two flagship source products (a11oy and killinchu) plus planned
 Provenance Anchor, Operator, and Policy roles. The design requires every query
 and mutation to enter the same governed receipt chain as the underlying REST
 surfaces. Doctrine v11 · Apache-2.0.
@@ -10,8 +10,9 @@ surfaces. Doctrine v11 · Apache-2.0.
 > **⚠️ STATUS: ROADMAP — NOT YET DEPLOYED OR PUBLISHED AS A STANDALONE REPOSITORY.**
 > There is currently no public `szl-holdings/graphql-gateway` repository and no
 > live GraphQL Space. The URLs and schema below are design targets, not executable
-> production endpoints. Use the live REST and MCP contracts documented in
-> [API reference](./api_reference.md) and [MCP integration](./mcp_integration.md).
+> production endpoints. Use the published REST/MCP route shapes documented in
+> [API reference](./api_reference.md) and [MCP integration](./mcp_integration.md), and check
+> [/status](/status) before any runtime call.
 
 - Planned endpoint (not live): `https://szlholdings-graphql-gateway.hf.space/graphql`
 - Planned explorer (not live): `https://szlholdings-graphql-gateway.hf.space/graphiql`
@@ -123,9 +124,10 @@ curl -s https://szlholdings-graphql-gateway.hf.space/graphql \
 | Protocol | MCP-compatible governed REST/tool surface | GraphQL over HTTP |
 | Discovery | `/api/a11oy/v1/mcp/tools` | introspection / SDL / explorer |
 | Governance | current receipt and policy controls | must preserve the same controls |
-| Live today? | REST surface is operational | not deployed |
+| Current evidence | Published route shapes; a11oy/Hatun readiness **UNAVAILABLE** | **NOT DEPLOYED** |
 
-Current rule: **agents and software should use the published REST/MCP contracts.**
+Current rule: **agents and software must distinguish published route shapes from runtime
+readiness and fail closed when [/status](/status) is unavailable.**
 GraphQL remains a design document until source, CI, deployment, and immutable
 runtime evidence exist.
 

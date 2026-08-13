@@ -3,5 +3,7 @@ docs/.vitepress/dist/
 docs/.vitepress/cache/
 docs/.vitepress/.temp/
 qa/
+playwright-report/
+test-results/
 *.log
 .DS_Store

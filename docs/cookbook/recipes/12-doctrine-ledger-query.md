@@ -1,119 +1,50 @@
-# Doctrine ledger query
+# Doctrine source ledger query
 
-> **Read the locked 749 / 14 / 163 kernel programmatically — from every shipping flagship's `/v1/honest` and from the canonical `szl-lake` index — and assert they all agree.**
->
-> **Headline number: 1 query → 2 shipping flagships + 1 lake → all report `c7c0ba17`.**
+> **Current executable scope:** reproduce the exact Lean source snapshot locally. Cross-runtime
+> agreement is **UNAVAILABLE** because a11oy readiness timed out and the relevant killinchu action
+> route was not probed. A mutable dataset `main` file is not an immutable doctrine witness.
 
-The doctrine is the source of truth: 749 declarations, 14 unique axioms, 163 tracked sorries,
-kernel commit `c7c0ba17`, Λ = Conjecture 1, SLSA L1. This recipe pulls those numbers from every
-live source and proves they are consistent.
-
-> **Honest scope.** Only **a11oy** and **killinchu** ship live Spaces. The a11oy Memory /
-> Operator / Sentinel roles have no standalone Spaces or repos; they ship
-> *inside* a11oy. There is also **no live `/api/doctrine` route**. The doctrine is
-> exposed per-flagship at `/v1/honest` and canonically in the lake's
-> [`lake_index.json`](https://github.com/szl-holdings/szl-lake/blob/main/lake_index.json). This
-> recipe uses those real surfaces, not a placeholder endpoint.
-
----
-
-## Prerequisites
+## Exact source measurement
 
 ```bash
-python3 -m pip install requests
+LUTAR_REV=c7c0ba17c2eaec60ad38ea9172b4a0d9ca0b582f
+git clone --filter=blob:none --no-checkout https://github.com/szl-holdings/lutar-lean.git lutar
+cd lutar
+git checkout --detach "$LUTAR_REV"
+test "$(git rev-parse HEAD)" = "$LUTAR_REV" || exit 1
+python3 -I -B .github/scripts/lean_numbers.py --repo-path . --ref "$LUTAR_REV"
 ```
+
+Locally remeasured on 2026-08-11 with the repository-owned counter:
+
+- 749 declarations;
+- 14 unique axioms (15 raw declarations);
+- 163 raw `sorry` tokens, 149 outside pure line comments.
+
+Lambda remains Conjecture 1. This exact snapshot is not the commit referenced by annotated tag
+`lutar-v18.0.0`; do not bind the tag and commit as one artifact.
+
+## Historical runtime comparison
+
+Older recipe text queried a mutable `szl-lake/resolve/main/lake_index.json` and the a11oy and
+killinchu `/v1/honest` route shapes. That method cannot establish durable agreement because:
+
+1. `main` can advance after the observation;
+2. provider `RUNNING` does not prove route readiness;
+3. the 2026-08-11 a11oy readiness probe timed out;
+4. the killinchu health response did not witness `/v1/honest`;
+5. a response needs an exact repository revision and preserved bytes.
+
+To promote the cross-surface comparison, pin the dataset revision and SHA-256, capture each exact
+runtime revision, perform bounded route probes, preserve raw responses, and compare the full
+snapshot identity—not only the eight-character prefix.
+
+## Evidence boundary
+
+The repository counter is source evidence. It does not prove a runtime, deployment, signature,
+or lake publication. See [/evidence/](/evidence/), [/status](/status), and
+[/compliance](/compliance).
 
 ---
 
-## Quickstart (live, verified)
-
-```python
-import requests
-
-EXPECT = {"declarations": 749, "axioms": 14, "sorries": 163, "kernel": "c7c0ba17"}
-LAKE = "https://huggingface.co/datasets/SZLHOLDINGS/szl-lake/resolve/main/lake_index.json"
-
-idx = requests.get(LAKE, timeout=30).json()
-assert (idx["declarations"], idx["axioms"], idx["sorries"], idx["kernel_commit"]) == \
-       (EXPECT["declarations"], EXPECT["axioms"], EXPECT["sorries"], EXPECT["kernel"])
-print("lake:", idx["kernel_commit"], idx["declarations"], idx["axioms"], idx["sorries"], "OK")
-# => lake: c7c0ba17 749 14 163 OK
-```
-
----
-
-## Full walkthrough
-
-### Step 1 — Query every flagship's honest endpoint
-
-```python
-import requests
-# Only the two shipping flagships expose a live /v1/honest. The a11oy Memory / Operator /
-# Sentinel verticals ship inside a11oy and are NOT
-# separate Spaces; do not query them as standalone hosts.
-FLAGSHIPS = {
-    "a11oy":     "https://szlholdings-a11oy.hf.space/api/a11oy/v1/honest",
-    "killinchu": "https://szlholdings-killinchu.hf.space/api/killinchu/v1/honest",
-}
-for name, url in FLAGSHIPS.items():
-    try:
-        h = requests.get(url, timeout=30).json()
-        d = h.get("declarations"); a = h.get("axioms_unique"); s = h.get("sorries_total")
-        print(f"{name:10} doctrine={h.get('doctrine')} {d}/{a}/{s} "
-              f"kernel={h.get('kernel_commit','(via lake)')}")
-    except Exception as e:
-        print(f"{name:10} (cold/error: {e}) — wake the Space and retry")
-```
-
-> **Honest note.** a11oy and killinchu are the only live Spaces; both may sleep on HF's free tier
-> and return an error until warmed — open the Space URL once to wake it. The lake index in the
-> quickstart is always available and is the canonical source of truth.
-
-### Step 2 — Assert Λ is Conjecture 1 everywhere
-
-```python
-h = requests.get(FLAGSHIPS["killinchu"], timeout=30).json()
-assert "Conjecture" in h["lambda_status"], "Λ must remain Conjecture 1"
-print("Λ:", h["lambda_status"])
-# => Λ: Conjecture 1 — NOT a theorem (open CAUCHY_ND sorry + missing symmetry axiom)
-```
-
-### Step 3 — Cross-check the SLSA posture
-
-Every flagship reports `slsa: "L1 (honest)"`. Anything claiming L2/L3 on a runtime receipt is a
-red flag — the image signing is keyless cosign (**[recipe 06](06-cosign-rekor-slsa-l1.md)**), but
-the honest *level* is L1.
-
-### Step 4 — Pin to the Lean kernel commit
-
-`c7c0ba17` is the commit in
-[`lutar-lean`](https://github.com/szl-holdings/lutar-lean/commit/c7c0ba17) that the entire mesh is
-anchored to. A receipt or organ declaring a different anchor is a doctrine-drift incident.
-
-### Step 5 — Build a drift monitor
-
-Run Steps 1–4 on a cron; alert if any source disagrees with `EXPECT`. This is the cheapest possible
-doctrine-integrity check and complements **[recipe 11](11-kitaev-surface-drift-detection.md)**.
-
----
-
-## See also
-
-- **[01 — Verify a receipt end-to-end](01-verify-a-receipt-end-to-end.md)** — receipts pin the same anchor.
-- **[11 — Kitaev surface drift detection](11-kitaev-surface-drift-detection.md)**
-- Source of truth: [lutar-lean @ c7c0ba17](https://github.com/szl-holdings/lutar-lean/commit/c7c0ba17) · [szl-lake](https://github.com/szl-holdings/szl-lake)
-
-## Cite this recipe
-
-```bibtex
-@misc{szl_cookbook_doctrine_query_2026,
-  title        = {Doctrine ledger query (SZL Cookbook recipe 12)},
-  author       = {{SZL Holdings}},
-  year         = {2026},
-  howpublished = {\url{https://github.com/szl-holdings/szl-cookbook/blob/main/recipes/12-doctrine-ledger-query.md}},
-  note         = {749/14/163 LOCKED, kernel c7c0ba17, Λ = Conjecture 1. No /api/doctrine route; uses /v1/honest + lake_index.json.}
-}
-```
-
----
-*Doctrine v11 LOCKED — 749/14/163 — kernel `c7c0ba17` · Λ = Conjecture 1 · SLSA L1 (honest)*
+*Exact source measurement available · cross-runtime ledger agreement UNAVAILABLE*

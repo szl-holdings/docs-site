@@ -1,108 +1,69 @@
-# Quickstart — 5 Minutes on the SZL Substrate
+# Developer quickstart — evidence before integration
 
-By the end you will have: listed the Hatun-MCP tools, dispatched a governed command, and
-**cryptographically verified** the signed receipt it produced. No SDK install required — everything
-is plain HTTP + the Python standard library.
+::: warning Runtime boundary — observed 2026-08-11
+Use the killinchu readiness route only after rechecking [/status](/status): it was **AVAILABLE_AT_OBSERVATION** at
+revision `83142da9`. a11oy was provider `RUNNING` at `f5c395e8` but readiness timed out twice;
+it is **UNAVAILABLE**. Hatun-MCP was `PAUSED` with `/readyz` HTTP 503 and quota `3/3`; it is
+**UNAVAILABLE**. No current authenticated Hatun client session is claimed.
+:::
 
-Doctrine v11 · License Apache-2.0
-
----
-
-## 0. Prerequisites
-
-- `curl` and Python 3.9+ (`cryptography` optional, only for local signature verification).
-- No API key needed for the public demo endpoints. (Commercial usage issues keys via the
-  customer portal.)
+## 1. Establish the source contract
 
 ```bash
-python3 -m pip install cryptography requests   # optional, for the verify step
+LUTAR_REV=c7c0ba17c2eaec60ad38ea9172b4a0d9ca0b582f
+git clone --filter=blob:none --no-checkout https://github.com/szl-holdings/lutar-lean.git lutar
+cd lutar
+git checkout --detach "$LUTAR_REV"
+test "$(git rev-parse HEAD)" = "$LUTAR_REV"
+python3 -I -B .github/scripts/lean_numbers.py --repo-path . --ref "$LUTAR_REV"
 ```
 
-## 1. Confirm the substrate is live (10 seconds)
+This pins the Doctrine v11 source contract. It does not query a hosted runtime. See
+[Evidence](/evidence/) for the count command and DOI lineage.
+
+## 2. Check public readiness before any integration
 
 ```bash
-curl -s https://szlholdings-a11oy.hf.space/healthz | python3 -m json.tool
+curl --fail-with-body --max-time 30 \
+  https://szlholdings-killinchu.hf.space/api/killinchu/healthz
 ```
 
-You should see `"doctrine": "v11"` and `"numbers": {"declarations": 749, "axioms": 14, "sorries": 163}`.
-That is the same number proved in Lean and cited everywhere — honest counters.
+The observed HTTP 200 is a point-in-time public readiness fact. It does not assert that every
+killinchu route is public, authenticated, signed, or continuously available.
 
-## 2. List the governed tools (live REST surface)
+## 3. Use published routes with their current state
 
-The REST catalog is the simplest integration path. A same-origin JSON-RPC `/mcp/`
-transport is also live and protocol-witnessed; see [MCP integration](./mcp_integration.md)
-for the distinct evidence and client-compatibility boundary.
+| Surface | Published route family | Current evidence |
+|---|---|---|
+| killinchu | `/api/killinchu/v1/*` | Readiness observed; inspect [API](/api/killinchu) before a call. |
+| a11oy | `/healthz`, `/api/a11oy/v1/*`, `/mcp/` | Route shapes documented; readiness unavailable in this observation. |
+| Hatun-MCP | `/readyz`, server card, authenticated Streamable HTTP | Paused; authentication and client session not current-witnessed. |
+
+Do not paste keys into a shell transcript or chat. This documentation does not offer a customer
+portal or generic API-key bootstrap because no such end-to-end issuance flow is currently
+witnessed here.
+
+## 4. Build from source instead of assuming a package is published
 
 ```bash
-# list the governed tools (live)
-curl -s https://szlholdings-a11oy.hf.space/api/a11oy/v1/mcp/tools | python3 -m json.tool
-
-# call one (live)
-curl -s -X POST https://szlholdings-a11oy.hf.space/api/a11oy/v1/mcp/call \
-  -H 'Content-Type: application/json' \
-  -d '{"tool":"lambda_score","args":{}}' | python3 -m json.tool
+git clone https://github.com/szl-holdings/a11oy.git
+cd a11oy
+pnpm install --frozen-lockfile
+pnpm build
 ```
 
-The response is the source of truth for the current catalog. See
-[MCP integration](./mcp_integration.md) for the native transport and the separately
-authenticated Hatun runtime; no generic Claude Desktop or Cursor configuration is claimed.
+Use local manifests and repository instructions for workspace packages. `szl-python`, `szl-ts`,
+and the Agentic Mesh SDK are planned surfaces, not registry-installable releases.
 
-## 3. Dispatch a governed command (sign a payload)
+## 5. Read receipts honestly
 
-Ask a11oy to sign a payload into a DSSE envelope:
+Receipt verification has two distinct questions: a locally recomputed hash chain/self-digest may
+support integrity; signer authentication requires a real signature. A receipt labelled
+`DSSE-PLACEHOLDER` or `UNSIGNED` is not authenticated. Image-level signature evidence is separate
+and does not make the running service ready. See [Verify](/developers/verify).
 
-```bash
-curl -s https://szlholdings-a11oy.hf.space/khipu/sign \
-  -H 'Content-Type: application/json' \
-  -d '{"payload":{"hello":"szl","ts":"2026-06-01"}}' | python3 -m json.tool
-```
+## Continue
 
-The response is a DSSE envelope: a base64 `payload`, a `payloadType`, and an ECDSA-P256-SHA256
-`signatures` array. This is your **receipt**.
-
-## 4. Verify the receipt (the whole point)
-
-Server-side verify:
-
-```bash
-# paste the envelope from step 3 as the body
-curl -s https://szlholdings-a11oy.hf.space/khipu/verify \
-  -H 'Content-Type: application/json' \
-  -d @envelope.json | python3 -m json.tool
-# => {"verified": true, "keyid_match": true, ...}
-```
-
-Or verify **offline** against the published public key:
-
-```bash
-curl -s https://szlholdings-a11oy.hf.space/khipu/pubkey | python3 -m json.tool
-# fingerprint_sha256: a4d73120c312d94bdd6cbdfa6f3d629cfff4b85e7addde5f9c3fd4c02341eb30
-```
-
-Run [`EXAMPLES/python_quickstart.py`](https://github.com/szl-holdings/docs-site/blob/main/docs/developers/EXAMPLES/python_quickstart.py) to do steps 3–4 in code and
-build a two-link Khipu chain locally.
-
-## 5. See the Λ-gate make a decision (live, inside a11oy)
-
-The **policy / immune** function (roadmap role: Policy) ships **inside a11oy** today as the
-Λ-gate. Score an action and watch the gate decide:
-
-```bash
-curl -s -X POST https://szlholdings-a11oy.hf.space/api/a11oy/v1/mcp/call \
-  -H 'Content-Type: application/json' \
-  -d '{"tool":"a11oy_gate","args":{"action":"summarize my notes"}}' | python3 -m json.tool
-# => a gated decision with a Λ score and a signed/honest-unsigned receipt
-```
-
-> The standalone Policy filter Space is **not deployed** (HTTP 404) — it is a roadmap role.
-> The live, enforcing decision today is a11oy's Λ-gate
-> (`a11oy_gate` tool / `/api/a11oy/v1/mcp/call`). See [API reference](./api_reference.md)
-> for the canonical live routes.
-
-## Next steps
-
-- **Build your own organ:** [Substrate packages](./substrate_packages.md)
-- **Full endpoint map:** [API reference](./api_reference.md)
-- **Deploy airgapped:** UDS Zarf bundles in [szl-holdings/uds-bundles](https://github.com/szl-holdings/uds-bundles)
-
-*Signed Yachay `<yachay@szlholdings.dev>` · Co-Authored-By: Perplexity Computer Agent · Apache-2.0*
+- [API reference](/api/) — route catalog and availability boundary.
+- [MCP integration](/developers/mcp_integration) — protocol/auth/client truth.
+- [SDKs](/sdks/) — planned package surfaces.

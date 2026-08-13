@@ -11,8 +11,9 @@ The master action-selection operator that ties them together is
 
 $$ P(x,t) = \operatorname*{arg\,max}_{a \in \mathcal{A}} \Big[\; \Lambda(x)\cdot \mathrm{Yuyay}_{13}(a)\cdot e^{-\beta\,\mathrm{HUKLLA}(a)}\cdot \textstyle\prod_i \mathrm{Khipu}_i(a)\;\Big]. $$
 
-Each organ below is a **specialisation** of this operator. Every extra factor lies in $[0,1]$
-and is non-negative, so it can only shrink the gated region — never bypass a gate.
+In the stated design model, each organ below is a **specialisation** of this operator. The proposed
+extra factors lie in $[0,1]$ and are non-negative, so the formula is intended to shrink the gated
+region rather than bypass a gate. This is not a claim of current runtime enforcement.
 
 ```mermaid
 flowchart TD
@@ -166,8 +167,8 @@ $$ O(a)=\mathbf{1}\big[\,\mathrm{traceparent}(\text{child}_a)\text{ extends }\ma
 
 $$ K(a)=\mathbf{1}\big[\,\mathrm{moralGrounding}(a)\ge 0.95\ \wedge\ \mathrm{measurabilityHonesty}(a)\ge 0.95\,\big]. $$
 
-  Enforces the v11 banned-claims register (no "SLSA L3", no "zero sorry", no unscoped
-  "fully verified").
+  Encodes the intended v11 banned-claims rule (no "SLSA L3", no "zero sorry", no unscoped
+  "fully verified"); runtime enforcement is not established here.
 - **Lean stub:** `K(a)` collapses to T01/T02 hard-fail tripwires; obligation in `formulas/PuriqLean.lean`.
 
 ## 10 · Hatun — doctrine {#hatun}
@@ -178,9 +179,10 @@ $$ K(a)=\mathbf{1}\big[\,\mathrm{moralGrounding}(a)\ge 0.95\ \wedge\ \mathrm{mea
 
 $$ D(a)=\mathbf{1}\big[\,a\text{ is additive}\ \wedge\ a\text{ edits no LOCKED number}\,\big]. $$
 
-  This is what makes "v12 = v11 + PURIQ, no edits" structurally enforceable: any action that
-  would change a [LOCKED number](/doctrine/v11-v12) yields $D(a)=0$.
-- **Lean stub:** additivity guard in `formulas/PuriqLean.lean`; HR-3 / HR-7 in Doctrine v11.
+  This states the intended rule for "v12 = v11 + PURIQ, no edits": a locked-number edit should
+  yield $D(a)=0$. It is a design obligation, not current runtime enforcement.
+- **Lean stub:** open, `sorry`-tagged additivity obligation in `formulas/PuriqLean.lean`; HR-3 /
+  HR-7 in Doctrine v11.
 
 ## 11 · Sumaq — designer {#sumaq}
 
@@ -191,7 +193,8 @@ $$ D(a)=\mathbf{1}\big[\,a\text{ is additive}\ \wedge\ a\text{ edits no LOCKED n
 
 $$ S(a)=\mathbf{1}\big[\,\text{every sorry in }a\text{ is tagged}\ \wedge\ \mathrm{proof\_status}(a)\in\{\text{PROVEN, SORRY, AXIOM, CONJECTURE}\}\,\big]. $$
 
-  A hidden `sorry` sets $S(a)=0$ — Zero-Bandaid enforced inside the selection operator.
+  In the design formula, a hidden `sorry` should set $S(a)=0$. Runtime enforcement is not
+  established here.
 - **Lean stub:** status-tag obligation in `formulas/PuriqLean.lean`; canonical-formulas registry (v11 §12).
 
 ## 12 · Killinchu-bridge — embodied agent {#killinchu-bridge}
@@ -206,27 +209,28 @@ $$ G(a)=\mathbf{1}\big[\,\mathrm{pose}(a)\in\mathcal{S}_{\text{safe}}\ \wedge\ \
 
   The geofence is the embodied analogue of the **Bekenstein** action-space bound
   ([INV-4](/doctrine/puriq)): a drone cannot enumerate an unbounded physical action space
-  ([LaValle, *Planning Algorithms*, ch. 13–15](http://lavalle.pl/planning/)).
+  ([LaValle, *Planning Algorithms*, ch. 13–15](https://lavalle.pl/planning/)).
 - **Lean stub:** feasibility factor `G(a)` in `formulas/PuriqLean.lean`.
 
 ---
 
 ## Invariant-preservation summary
 
-Every organ factor lies in $[0,1]$ and is non-negative, so multiplying the master utility by
-it can only **shrink** the gated region — never bypass a gate. The four master invariants
-([INV-1…INV-4](/doctrine/puriq)) therefore hold for every organ by construction.
+The design assigns each organ factor a range in $[0,1]$, so multiplying the master utility by a
+correctly implemented factor would only **shrink** the gated region. The four master invariants
+([INV-1…INV-4](/doctrine/puriq)) remain open, `sorry`-tagged obligations; this table describes
+intended relationships, not proved or deployed enforcement.
 
-| Organ | Extra factor | Range | Invariant it anchors |
+| Organ | Extra factor | Range | Intended relationship |
 |-------|--------------|-------|----------------------|
-| Memory | $e^{-\gamma\mathrm{KL}}$ | $(0,1]$ | preserves INV-1…4 |
+| Memory | $e^{-\gamma\mathrm{KL}}$ | $(0,1]$ | intended to preserve INV-1…4 |
 | Yuyay | identity (the gate) | $\{0\}\cup(0,1]$ | algebraic root of INV-1 |
 | Yawar | $C(a)$ chain-link | $\{0,1\}$ | folds into Khipu → INV-3 |
 | Hukulla | $e^{-\beta H}$, $\beta\gg0$ | $(0,1]$ | INV-1 `puriq_halting_safety` |
-| Kallpa | $B(a)$ BV budget | $\{0,1\}$ | preserves INV-1…4 |
+| Kallpa | $B(a)$ BV budget | $\{0,1\}$ | intended to preserve INV-1…4 |
 | Khipu | Merkle / sum indicator | $\{0,1\}$ | INV-3 `puriq_khipu_integrity` |
 | Lambda | $\Lambda(x)$ itself | $[0,1]$ | INV-2 `puriq_lambda_monotone` |
-| OTel-VSP | $O(a)$ trace-continuity | $\{0,1\}$ | preserves INV-1…4 |
+| OTel-VSP | $O(a)$ trace-continuity | $\{0,1\}$ | intended to preserve INV-1…4 |
 | Kanchay | $K(a)$ sacred-axis | $\{0,1\}$ | INV-1 (T01/T02) |
 | Hatun | $D(a)$ additivity | $\{0,1\}$ | locks v11 numbers |
 | Sumaq | $S(a)$ honest-proof | $\{0,1\}$ | Zero-Bandaid |

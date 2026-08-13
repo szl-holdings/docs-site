@@ -1,84 +1,80 @@
-# Status
+# Runtime status
 
-Public endpoint inventory and last witnessed availability for the SZL surfaces. This page is a
-versioned static observation, not a synthetic uptime monitor. A deployed revision is not labelled
-operational unless its public readiness surface succeeds in the same observation.
+This page is the canonical, versioned observation for public SZL runtime availability. It is
+not an uptime monitor and it does not promote source, a published revision, or a historical
+probe into a current readiness claim.
 
-## Deployed source
+## Documentation artifact identity
 
-Every production Pages release publishes `/docs-site/deployment.json`. That machine-readable
-record binds the site to an exact protected `szl-holdings/docs-site` commit, the exact release
-workflow revision and run, and a SHA-256 inventory/root digest for every uploaded file. The
-workflow then reads the public manifest and critical HTML, CSS, JavaScript, sitemap, and web-app
-manifest bytes back from the canonical host before it reports success.
+The deployed site's machine-readable `/deployment.json` is the authority for
+its exact protected source revision, workflow run, file count, and artifact Merkle root. The Pages
+workflow generates that file from the revision it actually checks out; this page never hard-codes
+its predecessor as the release source. Documentation identity still does **not** prove that a
+product runtime is running or ready.
 
-This is deployment evidence, not a substitute for runtime liveness. Service availability below
-still comes from each product's own health and readiness surfaces.
+## Public runtime observation — 2026-08-11
 
-## Public runtime observation
+Observed through the public Hugging Face API and unauthenticated public probes. **Provider state**
+and **readiness** are separate: a `RUNNING` provider state is not a readiness success.
 
-Observed at **2026-08-09T01:06:19Z** through the public Hugging Face API and unauthenticated public
-probes. All three published runtime revisions were provider-paused; none was operational in this
-observation.
+Observation window ended at **2026-08-11T07:27:11Z**. The same evidence is published as the
+machine-readable [`/runtime-status.json`](/runtime-status.json) contract; full revisions, bounded
+probe windows, and non-claims in that file are part of this status record.
 
-| Surface | Published revision | Provider state | Public probe | Evidence state |
-|---------|--------------------|----------------|--------------|----------------|
-| **a11oy** | `d069699e61d93a5e89f734bc3dc76faf44f50b99` | `PAUSED` | `GET /healthz` → HTTP 503 | **UNAVAILABLE** |
-| **killinchu** | `83142da9526e2c0ddfe1e78eb99a20940cde0cf3` | `PAUSED` | `GET /api/killinchu/healthz` → HTTP 503 | **UNAVAILABLE** |
-| **Hatun-MCP** | `ffa28928e5688107390b1708eed528f31f6beafe` | `PAUSED` | `GET /readyz` → HTTP 503 | **UNAVAILABLE** |
-| Anatomy-3D / Operator-3D (Three.js showcases) | none | not deployed | screenshots only — see [3D Showcases](/anatomy/3d-showcases) | **UNAVAILABLE** |
+| Surface | Published revision | Provider state | Readiness probe | Evidence state |
+|---|---|---|---|---|
+| **a11oy** | `f5c395e81eaa306b2eb1c8bbf8773f07664ce564` | `RUNNING` | `GET /healthz` timed out at both 20 s and 30 s | **UNAVAILABLE** — readiness not observed |
+| **killinchu** | `83142da9526e2c0ddfe1e78eb99a20940cde0cf3` | `RUNNING` | `GET /api/killinchu/healthz` → HTTP 200 | **AVAILABLE_AT_OBSERVATION** — this observation only |
+| **Hatun-MCP** | `ebc78be2ffffb08241a1da1eb8ebcc6d34a1ab34` | `PAUSED` | `GET /readyz` → HTTP 503; provider quota `current=3`, `limit=3` | **UNAVAILABLE** |
 
-Doctrine v11 remains source-locked at `749 declarations / 14 unique axioms / 163 tracked sorries`
-and kernel `c7c0ba17`. Those values are a source contract; this observation did not receive them
-from a live runtime.
+The a11oy timeout is an availability result, not evidence that a route is absent or that its
+source is invalid. The killinchu result is a point-in-time readiness observation, not a
+continuous-availability guarantee. No authenticated Hatun-MCP `initialize` or `tools/list`
+session was performed in this observation.
 
-## Repositories
+## How to read developer commands
 
-Flagship repos run CI, CodeQL, SBOM, and DCO workflows on `main`:
+- **Source-local** commands run against a checked-out repository and can be reproduced without a
+  public runtime.
+- **Published contract** means a route shape exists in source or prior documentation. It is not a
+  current availability promise.
+- **Historical witness** identifies a past observed response and must include its date.
+- **AVAILABLE_AT_OBSERVATION** is reserved for a successful probe in the table above.
+- **UNAVAILABLE** means an integration command must fail closed; do not treat a timeout, 503, or
+  provider `RUNNING` state as success.
 
-- [a11oy](https://github.com/szl-holdings/a11oy) ·
-  [killinchu](https://github.com/szl-holdings/killinchu)
-- [lutar-lean](https://github.com/szl-holdings/lutar-lean) (kernel) ·
-  ouroboros-thesis ·
-  [szl-cookbook](https://github.com/szl-holdings/szl-cookbook) ·
-  [szl-brand](https://github.com/szl-holdings/szl-brand)
+Developer pages link here before presenting a hosted command. Commands against a11oy or
+Hatun-MCP are not a current quickstart while this observation remains `UNAVAILABLE`.
 
-::: info Dedicated status page
-A dedicated, auto-refreshing status page (uptime history + incident log) is **in development**.
-Until it ships, this page is the canonical endpoint list and each service's `/healthz` is the
-real-time source of truth.
-:::
+## Route and authentication boundary
 
-## Known honest-status items
+| Runtime | Canonical public readiness route | Authentication evidence in this observation |
+|---|---|---|
+| a11oy | `/healthz` | No authenticated session was tested; readiness is unavailable. |
+| killinchu | `/api/killinchu/healthz` | Public readiness returned HTTP 200; this does not establish authorization for other routes. |
+| Hatun-MCP | `/readyz` | The service is paused. Prior API-key transport evidence is historical, not a current client-session claim. |
 
-- **Hatun-MCP (`szlholdings-hatun-mcp.hf.space`):** the public
-  [server card](https://szlholdings-hatun-mcp.hf.space/.well-known/mcp/server-card.json),
-  [readiness](https://szlholdings-hatun-mcp.hf.space/readyz), and
-  [build information](https://szlholdings-hatun-mcp.hf.space/api/build-info) are currently
-  unavailable because the published Space is `PAUSED`. A prior release witnessed the
-  Streamable HTTP contract with API-key authentication, receipt chain, and signer, but that
-  historical result is not current availability. This observation did not perform an
-  authenticated `initialize`/`tools/list`; no authenticated client session was witnessed, and no
-  current Hatun client session is claimed. The a11oy and
-  killinchu same-origin `/mcp/` endpoints are also unavailable while their Spaces are paused.
-- **Roadmap surfaces not yet deployed (removed from the live table):** the Provenance Anchor,
-  Operator, and Policy components have **no live Space today** (their retired standalone Space
-  hostnames return HTTP 404) and are roadmap/frontier roles, not shipping services. The former
-  Operator-3D showcase is likewise not deployed. They are documented honestly under
-  [Flagships](/flagships/).
-- **"MCP receipts server" Space:** **removed from this table** — `szlholdings-mcp-receipts-server.hf.space`
-  is not deployed (HTTP 404) and has no backing repo. The flagship source exposes
-  `/khipu/sign` · `/khipu/verify` · `/khipu/pubkey`, but this observation cannot label those routes
-  live while the public runtimes are paused.
-- **cosign signing:** PENDING — DSSE signatures are `PLACEHOLDER` (see [Compliance](/compliance)).
-- **Cardano mainnet anchoring (Provenance Anchor):** in development.
-- **Wire D (W3C traceparent):** in-process tracing is implemented in deployed source;
-  cross-Space distributed-trace brokering is **NOT wired** (roadmap). Current runtime observation
-  is unavailable. See [WIRES D–H](/architecture).
-- **Wire E–H (cortex SSE, Khipu receipts, brain mesh, lean-verify):** implemented in-process in
-  deployed source; cross-Space orchestration is roadmap and current runtime observation is
-  unavailable.
-- **UDS public demo:** not witnessed live; retain as roadmap until a public runtime is observed.
-- **Unified SDKs (szl-python, szl-ts):** in development.
+The same-origin `/mcp/` transports and `/khipu/*` route shapes are not independently labelled
+ready by this observation. See [MCP integration](/developers/mcp_integration) for the client
+boundary and [API reference](/api/) for the route catalog.
 
-*Doctrine v11 LOCKED · 749/14/163 · kernel c7c0ba17 · SLSA L1 honest*
+## Supply-chain and receipt truth
+
+- **Runtime receipts:** no current runtime receipt signature is claimed. A hash-chain or
+  self-digest demonstrates integrity of the supplied bytes; it does not authenticate a signer
+  when the receipt is labelled `DSSE-PLACEHOLDER` or `UNSIGNED`.
+- **Image signatures:** image-level cosign/Sigstore evidence, if published for an immutable image
+  digest, is a separate artifact class. It does not make a paused or timing-out runtime ready and
+  does not sign a runtime receipt.
+- **Build provenance:** source CI, SBOMs, and attestations describe their named build artifacts.
+  They are not deployment or readiness evidence.
+- **SLSA:** the documented posture is **L1 (honest)**. L2/L3 are not claimed.
+
+## Source and proof contract
+
+Doctrine v11 is source-locked at `749 declarations / 14 unique axioms / 163 raw sorry tokens`,
+measured at exact commit `c7c0ba17c2eaec60ad38ea9172b4a0d9ca0b582f` with the repository-owned
+counter. That is a pinned source contract, not a value received from a public runtime or a claim
+about the differently bound `lutar-v18.0.0` tag. Reproduce it on the [Evidence](/evidence/) page.
+
+*Runtime observation ended 2026-08-11T07:27:11Z · deployed docs identity: `/deployment.json` · SLSA L1 honest*

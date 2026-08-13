@@ -1,93 +1,43 @@
-# a11oy Operator — receipt orchestration
+# a11oy Operator - receipt orchestration
 
-> **a11oy Operator** is the admission-control & receipt-DAG vertical of [a11oy](/flagships/a11oy).
-
-<div class="quechua">
-<strong>Name origin.</strong> <em>Operator</em> is an English role name — the
-<strong>R</strong>eceipt-<strong>O</strong>rchestrated <strong>S</strong>igned
-<strong>I</strong>ngress <strong>E</strong>nvironment. Its structure, however, is pure Andean:
-the receipt DAG is modelled directly on the Inka <em>khipu</em>.
-</div>
+> **Status:** Operator is documented as an a11oy in-process capability and frontier receipt role.
+> It is not claimed as a separately deployed public service; see [Runtime status](/status).
 
 ## Overview
 
-**a11oy Operator** is the **admission-control and receipt-DAG surface** of a11oy. It ships the
-**Khipu-indexed receipt DAG** — a three-tier pendant-cord tree that records every governance
-decision under a **summation-cord invariant** and an optional dual-attestation field. As of
-v17 it also ships the **CSS (Calderbank-Shor-Steane) ingress** module: quantum-error-correcting
-admission control for governed receipt streams.
+**a11oy Operator** documents a Khipu-indexed receipt-DAG model: a three-tier pendant-cord tree
+that represents governance decisions with a summation invariant and an optional
+dual-attestation field. The source contains a CSS ingress module and receipt-DAG implementation.
+This is an implementation and design description, not a claim that every public receipt is
+currently signed or that an independent Operator runtime is live.
 
-> **Frontier capability.** First QEC-admission-controlled receipt DAG with CSS ingress and a
-> kernel-verified sum invariant — `Lutar/Khipu/SummationInvariant` + CSS v17
-> ([Ouroboros Thesis DOI 10.5281/zenodo.20434276](https://doi.org/10.5281/zenodo.20434276)).
-
-**Anatomy mapping:** a11oy Operator is the operational [Khipu](/anatomy/#khipu) organ, fed by
-[Yawar](/anatomy/#yawar) and anchored externally by [a11oy Memory](/flagships/memory).
+The role maps to the [Khipu](/anatomy/#khipu) organ and is related to
+[Yawar](/anatomy/#yawar). Signature status is governed by [Compliance](/compliance) and must be
+checked on the exact artifact.
 
 ```mermaid
 flowchart TD
-    subgraph Ingress["CSS ingress (v17)"]
-        CI[css_ingress.ts — QEC admission control]
-        QL[qec_lineage.ts — error-correction provenance]
-    end
-    subgraph DAG["Khipu receipt DAG"]
-        DR[DecisionReceipt — leaf: id · value · SHA-256]
-        OR[OrganReceipt — pendant: Σ decision values]
-        KR[KhipuRootReceipt — primary: Σ pendant values]
-        DA[DualAttestation — two distinct signers]
-    end
-    CI --> DAG
-    QL -->|lutar-lean backing| CI
-    DR --> OR --> KR
-    DA --> KR
+    CI["CSS ingress - documented source module"] --> DR["Decision receipt"]
+    DR --> OR["Organ receipt"]
+    OR --> KR["Khipu root receipt"]
+    DA["Optional dual-attestation field"] --> KR
 ```
 
 ## The summation invariant
 
-The structural heart of a11oy Operator mirrors the Inka khipu primary-cord arithmetic:
+The receipt model uses the arithmetic relationship:
 
 $$ \text{rootValue} \;=\; \sum \text{pendantValues} \;=\; \sum \sum \text{decisionValues}. $$
 
-Tampering with any leaf changes the root boundary sum — integrity by additive arithmetic,
-not hash-collision resistance alone. This is formally verified in
-[`lutar-lean`](https://github.com/szl-holdings/lutar-lean) as
-`Lutar/Khipu/SummationInvariant.lean`, and is the algebraic root of the PURIQ
-[INV-3 invariant](/doctrine/puriq#sf-06).
+The site links the relevant Lean file, `Lutar/Khipu/SummationInvariant.lean`, as proof evidence.
+The overall formal-methods posture remains `MIXED`; read the [Evidence index](/evidence/) and
+[Proof](/proof) rather than extrapolating a single invariant into a system-wide guarantee.
 
-## What's here
+## Source and evidence
 
-| File | Purpose |
-|------|---------|
-| `src/khipu-receipt.ts` | Three-tier pendant-cord receipt DAG with sum-of-sums invariant |
-| `src/qec/css_ingress.ts` | CSS ingress: QEC-governed admission control (v17, PR #6) |
-| `src/qec/qec_lineage.ts` | QEC lineage tracking and provenance chain (v17, PR #6) |
-| `tests/khipu-receipt.test.ts` | 10 runtime tests: TH11 failure modes, dual-attestation, R1/R2 smoke |
-| `src/qec/css_ingress.test.ts` | CSS ingress tests |
-
-## API / install
-
-```bash
-git clone https://github.com/szl-holdings/a11oy.git
-cd a11oy
-pnpm install
-pnpm test   # 10 runtime tests
-```
-
-## Example — verify the invariant
-
-```ts
-import { KhipuRoot, verifySumInvariant, verifyDualAttestation } from './src/khipu-receipt'
-
-const root = KhipuRoot.from(organReceipts)
-
-verifySumInvariant(root)      // true ⇔ rootValue = Σ Σ decisionValues
-verifyDualAttestation(root)   // P6 + P8 of A8: two distinct signers required
-```
-
-## Source & evidence
-
-- **Repo:** [`a11oy`](https://github.com/szl-holdings/a11oy)
-- **3D showcase (screenshots; not deployed):** [Operator-3D](/anatomy/3d-showcases#operator-3d)
-- **Proof:** `Lutar/Khipu/SummationInvariant.lean` in [`lutar-lean`](https://github.com/szl-holdings/lutar-lean)
-- **DOI:** [10.5281/zenodo.20434276](https://doi.org/10.5281/zenodo.20434276)
-- **License:** Apache-2.0
+- **Role status:** `ROADMAP` as a standalone service; documented in-process receipt capability.
+- **Source:** [`a11oy`](https://github.com/szl-holdings/a11oy)
+- **Proof reference:** `Lutar/Khipu/SummationInvariant.lean` in [`lutar-lean`](https://github.com/szl-holdings/lutar-lean)
+- **Signature posture:** [Compliance](/compliance) and the exact receipt artifact are authoritative.
+- **3D showcase:** [screenshots only; not deployed](/anatomy/3d-showcases#operator-3d)
+- **Thesis v18 reference (not a software/product DOI):** [10.5281/zenodo.20434276](https://doi.org/10.5281/zenodo.20434276)

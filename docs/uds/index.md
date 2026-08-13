@@ -1,54 +1,54 @@
 # UDS — Unified Demo Surface
 
-::: warning Roadmap — public launch not witnessed
-The **Unified Demo Surface (UDS)** is not a publicly witnessed end-to-end deployment.
-This page documents the surface being wired. Until a deployment is independently
-verified, use the individual flagship REST surfaces or the authenticated
-[Hatun-MCP](#mcp-governed-tools) runtime with the evidence boundary below.
+::: danger UNAVAILABLE — design contract, not a public runtime
+No exact-revision public UDS deployment, multi-organ execution, quorum receipt, per-organ
+signature set, or Rekor entry has been independently witnessed. Hatun-MCP was `PAUSED` and
+returned HTTP 503 in the dated [/status](/status) observation. Do not run this page as an
+integration guide until those gates have evidence.
 :::
 
-UDS is the single, governed demo surface that fans a customer request out across the
-five SZL flagships, gathers each organ's signed verdict, and returns a **3-of-4
-Byzantine-fault-tolerant consensus receipt** — every step provenanced on the Khipu
-chain.
+UDS is the proposed single governed surface for composing SZL product roles. This page records
+the architecture and the evidence required to promote it; it does not assert that five independent
+services, a consensus deployment, or a signed-receipt pipeline currently exists.
 
-> Doctrine v11 **LOCKED** — 749 declarations / 14 axioms / 163 sorries · locked_at `c7c0ba17`.
-> SLSA L1 (honest). Λ = Conjecture 1 (not a theorem). Quechua names are brand naming only.
+> Doctrine source snapshot: `c7c0ba17c2eaec60ad38ea9172b4a0d9ca0b582f` — locally measured
+> `749 declarations / 14 unique axioms / 163 raw sorry tokens`. Lambda remains Conjecture 1.
 
-## What UDS does
+## Proposed execution contract
 
-1. **Single intake** — one request hits the UDS aggregator (`killinchu` acts as the
-   consensus aggregator at the `/api/killinchu/uds/v1/*` surface).
-2. **Fan-out to organs** — each flagship (`a11oy`, `memory`, `sentinel`, `operator`,
-   `killinchu`) signs its verdict with its own ECDSA-P256 cosign key
-   (`<organ>-cosign`).
-3. **Quorum** — a canonical receipt is emitted only when **3 of 4** organ signatures
-   agree (the BFT safety property). Disagreement yields a clearly-labelled rejection
-   receipt.
-4. **Provenance** — the consensus receipt is pushed to the public Khipu chain and a
-   Rekor transparency entry, so any party can re-verify the decision years later.
+1. **Intake** — a versioned request enters a named aggregator route.
+2. **Fan-out** — independently deployed roles evaluate the same content-addressed input.
+3. **Quorum** — a declared quorum rule evaluates byte-identical, signer-bound verdicts.
+4. **Receipt** — the aggregator emits an integrity record and, only when proven, a signature.
+5. **Publication** — immutable receipt bytes, key/certificate identity, and transparency material
+   are retained together.
 
-## MCP-governed tools
+Those steps are design requirements. A source route or diagram does not prove any step ran.
 
-Until UDS opens publicly, the dedicated **Hatun-MCP** service reports a ready
-Streamable HTTP runtime at `https://szlholdings-hatun-mcp.hf.space/`. Its public
-[server card](https://szlholdings-hatun-mcp.hf.space/.well-known/mcp/server-card.json)
-requires API-key authentication and is the source of truth for the current catalog; no
-tool count is frozen here. This release has not witnessed an authenticated client session.
-See the [MCP integration guide](/developers/mcp_integration) and the
-[flagship pages](/flagships/) for the evidence states of today-available surfaces.
+## Promotion evidence required
 
-## Honesty labels
+| Gate | Required evidence | Current state |
+|---|---|---|
+| Deployment | Exact source revision, immutable image digests, protected deployment run, live readback | **UNAVAILABLE** |
+| Organ independence | Named live endpoints and revisions for every quorum participant | **UNAVAILABLE** |
+| Quorum | Request bytes, participant verdict bytes, algorithm/version, and replay result | **UNAVAILABLE** |
+| Receipt signing | Signature algorithm, exact signed bytes, signer identity, public verification material, verified result | **UNAVAILABLE** |
+| Rekor/transparency | Immutable log index and entry readback bound to the receipt digest | **UNAVAILABLE** |
+| MCP | Authenticated `initialize` plus catalog/tool witness at an exact Hatun-MCP revision | **UNAVAILABLE** |
 
-- **UDS public demo is not yet live** — no public launch is claimed without an
-  independently witnessed deployment. The consensus primitive
-  (`/api/killinchu/uds/v1/mission/execute`, `/consensus/verify`) is the surface being
-  wired; this page changes state only after that evidence exists.
-- Per-organ signatures are **real ECDSA-P256-SHA256** over the DSSE PAE — verifiable
-  with `cosign verify-blob --key <organ>.pub`.
-- Drone positions used in UDS killinchu demos are **deterministic simulated** (seeded),
-  and geofence zones are a **static snapshot** — both clearly labelled at the API.
+## Published route shapes
+
+Source documentation names `/api/killinchu/uds/v1/mission/execute` and
+`/api/killinchu/uds/v1/consensus/verify` as proposed route shapes. They are not current public
+quickstarts. See [MCP integration](/developers/mcp_integration), [API reference](/api/), and
+[Compliance](/compliance) before interpreting a response.
+
+## Simulation boundary
+
+Drone positions in UDS examples are deterministic simulated inputs, and geofence zones are static
+fixtures. Simulation can test orchestration logic; it cannot establish deployment, sensor
+authenticity, runtime availability, or signature provenance.
 
 ---
 
-*Doctrine v11 LOCKED · 749 / 14 / 163 · c7c0ba17 — signed Yachay `<yachay@szlholdings.dev>` · Co-Authored-By: Perplexity Computer Agent · Apache-2.0.*
+*Design contract · runtime/signature/transparency state UNAVAILABLE · SLSA L1 honest*

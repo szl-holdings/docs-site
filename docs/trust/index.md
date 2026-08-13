@@ -1,69 +1,64 @@
-# Trust — Public Transparency Layer
+# Trust - Public Transparency Layer
 
-> A measurable governance operator on the receipt-bus σ-algebra of agentic AI — publishing Covenant Proof Standard run artifacts from real production executions with `mocked:false` evidence chains for external auditability.
+> A read-only registry of historical governance artifacts. It helps a reviewer inspect included
+> bytes and provenance fields; it is not a live execution service or evidence of current
+> production availability.
 
-> **Migrated here from [`szl-holdings/szl-trust`](https://github.com/szl-holdings/szl-trust).**
-> This is the canonical published home of the trust/transparency docs. The source repo remains
-> active during consolidation but is now marked deprecated in favor of this site.
+> **Migrated from [`szl-holdings/szl-trust`](https://github.com/szl-holdings/szl-trust).** This
+> docs site is the canonical published location during the stated migration lifecycle.
 
 ## What this is
 
-The trust layer is the public transparency layer of the SZL Holdings governed AI platform. It publishes Covenant Proof Standard (CPS) run artifacts — hash-chained, cryptographically verifiable governance receipts from real production executions. The canonical reference run is the **E4 Codex Kernel (2026-04-29)**: 12 receipts, all `mocked:false`, 12 proof-ledger steps, with a `deployment_contract.json` anchoring the full run to a specific `repo_commit`. External auditors, partners, and regulators can verify every decision without SZL tooling.
+The Trust layer publishes Covenant Proof Standard (CPS) artifact sets: JSON receipts, a
+hash-linked ledger, manifests, and a local verifier. These artifacts can support an integrity
+review of the bytes that are actually included. They do not independently establish a current
+runtime, an externally witnessed deployment, a customer workflow, or a signature that is not
+present in the reviewed artifact.
 
-## Why it matters
+The canonical E4 Codex Kernel artifact set is a **historical deterministic demonstration**. Its
+own lineage identifies `model_provider` as `proxy_or_offline_emulator`, its model version as
+`deterministic`, and its final state as `demo_epoch`. Its `mocked:false` fields describe the
+receipt data; they do not convert this demonstration into production-runtime evidence.
 
-Regulated AI must demonstrate that decisions were made within approved policy bounds — and that evidence is not fabricated post-hoc. This layer provides the artifact registry: every receipt is deterministic (same inputs + policy → same byte-string), hash-chained (no receipt can be inserted without breaking the chain), and published at rest (no live system to query). This is what Article 12 of the EU AI Act and NIST AI RMF traceability requirements look like in practice.
+## E4 artifact set at a glance
 
-## Deep dive
+| Field | Included artifact value | Truth label |
+|-------|-------------------------|-------------|
+| Run ID | `E4-codex-kernel-governed-loop-unified-replit-all-in-one` | `HISTORICAL` |
+| Date | 2026-04-29 | `HISTORICAL` |
+| Receipts | 12 with `mocked:false` fields | `MODELED` demonstration evidence |
+| Proof ledger | 12 hash-linked steps | inspectable local artifact |
+| Model provider | `proxy_or_offline_emulator` | `MODELED` |
+| Final state | `demo_epoch` | demonstration state |
+| Runtime availability | not established by this artifact | consult [Runtime status](/status) |
 
-See **[Trust architecture (deep dive)](/trust/trust-deep)** for the full inclusion-proof chain, the Rekor-style transparency-log anchor, and the layered verification paths for a sophisticated external reviewer.
+## What a reviewer can check locally
 
-## E4 Codex Kernel run at a glance
-
-| Metric | Value |
-|--------|-------|
-| Run ID | `E4-codex-kernel-governed-loop-unified-replit-all-in-one` |
-| Date | 2026-04-29 |
-| Receipts | 12 (`mocked:false` on all) |
-| Proof ledger steps | 12 (hash-chained, covenant-v1) |
-| Span validators | `state_transition_rule`, `drift_bounds`, `human_gate`, `evidence_provenance` — all PASS |
-| Policy version | `covenant-v1` |
-| Repo commit | `7eb623f8b870128e615ac6be9880e0265204b454` |
-
-## Verify it yourself
-
-Receipts are plain JSON, verifiable without proprietary SZL tooling. The canonical
-docs-site copy now contains the one-shot [`verify.sh`](https://github.com/szl-holdings/docs-site/blob/main/docs/trust/verify.sh)
-and the byte-identical [E4 run artifact set](https://github.com/szl-holdings/docs-site/tree/main/docs/trust/runs/E4-codex-kernel-2026-04-29).
-The immutable source commit, per-file SHA-256 values, and migration boundary are recorded in
-[Migration provenance](https://github.com/szl-holdings/docs-site/blob/main/docs/trust/MIGRATION_PROVENANCE.md).
+The docs-site copy contains [`verify.sh`](https://github.com/szl-holdings/docs-site/blob/main/docs/trust/verify.sh)
+and the [E4 artifact set](https://github.com/szl-holdings/docs-site/tree/main/docs/trust/runs/E4-codex-kernel-2026-04-29).
+The [migration provenance](/trust/MIGRATION_PROVENANCE) page records the file boundary.
 
 ```bash
 git clone https://github.com/szl-holdings/docs-site && cd docs-site
 
-# Inspect the canonical E4 Codex Kernel copy
 jq '.deliverables' docs/trust/runs/E4-codex-kernel-2026-04-29/run_manifest.json
 head -3 docs/trust/runs/E4-codex-kernel-2026-04-29/proof_ledger.jsonl | jq '.'
-
-# Verify mocked:false on every trace receipt
 jq -s '[.[].decision_receipt.mocked] | unique' \
   docs/trust/runs/E4-codex-kernel-2026-04-29/trace.jsonl
-# → [false]
-
-# Run the one-shot verifier; it prefers the colocated canonical receipt
 bash docs/trust/verify.sh
 ```
 
-The predecessor repository remains readable for provenance and rollback. Its lifecycle is
-`deprecated`, not `archived`, until the owner-authorized GitHub mutation and post-archive
-smoke tests are complete.
+Command output only verifies what the command and its present dependencies actually return. A
+failed network call or absent signature is a discrepancy to report, not a condition this page can
+silently upgrade.
 
-## Scope (honest)
+## Scope boundary
 
-- **Not a live execution system.** A read-only audit artifact registry — it publishes receipts, it does not execute AI decisions.
-- **Not independently sufficient for trust.** Receipts should be verified against the Ouroboros runtime and Covenant Policy Engine; this layer does not ship the verifier.
-- **Not a general-purpose blockchain ledger.** Receipts are JSON artifacts anchored by Merkle roots; Cardano anchoring (via the a11oy Memory provenance anchor) is separate.
+- **Not a live execution system.** It publishes historical artifacts and does not execute AI decisions.
+- **Not independently sufficient for trust.** Review the exact source, runtime, and policy context separately.
+- **Not a general-purpose blockchain ledger.** The files are JSON artifacts with hash-link fields;
+  Cardano mainnet anchoring is not claimed here.
+- **Not a signature authority.** Receipt-signature posture is governed by [Compliance](/compliance)
+  and must be verified on the exact artifact.
 
----
-
-Doctrine v11 LOCKED · 749/14/163 · kernel c7c0ba17 · Λ = Conjecture 1 · CC-BY-4.0
+For an investor-facing map of this boundary, see the [Diligence index](/investors/diligence).

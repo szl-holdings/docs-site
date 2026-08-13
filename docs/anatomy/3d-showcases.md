@@ -43,7 +43,8 @@ frontier-capability map across the ecosystem. Screenshots from the local build:
 
 **What you are looking at:** the brain-jack mesh shows the [PURIQ](/doctrine/puriq)
 `decide → act → reflect` decision flow; the frontier map highlights each flagship's
-verified frontier capability.
+depicted frontier capability. The image is a local visualization, not a
+capability-specific runtime or verification record.
 
 ## Source
 

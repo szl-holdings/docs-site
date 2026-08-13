@@ -1,8 +1,9 @@
-# Greene demo flow
+# Greene source-described flow
 
-An end-to-end counter-UAS decision-support walkthrough built on
-[killinchu](/flagships/killinchu) and the [a11oy](/flagships/a11oy) Λ-gate — the path a
-defense evaluator follows from a raw broadcast signal to a receipted, governed recommendation.
+A historical/source-described counter-UAS decision-support walkthrough built around
+[killinchu](/flagships/killinchu) and the [a11oy](/flagships/a11oy) Λ-gate. It models a path from
+a raw broadcast signal to a receipted recommendation; it is not evidence that this end-to-end
+path ran on the current hosted revision.
 
 ## The flow
 
@@ -20,19 +21,23 @@ sequenceDiagram
     R-->>S: governed recommendation + receipt
 ```
 
-1. **Ingest** a real broadcast self-ID (Remote-ID, ADS-B, or MAVLink) — `POST /v1/*/decode`.
-2. **Geofence** — haversine breach check against the protected volume.
-3. **Λ-gate** — fuse the geofence result with the [13-axis `yuyay_v3`](/doctrine/v11-v12) score;
+1. **Ingest (source-described)** a broadcast self-ID shape (Remote-ID, ADS-B, or MAVLink) through
+   a documented `/v1/*/decode` route.
+2. **Geofence (source-described)** — haversine breach check against the protected volume.
+3. **Λ-gate (source-described)** — fuse the geofence result with the [13-axis `yuyay_v3`](/doctrine/v11-v12) score;
    conjunctive AND, no compensation.
-4. **Receipt** — emit a DSSE Khipu receipt into the in-memory Merkle DAG (real SHA-256).
-5. **Recommendation** — a governed, auditable decision the operator can replay.
+4. **Receipt (source-described)** — form a Khipu receipt in an in-memory Merkle DAG; signature
+   status remains `PLACEHOLDER`.
+5. **Recommendation (source-described)** — return decision-support output for operator review.
 
-## Why it lands
+## What the source flow demonstrates
 
-Every step is **verifiable on disk**: the decode is a real protocol parse, the geofence is a
-closed-form haversine, the Λ-gate returns a 13-entry score vector, and the receipt chains. An
-evaluator can reproduce the entire path from the [killinchu API](/api/killinchu) without trusting
-a single opaque step.
+Source inspection can audit the intended protocol parse, haversine calculation, 13-entry score
+vector, and receipt-chain construction. The docs-site observation did not invoke the decode,
+evaluation, or receipt routes, so hosted end-to-end reproducibility is **UNAVAILABLE** here. It
+would require an exact-revision action-route response plus payload, authorization, dependency,
+receipt, and independent readback evidence; the successful health response supplies none of
+those bindings.
 
 ## Honest boundaries
 
@@ -40,5 +45,8 @@ a single opaque step.
 - Broadcast signals are **unauthenticated and spoofable**; every decoded field is a *claim*.
 - DSSE signatures are **PLACEHOLDER**; the receipt's SHA-256 chain is real (see
   [Compliance](/compliance)).
+- Hosted evidence is **health-only**: `GET /api/killinchu/healthz` returned HTTP 200 at exact
+  revision `83142da9526e2c0ddfe1e78eb99a20940cde0cf3` during the dated observation. No `/v1/*`
+  route was witnessed.
 
-> This flow is the live, runnable counterpart to the [Quickstart killinchu step](/quickstart#_4-killinchu-decode-a-remote-id-frame).
+> This flow is a source-described historical companion to the [Quickstart killinchu health step](/quickstart#_3-call-the-currently-ready-public-route). Recheck [/status](/status); health does not establish action-route availability.

@@ -1,70 +1,33 @@
-# a11oy Memory — provenance anchor
+# a11oy Memory - provenance anchor
 
-> **a11oy Memory** is the provenance & receipt-anchoring vertical of [a11oy](/flagships/a11oy).
+> **Status:** Memory is documented as an a11oy in-process capability and a roadmap provenance
+> role. It is not claimed as a separately deployed public service; see [Runtime status](/status).
 
 ## Overview
 
-**a11oy Memory** handles **blockchain anchoring of governance receipts** with **Shor-encoded
-provenance**: provenance hashes are encoded with the 9-qubit Shor code before Cardano
-anchoring, giving single-qubit error correction on the immutable receipt chain. It performs
-convergent multi-source data sync with append-only delta logs and bounded-loop convergence
-guarantees.
+**a11oy Memory** documents receipt-provenance techniques including append-only delta logs,
+Lamport ordering, and a Shor-encoding representation. The proposed external Cardano anchoring
+path is not a mainnet claim. It remains a roadmap item stated on [Runtime status](/status).
 
-> **Frontier capability.** First Shor-encoded + Cardano-anchored governance-receipt minting
-> pipeline.
+The source description should be read as an implementation and architecture reference. It does
+not establish a currently reachable anchoring service, a signed receipt, or an immutable external
+ledger for every decision.
 
-**Anatomy mapping:** a11oy Memory sits across [Yawar](/anatomy/#yawar) (the receipt ledger) and
-the [Khipu](/anatomy/#khipu) DAG, providing the durable external anchor.
+## Mathematical references
 
-## Mathematical foundation
+| Property | Documented scope | Reference |
+|----------|------------------|-----------|
+| Convergence | proposed compression-operator framing | [Banach, 1922](https://doi.org/10.4064/fm-3-1-133-181) |
+| Error correction | Shor-encoding representation in the provenance design | [Shor, 1995](https://doi.org/10.1103/PhysRevA.52.R2493) |
+| Causal order | Lamport timestamps in receipt-event ordering | [Lamport, 1978](https://doi.org/10.1145/359545.359563) |
 
-| Property | Guarantee | Source |
-|----------|-----------|--------|
-| **Convergence** | The delta-log compression operator is a **contraction mapping** on hash-verified ingest sequences under the ℓ∞ norm | [Banach, 1922](https://doi.org/10.4064/fm-3-1-133-181) |
-| **Error correction** | Provenance hashes are **Shor 9-qubit** encoded for single-qubit correction on the anchor chain | [Shor, 1995](https://doi.org/10.1103/PhysRevA.52.R2493) |
-| **Causal order** | Receipt events carry **Lamport timestamps** for total causal order across nodes | [Lamport, 1978](https://doi.org/10.1145/359545.359563) |
+The formal-methods and runtime evidence for any specific property must be read from its pinned
+artifact. The broad proof posture is `MIXED`; see [Evidence](/evidence/) and [Proof](/proof).
 
-Banach contraction (the convergence guarantee): there exists $q \in [0,1)$ such that for the
-compression operator $T$,
+## Source and evidence
 
-$$ d\big(T(x), T(y)\big) \le q \cdot d(x, y), $$
-
-so iterating $T$ converges to a unique fixed point — the canonical synced ledger state.
-
-## API / install
-
-```sh
-git clone https://github.com/szl-holdings/a11oy.git
-cd a11oy
-pnpm install
-pnpm test
-```
-
-## Example — mint a receipt
-
-```ts
-import { mintReceipt } from '@szl/a11oy'
-
-const receipt = mintReceipt({
-  payload: { decisionId: 'd-001', value: 1, organ: 'a11oy.policy' },
-})
-
-console.log(receipt.sha256)   // SHA-256 over the canonical JSON
-console.log(receipt.lamport)  // Lamport timestamp for causal order
-console.log(receipt.shorBlock)// Shor-9 encoded provenance block
-```
-
-::: warning In development
-**Cardano mainnet anchoring** is in development (target: Series-A milestone). The local
-append-only delta log, Shor encoding, and Lamport ordering are **live today** and tested
-via `pnpm test`. The DSSE receipt **signature** field is a PLACEHOLDER until Sigstore CI
-lands (see [Compliance](/compliance)).
-:::
-
-## Source & evidence
-
-- **Repo:** [`a11oy`](https://github.com/szl-holdings/a11oy)
-- **Spec:** Ouroboros Thesis ([10.5281/zenodo.20434276](https://doi.org/10.5281/zenodo.20434276))
-- **Proofs:** [`lutar-lean`](https://github.com/szl-holdings/lutar-lean)
-- **DOI (versioned):** [10.5281/zenodo.20434276](https://doi.org/10.5281/zenodo.20434276) · **Concept DOI:** [10.5281/zenodo.19944926](https://doi.org/10.5281/zenodo.19944926)
-- **License:** Apache-2.0
+- **Role status:** `ROADMAP` as a standalone provenance service.
+- **Source:** [`a11oy`](https://github.com/szl-holdings/a11oy)
+- **External anchoring:** Cardano mainnet anchoring is `ROADMAP`, not a current claim.
+- **Receipt signatures:** [Compliance](/compliance) and the exact artifact are authoritative.
+- **Specification:** [Ouroboros Thesis](https://doi.org/10.5281/zenodo.20434276)

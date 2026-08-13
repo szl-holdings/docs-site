@@ -20,6 +20,9 @@ hero:
     - theme: alt
       text: Understand the platform
       link: /flagships/
+    - theme: alt
+      text: Investor brief
+      link: /investors/
 
 features:
   - title: Decide under policy
@@ -36,7 +39,7 @@ features:
 ## One company. Three ways in.
 
 <div class="szl-audience">
-  <a href="./about.html"><span class="szl-kicker">Investor</span><strong>See the category and wedge</strong><span>Understand the platform, product surfaces, governance moat, and what is shipping versus roadmap.</span></a>
+  <a href="./investors/index.html"><span class="szl-kicker">Investor</span><strong>Start with the evidence</strong><span>Understand the product surfaces, formal-methods posture, operating limits, and diligence path without upgrading a claim.</span></a>
   <a href="./developers/index.html"><span class="szl-kicker">Developer</span><strong>Get to a working call</strong><span>Choose an API or SDK, run the quickstart, inspect the response contract, and verify a receipt.</span></a>
   <a href="./evidence/index.html"><span class="szl-kicker">Evaluator</span><strong>Audit before you trust</strong><span>Start with evidence, proof state, lineage, runtime status, and explicit limitations.</span></a>
 </div>
@@ -90,19 +93,24 @@ replay the decision boundary.
 No single page upgrades a claim. `REAL`, `MEASURED`, `MODELED`, `ROADMAP`, and `UNAVAILABLE` keep
 their meaning across product, documentation, GitHub, and evidence surfaces.
 
+For an investment-oriented view of the same source material, start with the
+[Investor brief](./investors/index.html). It separates source status, proof status, and runtime
+availability rather than using a product label as evidence of a live service.
+
 ## Citation
 
 ```bibtex
 @software{szl_holdings_2026,
   author    = {Lutar, Stephen P.},
-  title     = {SZL Holdings: Sovereign Governed AI},
+  title     = {SZL Holdings documentation},
   year      = {2026},
-  publisher = {Zenodo},
-  version   = {Doctrine v11 LOCKED},
-  doi       = {10.5281/zenodo.20434276},
-  url       = {https://github.com/szl-holdings}
+  url       = {https://holdings.a-11-oy.com/docs-site/},
+  note      = {Resolve /deployment.json for the exact deployed source revision and artifact root}
 }
 ```
+
+The separate versioned [Ouroboros Thesis v18 deposit](https://doi.org/10.5281/zenodo.20434276)
+must be cited under its own title and artifact identity; it is not the DOI of this software site.
 
 This documentation uses the versioned [KANCHAY design system](./brand.html). Its generated bundle,
 source revision, and integrity manifest are committed beside the site theme.

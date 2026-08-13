@@ -1,112 +1,54 @@
-# Evidence
+# Evidence and reproduction
 
-Every claim on this site is meant to be checked. This page is the evidence index: the DOIs,
-commit anchors, Lean kernel, thesis PDFs, evaluation results, and example receipts that back
-the [flagships](/flagships/), the [anatomy](/anatomy/), and the [doctrine](/doctrine/v11-v12).
+Every claim must identify its evidence class and anchor. For a deployed documentation artifact,
+`/deployment.json` is the exact source/workflow/file-root authority; it does
+not certify a product runtime.
 
-## Single source of truth
+## Locked source contract
 
-Per Doctrine v11: **the README of each repo on `main` HEAD is the source of truth**, and you
-must regenerate any number before citing it. Reproduce the canonical Lean figures:
+Doctrine v11's measured source contract is exact commit
+`c7c0ba17c2eaec60ad38ea9172b4a0d9ca0b582f`. It is **not** the commit referenced by annotated tag
+`lutar-v18.0.0`, so the two identifiers must not be presented as one artifact:
 
 ```bash
-gh repo clone szl-holdings/lutar-lean /tmp/lutar -- --depth 1
-cd /tmp/lutar
-DECL=$(grep -rE '^(theorem|lemma|def|abbrev|axiom) ' --include='*.lean' Lutar/ | wc -l)
-AXIOM_UNIQ=$(grep -rhE '^axiom ' --include='*.lean' Lutar/ | awk '{print $2}' | sort -u | wc -l)
-SORRY=$(grep -rE '\bsorry\b' --include='*.lean' Lutar/ | wc -l)
-echo "Lean: $DECL declarations / $AXIOM_UNIQ unique axioms / $SORRY sorries"
+LUTAR_REV=c7c0ba17c2eaec60ad38ea9172b4a0d9ca0b582f
+git clone --filter=blob:none --no-checkout https://github.com/szl-holdings/lutar-lean.git lutar
+cd lutar
+git checkout --detach "$LUTAR_REV"
+test "$(git rev-parse HEAD)" = "$LUTAR_REV" || { echo "wrong locked snapshot"; exit 1; }
+python3 -I -B .github/scripts/lean_numbers.py --repo-path . --ref "$LUTAR_REV"
 ```
 
-| Snapshot | Declarations | Unique axioms | Sorries | Anchor |
-|----------|-------------|---------------|---------|--------|
-| **v11 LOCKED (contract)** | <span class="locked">749</span> | <span class="locked">14</span> | <span class="locked">163</span> | tag `lutar-v18.0.0` / `c7c0ba17` |
-| Live (matches contract) | 749 *(measured @ `c7c0ba17`)* | 14 | 163 (112 baseline + 51 Putnam) | `lean_numbers.json` |
+Locally remeasured on 2026-08-11 with that checked-in counter: `749 declarations / 14 unique
+axioms / 163 raw sorry tokens` (`149` outside pure line comments). This is a pinned source
+assertion. To inspect current `main`, resolve and print its full SHA first, then label the output
+**CURRENT SOURCE**. Never substitute a tag or shallow default-branch clone for this snapshot.
 
-Both are stated honestly. The **locked** figures are the doctrine contract; the **live** figures are the current measured reality, and now match the locked contract. Source for the live snapshot:
-[`lean_numbers.json`](https://github.com/szl-holdings/.github/blob/main/.github/data/lean_numbers.json).
+## Runtime observation
 
-## Lean kernel
+The dated public observation is maintained on [/status](/status): a11oy was `RUNNING` but
+readiness **UNAVAILABLE** (timeouts), killinchu was **AVAILABLE_AT_OBSERVATION** for its documented health probe,
+and Hatun-MCP was `PAUSED`/**UNAVAILABLE**. Runtime source, provider state, readiness, and an
+authenticated client session remain distinct evidence classes.
 
-- **Kernel:** [`szl-holdings/lutar-lean`](https://github.com/szl-holdings/lutar-lean) — the
-  machine-checked proof corpus (`Lutar/`).
-- **Key files:** `Lutar/Axioms.lean` (A1–A4), `Lutar/Khipu/SummationInvariant.lean`,
-  `Lutar/QEC/KitaevSurface`, `Lutar/DPI/DPIBound.lean` (Pinsker), `Lutar/Egyptian/AkhmimTable.lean`.
-- **PURIQ obligations:** `formulas/PuriqLean.lean` — `puriq_halting_safety`,
-  `puriq_lambda_monotone`, `puriq_khipu_integrity`, `puriq_bekenstein_bound` (all `sorry`-tagged).
-- **Putnam:** 4/12 GREEN [A1, A5, B4, B6] (no sorries); 10/12 with structural skeletons.
+## DOI register
 
-## Zenodo DOIs
+| DOI | Stated role | Boundary |
+|---|---|---|
+| [10.5281/zenodo.20434276](https://doi.org/10.5281/zenodo.20434276) | Ouroboros Thesis v18.0, versioned | Cite the versioned deposit; it is not a current runtime witness. |
+| [10.5281/zenodo.19944926](https://doi.org/10.5281/zenodo.19944926) | Concept DOI | Always-latest reference; do not use as immutable-release evidence. |
+| [10.5281/zenodo.20424992](https://doi.org/10.5281/zenodo.20424992) | Ouroboros Thesis v14, versioned deposit (`paper-v14-1.0.2`) | The deposit title/version is identified here; record the deposited filename and SHA-256 before binding a file to source evidence. |
+| [10.5281/zenodo.20434308](https://doi.org/10.5281/zenodo.20434308) | Lutar Lean 4 Formal Proofs v18.0.0 companion | Companion identity is not a source-revision binding; record the deposited filename and SHA-256 before treating a file as source evidence. |
 
-The Ouroboros Thesis and supporting artifacts are deposited on Zenodo with persistent DOIs.
+The former thesis repository is retired. This release does not rely on an unavailable repository
+`CITATION.cff` as the complete DOI source. A future expanded register must carry each deposit’s
+version, artifact filename, SHA-256, and relation to a named source revision.
 
-| DOI | Role |
-|-----|------|
-| [10.5281/zenodo.20434276](https://doi.org/10.5281/zenodo.20434276) | **Ouroboros Thesis v18.0** (versioned) — cited by every flagship |
-| [10.5281/zenodo.19944926](https://doi.org/10.5281/zenodo.19944926) | **Concept DOI** (always-latest) |
-| [10.5281/zenodo.20434308](https://doi.org/10.5281/zenodo.20434308) | Supporting artifact |
-| [10.5281/zenodo.20431181](https://doi.org/10.5281/zenodo.20431181) | Supporting artifact |
-| [10.5281/zenodo.20195368](https://doi.org/10.5281/zenodo.20195368) · [20173920](https://doi.org/10.5281/zenodo.20173920) · [20162352](https://doi.org/10.5281/zenodo.20162352) | Versioned deposits |
-| [10.5281/zenodo.19867281](https://doi.org/10.5281/zenodo.19867281) · [19934129](https://doi.org/10.5281/zenodo.19934129) · [19983066](https://doi.org/10.5281/zenodo.19983066) | Earlier versioned deposits |
+## Receipt and image evidence
 
-A complete, versioned list is maintained in the thesis repository's `CITATION.cff`.
+`DSSE-PLACEHOLDER` and `UNSIGNED` mean a runtime receipt is unsigned. A SHA-256/SHA3-256 hash
+chain or self-digest can be recomputed for integrity but cannot authenticate a signer. Image
+cosign/Sigstore verification, if independently published for a full immutable digest, applies to
+that image only; it does not sign a runtime receipt or establish runtime readiness.
 
-## GitHub commit anchors
-
-| Anchor | Meaning |
-|--------|---------|
-| `lutar-v18.0.0` / `c7c0ba17` | Doctrine v11 LOCKED Lean snapshot (749/14/163) |
-| `3de37e5` | Live reproducibility correction (752/160) |
-| `85de269` | lutar-lean `main` HEAD at 2026-05-30 verification |
-| Operator PR #6 | CSS ingress + QEC lineage (v17) |
-
-## Thesis PDFs (v18–v20)
-
-The Ouroboros Thesis is the mathematical spine. The former `szl-holdings/ouroboros-thesis`
-repository has been retired; the canonical, citable source is now archived at Zenodo DOI
-[10.5281/zenodo.20434276](https://doi.org/10.5281/zenodo.20434276). v18.0 corresponds to the versioned DOI above; v19/v20 are the active
-revision line.
-
-::: info In development
-The public PDF mirror for **v18–v20** on this docs site is in development. Until it publishes,
-fetch the built PDFs from the Zenodo deposit ([10.5281/zenodo.20434276](https://doi.org/10.5281/zenodo.20434276)); the former standalone thesis repository
-has been retired.
-:::
-
-## Ouroboros evaluation results
-
-The Ouroboros self-evaluation harness (`OUROBOROS_RUN_ALL`) exercises the governed loop
-end-to-end and emits a self-test log. Results and the doctrine self-grade are published in the
-the archived Ouroboros Thesis deposit on Zenodo ([10.5281/zenodo.20434276](https://doi.org/10.5281/zenodo.20434276)), under `docs/audit/doctrine-pass-results.md`.
-The self-grade artifact lives at `papers/v13/self_grade.md` within that archived deposit
-(note: v13 here is the thesis paper version number, unrelated to governance versioning).
-The Putnam suite (4/12 GREEN) is the formal-math eval anchor.
-
-## Khipu receipt examples
-
-A Khipu receipt is the atomic unit of provenance. The structure (from the Operator
-receipt-DAG role — [reference](/flagships/operator)):
-
-```json
-{
-  "decisionId": "d-001",
-  "value": 1,
-  "organ": "a11oy.policy",
-  "sha256": "<sha256 over canonical sort_keys JSON>",
-  "prevRoot": "<previous chain root>",
-  "lamport": 42,
-  "signature": "DSSE-PLACEHOLDER",
-  "chain_verified": true
-}
-```
-
-The receipt rule is `packet → json.dumps(sort_keys=True) → sha256 → hexdigest → append`. The
-summation invariant `rootValue = Σ pendantValues = Σ Σ decisionValues` is verified at runtime
-(the Operator role's 10 runtime tests) and formally in `Lutar/Khipu/SummationInvariant.lean`.
-
-::: warning Honest signature status
-The `signature` field is **`DSSE-PLACEHOLDER`**. Receipts carry a real SHA-256 Merkle digest
-and a verified hash chain, but the **envelope is unsigned** until Sigstore/cosign CI lands
-(see [Compliance & Security](/compliance)). $\mathrm{Khipu}_i(a)$ verifies the *chain*, not the
-*signature*, today.
-:::
+See [Proof](/proof), [Verify](/developers/verify), and [Compliance](/compliance).

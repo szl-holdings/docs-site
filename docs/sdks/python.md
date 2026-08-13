@@ -1,51 +1,35 @@
 # szl-python
 
-The Python client for the SZL anatomy.
+`szl-python` is a **planned** unified Python SDK. No PyPI release is asserted here; therefore this
+page intentionally contains no `pip install szl` command.
 
-::: warning In development
-`szl-python` is **in development** (target: Series-A milestone). The interface below is the
-**planned** surface; it is documented now so integrators can design against it. The shapes are
-real — they mirror the live per-flagship packages and the [Doctrine v11](/doctrine/v11-v12)
-types — but the unified PyPI package is not yet published. Use the per-flagship paths in the
-[Quickstart](/quickstart) today.
-:::
+## Design target, not executable API
 
-## Install (planned)
-
-```bash
-pip install szl   # in development — not yet on PyPI
-```
-
-## Init (planned)
+The following shape is a design sketch for future compatibility. It must not be copied into a
+production integration until a versioned source and package receipt exist.
 
 ```python
+# Planned, not importable today.
 from szl import Client
 
-szl = Client(org="szl-holdings")  # honest local mode by default; no signing yet
+client = Client()
+decision = client.policy.evaluate(action="example", axes={})
 ```
 
-## Examples (planned surface)
+## Source-local path today
 
-```python
-# 1 · Evaluate the 13-axis Λ-gate (a11oy)
-decision = szl.policy.evaluate(
-    action="deploy-model",
-    axes={"moralGrounding": 0.97, "measurabilityHonesty": 0.96},  # ...13 axes
-)
-print(decision.passed, decision.continuum_hash)
+Use source repositories and their checked-in manifests rather than an unverified registry name:
 
-# 2 · Mint + verify a Khipu receipt (Memory / Operator)
-receipt = szl.receipts.mint(payload={"decisionId": "d-001", "value": 1})
-assert receipt.chain_verified            # hash chain verified
-assert receipt.signature == "DSSE-PLACEHOLDER"  # honest: signing not yet wired
-
-# 3 · Decode a Remote-ID broadcast (killinchu)
-track = szl.killinchu.remote_id.decode(hex="0d01...")
-print(track.operator_id, track.position)
+```bash
+git clone https://github.com/szl-holdings/lutar-lean.git
+git clone https://github.com/szl-holdings/a11oy.git
 ```
 
-## Interim path (live today)
+Pin the Lean lock to exact commit `c7c0ba17c2eaec60ad38ea9172b4a0d9ca0b582f` when reproducing Doctrine v11; the `lutar-v18.0.0` tag resolves elsewhere. Build a11oy using
+its local README and lockfile. The a11oy public readiness observation is currently **UNAVAILABLE**;
+killinchu readiness was **AVAILABLE_AT_OBSERVATION** only at the dated probe. See [/status](/status).
 
-- **Lean numbers / proofs:** clone [`lutar-lean`](https://github.com/szl-holdings/lutar-lean).
-- **killinchu:** call the live Space API directly (see [killinchu API](/api/killinchu)).
-- **Receipts / formulas:** the math tooling in the SZL cookbook recipes ships runnable Python.
+## Receipt boundary
+
+Future SDKs must preserve receipt labels. `DSSE-PLACEHOLDER` or `UNSIGNED` is unsigned; a hash
+chain/self-digest is integrity evidence, not a cryptographic signer. Image provenance is separate.

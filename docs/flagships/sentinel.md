@@ -1,82 +1,41 @@
-# a11oy Sentinel — drift detector
+# a11oy Sentinel - drift detector
 
-> **a11oy Sentinel** is the security-posture & observability vertical of [a11oy](/flagships/a11oy).
-
-<div class="quechua">
-<strong>Name origin.</strong> <em>Sentinel</em> is an English role name — the guard who watches a
-boundary. Its job matches the name: a11oy Sentinel watches the cyber-posture surface and raises
-a flag when it drifts.
-</div>
+> **Status:** Sentinel is documented as an a11oy in-process capability and policy/observability
+> role. It is not claimed as a separately deployed public service; see [Runtime status](/status).
 
 ## Overview
 
-**a11oy Sentinel** is the **anomaly-detection and observability substrate** of a11oy. It models
-enterprise cyber posture as a **Kitaev surface** — security state is a topological surface, and
-drift is the deviation from the ground-state configuration.
+**a11oy Sentinel** documents a posture-drift approach that represents a security surface with a
+Kitaev-inspired model, baseline comparison, and policy-gated response. It is an implementation
+and architecture description, not a claim of a continuously operating enterprise monitoring
+service or universally signed remediation record.
 
-> **Frontier capability.** First Kitaev-surface posture-drift detector on a Λ-axis-governed
-> observability fiber — `Lutar/QEC/KitaevSurface` formal lattice basis
-> ([Ouroboros Thesis DOI 10.5281/zenodo.20434276](https://doi.org/10.5281/zenodo.20434276)).
-
-**Anatomy mapping:** a11oy Sentinel is the operational face of the [Hukulla](/anatomy/#hukulla)
-immune system and the [OTel-VSP](/anatomy/#otel-vsp) nervous/observability fiber.
+The role maps to [Hukulla](/anatomy/#hukulla) and the documented
+[OTel-VSP](/anatomy/#otel-vsp) observability concepts. The site identifies telemetry and
+cross-service wiring limits separately in [Runtime status](/status).
 
 ```mermaid
 flowchart TD
-    subgraph Ingest
-        T1[Sensor adapters: CVE · SIEM · endpoint]
-        T2[Audit fiber tap: proof-chain events]
-    end
-    subgraph Detect
-        D1[Kitaev surface model: stability score]
-        D2[Baseline comparator: posture delta]
-        D3[Threat classifier: CVSS-weighted]
-    end
-    subgraph Respond
-        R1[Incident queue by severity]
-        R2[Covenant policy gate]
-        R3[Audited + proof-sealed remediation]
-    end
-    Ingest --> Detect --> Respond
-    T2 -->|lineage| D1
+    I["Documented signal inputs"] --> D["Kitaev-inspired drift model"]
+    D --> Q["Classified event queue"]
+    Q --> P["Policy-gated response model"]
 ```
 
-## How it works
+## Documented flow
 
-1. **Continuous posture scoring** — a real-time topological stability score across the surface.
-2. **Drift events** — any delta beyond the policy threshold raises a classified event.
-3. **Incident queue** — events ranked by CVSS-weighted severity.
-4. **Policy gate** — every remediation passes the [a11oy](/flagships/a11oy) Covenant gate.
-5. **Proof chain** — every response is sealed in the SZL audit fiber with full attribution.
+1. **Posture scoring** compares an observed surface with a configured baseline.
+2. **Drift events** classify a delta that crosses a policy threshold.
+3. **Incident ordering** can prioritize events using documented severity inputs.
+4. **Policy gating** represents a review boundary before a response.
+5. **Receipt linkage** is a documented evidence model whose signature status remains artifact-specific.
 
-The Kitaev-surface stability model gives an objective stability scalar rather than a
-hand-tuned alert threshold — drift is measured against a topological ground state.
+The Lean corpus may be relevant to the model, but this page does not make a comparative "first"
+claim or turn that reference into a proof of real-world cyber posture.
 
-## API / install
+## Source and evidence
 
-```bash
-git clone https://github.com/szl-holdings/a11oy.git
-cd a11oy
-pnpm install
-pnpm test
-```
-
-## Example — score posture drift
-
-```ts
-import { driftScore } from '@szl/a11oy'
-
-const report = driftScore({ baseline: surfaceA, observed: surfaceB })
-
-console.log(report.stability) // topological stability score
-report.events
-  .sort((a, b) => b.cvss - a.cvss)
-  .forEach(e => console.log(e.id, e.cvss, e.requiresApproval))
-```
-
-## Source & evidence
-
-- **Repo:** [`a11oy`](https://github.com/szl-holdings/a11oy)
-- **Model:** Kitaev-surface basis in the Ouroboros Thesis ([10.5281/zenodo.20434276](https://doi.org/10.5281/zenodo.20434276)), `Lutar/QEC/KitaevSurface`
-- **DOI:** [10.5281/zenodo.20434276](https://doi.org/10.5281/zenodo.20434276)
-- **License:** Proprietary
+- **Role status:** `MIXED` implementation and roadmap claims; no standalone Space claimed.
+- **Source:** [`a11oy`](https://github.com/szl-holdings/a11oy)
+- **Model reference:** `Lutar/QEC/KitaevSurface` and the [Ouroboros Thesis](https://doi.org/10.5281/zenodo.20434276)
+- **Runtime and telemetry status:** [Runtime status](/status)
+- **Proof posture:** [Evidence](/evidence/) and [Proof](/proof)

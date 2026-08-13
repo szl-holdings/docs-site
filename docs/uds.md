@@ -1,90 +1,73 @@
-# UDS — customer deployment & hand-off
+# UDS — deployment evidence checklist
 
-This is the **customer hand-off page** for deploying an SZL flagship as a signed UDS
-(Unified Delivery System / Defense Unicorns) payload. It mirrors the
-[CUSTOMER_DEPLOYMENT_README](https://github.com/szl-holdings/uds-bundles) shipped in
-`uds-bundles`. For the live multi-organ demo surface, see [UDS — Unified Demo Surface](/uds/).
+::: danger UNAVAILABLE — do not treat these templates as released artifacts
+No immutable GHCR digest, matching SBOM identity, observed cosign verification result, or deployed
+UDS witness is bound on this page. OCI tags such as `uds-v0.2.0` are not asserted to exist. This is
+a fail-closed hand-off checklist for a future release, not a customer deployment claim.
+:::
 
-> Doctrine v11 **LOCKED** — 749/14/163 · kernel `c7c0ba17` · **Λ = Conjecture 1** · SLSA L1 honest ·
-> Section 889 = exactly 5 vendors.
+The checklist below defines what a real Zarf/UDS hand-off must contain. For the proposed
+multi-organ surface, see [Unified Demo Surface](/uds/). For current runtime state, see
+[/status](/status).
 
-## 30-second summary
+## 1 · Bind an immutable artifact
 
-SZL flagships ship as **Zarf/UDS packages** stored as OCI artifacts in GHCR. Each artifact is
-**cosign-signed (keyless OIDC)**, carries a **CycloneDX + SPDX SBOM**, and emits **DSSE Khipu
-receipts** at runtime. Deploy into any UDS Core / k3d cluster, airgap-friendly. Receipt-key
-material is regenerable; rotation forks the Khipu DAG.
+Record all of the following before exposing a pull command:
 
-## 1 · Pull the OCI artifact
+- `repository@sha256:<64 hex>` — never a mutable tag alone;
+- the protected source revision and build run that produced it;
+- the OCI manifest media type and platform set;
+- CycloneDX/SPDX artifact names and SHA-256 values;
+- an exact registry readback of the digest.
 
-Container packages are published under `ghcr.io/szl-holdings/<flagship>`:
-
-```bash
-# Example: a11oy. Substitute sentinel / memory / operator / killinchu as needed.
-zarf package pull oci://ghcr.io/szl-holdings/a11oy:uds-v0.2.0
-```
-
-> **Honest note.** GHCR publication is gated on the org "Read and write" workflow permission;
-> at hand-off time some flagship images may be pending that founder action. Confirm the exact
-> tag against the [latest release assets](https://github.com/szl-holdings/a11oy/releases).
-
-## 2 · Verify the signature (cosign, keyless OIDC)
+Only after those fields exist may an operator substitute a real value for this placeholder:
 
 ```bash
-cosign verify ghcr.io/szl-holdings/a11oy:uds-v0.2.0 \
-  --certificate-identity-regexp="^https://github.com/szl-holdings/" \
-  --certificate-oidc-issuer="https://token.actions.githubusercontent.com"
+UDS_REF='ghcr.io/szl-holdings/<flagship>@sha256:<UNAVAILABLE>'
+test "$UDS_REF" != 'ghcr.io/szl-holdings/<flagship>@sha256:<UNAVAILABLE>' || exit 1
+zarf package pull "oci://$UDS_REF"
 ```
 
-This checks that the artifact was built by a `szl-holdings` GitHub Actions workflow via the
-OIDC issuer — no long-lived signing key. SBOMs are attached as release assets.
+## 2 · Verify provenance separately
 
-## 3 · Deploy on UDS
+A valid release record must preserve the exact `cosign verify --output json` result, certificate
+identity, OIDC issuer, integrated time/log material, and artifact digest. Until that record exists,
+the verification state is **UNAVAILABLE**:
 
 ```bash
-# UDS Core must be running first (k3d example):
-uds deploy k3d-core
-# Then deploy the flagship payload:
-uds deploy oci://ghcr.io/szl-holdings/a11oy:uds-v0.2.0
+cosign verify "$UDS_REF" \
+  --certificate-identity-regexp='^https://github.com/szl-holdings/' \
+  --certificate-oidc-issuer='https://token.actions.githubusercontent.com' \
+  --output json
 ```
 
-## 4 · Helm hook — receipt-key flow
+Image/OCI verification does not sign runtime receipts and does not prove a deployment is ready.
 
-The flagship chart registers a **pre-install / pre-upgrade Helm hook** that provisions the
-DSSE receipt keypair into the cluster before the workload starts:
+## 3 · Deploy only after admission
 
-```yaml
-# values.yaml (excerpt)
-receiptKey:
-  algorithm: ed25519       # Ed25519 (not RSA) — post-quantum prep, smaller signatures
-  rotation:
-    enabled: true
-    onRotate: fork-khipu   # rotating the keypair forks the Khipu DAG (auditable)
-```
+The deployment gate requires a supported UDS Core version, exact cluster inventory, policy result,
+resource capacity, rollback plan, and protected approval evidence. A future executable command must
+use the same admitted immutable `$UDS_REF`; this page does not claim it has run.
 
-```yaml
-# templates/receipt-key-hook.yaml (excerpt)
-metadata:
-  annotations:
-    "helm.sh/hook": pre-install,pre-upgrade
-    "helm.sh/hook-weight": "-5"
-    "helm.sh/hook-delete-policy": before-hook-creation
-```
+## 4 · Receipt keys
 
-The hook generates (or rotates) the Ed25519 keypair, stores it as a Kubernetes Secret, and
-writes a rotation receipt into the Khipu chain. On rotation the DAG **forks** so historic
-receipts stay verifiable against the prior key.
+The proposed chart contract uses an Ed25519 receipt key and explicit rotation lineage. Before this
+becomes an operational claim, publish the exact chart revision, hook manifests, secret ownership,
+key-custody policy, recovery/rotation test, and a verified pre/post-rotation receipt pair. Never
+place private key material in documentation or source control.
 
-## 5 · Airgap
+## 5 · Air-gap closure
 
-UDS packages are self-contained (images + SBOM + signatures bundled). Pull on a connected
-host, transfer the `.tar.zst`, and `uds deploy` the local file — no registry egress required
-at the airgapped site.
+An air-gap claim requires an exported bundle digest, complete image/SBOM/signature inventory, an
+offline verification transcript, a no-egress deployment observation, and restore/rollback proof.
+Without that evidence, “self-contained” and “no registry egress required” remain design goals.
 
-## Section 889 admission
+## Section 889 policy boundary
 
-Exactly **5 vendors** are blocked at admission via a Pepr policy: Huawei, ZTE, Hytera,
-Hikvision, Dahua. No Iron Bank / FedRAMP / CMMC / SWFT / Mission Owner claims.
+The documented design lists five named vendors for an admission policy. That source policy is not
+a FedRAMP, CMMC, Iron Bank, IL5, or procurement certification. Publish a policy test and admitted
+deployment receipt before calling the control operational.
 
 ---
-*Doctrine v11 LOCKED · 749/14/163 · kernel c7c0ba17 · Λ = Conjecture 1 · SLSA L1 honest*
+
+*Deployment template · artifact/provenance/deployment state UNAVAILABLE · SLSA L1 honest*

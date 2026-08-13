@@ -4,16 +4,25 @@
   "description": "SZL Holdings unified documentation site",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "docs:dev": "vitepress dev docs",
-    "docs:build": "vitepress build docs && node fix-relative-paths.mjs && node scripts/verify-experience.mjs --dist && node scripts/verify-built-links.mjs",
+    "docs:build": "npm run test:contracts && vitepress build docs && node fix-relative-paths.mjs && node scripts/verify-experience.mjs --dist && node scripts/verify-built-links.mjs",
     "docs:preview": "vitepress preview docs",
     "test:experience": "node scripts/verify-experience.mjs",
+    "test:links": "node --test scripts/test-html-security.mjs scripts/test-built-links.mjs",
+    "test:runtime-status": "node --test scripts/test-runtime-status.mjs && node scripts/verify-runtime-status.mjs",
+    "test:contracts": "npm run test:links && npm run test:runtime-status",
+    "test:browser": "npm run docs:build && playwright test",
     "test:deployment": "node --test scripts/test-deployment-manifest.mjs scripts/test-protected-source.mjs",
     "deployment:write": "node scripts/write-deployment-manifest.mjs",
     "deployment:verify": "node scripts/verify-deployment-manifest.mjs"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.12.1",
+    "@playwright/test": "^1.62.1",
     "mermaid": "^11.16.1",
     "vitepress": "^1.6.3",
     "vitepress-plugin-mermaid": "^2.0.17"
@@ -24,6 +33,7 @@
   },
   "overrides": {
     "vite": "^6.4.2",
-    "esbuild": "^0.25.0"
+    "esbuild": "^0.25.0",
+    "nanoid": "3.3.17"
   }
 }

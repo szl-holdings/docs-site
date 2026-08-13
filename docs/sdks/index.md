@@ -1,37 +1,29 @@
 # SDKs
 
-SZL is shipping two first-party client SDKs that wrap the [flagships](/flagships/) and the
-[anatomy](/anatomy/) organs behind a single typed surface: **`szl-python`** for Python and
-**`szl-ts`** for TypeScript.
+`szl-python` and `szl-ts` are planned unified client interfaces. They are **not published package
+releases** in this documentation snapshot. Do not run an install command for a package name until
+its exact registry version, integrity, source revision, and release provenance are published.
 
-::: warning In development
-The unified `szl-python` and `szl-ts` packages are **in development**. Today, the shipping
-flagships are consumed via the a11oy package (`@szl-holdings/a11oy-policy`) or the live
-killinchu Space API. The unified SDKs roll those into one client with shared receipt,
-Λ-gate, and Khipu types.
+## What is available today
 
-**Target:** first public `szl-python` + `szl-ts` release at the Series-A milestone. Until then,
-the per-flagship packages on [the org](https://github.com/szl-holdings) and the
-[Quickstart](/quickstart) are the supported path.
-:::
+| Need | Supported path | Evidence boundary |
+|---|---|---|
+| Lean source/proof reproduction | Clone the pinned `lutar-lean` source snapshot | Source contract, not runtime evidence. |
+| a11oy development | Clone/build the a11oy source workspace | Source-local; public readiness currently unavailable. |
+| killinchu public readiness | `GET /api/killinchu/healthz` after checking [/status](/status) | HTTP 200 observed on 2026-08-11 only. |
+| Receipt integrity | Recompute the documented hash/self-digest when bytes are available | Integrity is not signer authentication. |
 
-## What the SDKs unify
+The standalone Provenance Anchor, Operator, and Policy roles remain roadmap/not deployed. Their
+names are not registry-package or cloneable-repository promises in this page.
 
-| Capability | Backed by | Status |
-|------------|-----------|--------|
-| Policy evaluation (13-axis Λ-gate) | [a11oy](/flagships/a11oy) | per-package live; unified in dev |
-| Counter-UAS / protocol decode | [killinchu](/flagships/killinchu) | live (Space API) |
-| Receipt minting + anchoring | Provenance Anchor | roadmap; local Merkle anchoring lives inside a11oy; Cardano mainnet in dev |
-| Khipu receipt DAG + sum invariant | Operator | roadmap; sum invariant verified in lutar-lean |
-| Posture-drift scoring | Policy | roadmap; live policy gate ships inside a11oy |
+## Planned clients
 
-## Design principles
+| SDK | State | Installation rule |
+|---|---|---|
+| `szl-python` | Planned | No PyPI command is published. |
+| `szl-ts` | Planned | No npm/pnpm command is published. |
+| Agentic Mesh SDK | Roadmap | No JavaScript, Python, or Go registry package is published. |
 
-- **One receipt type.** Every call returns a Khipu receipt with the canonical
-  `sha256 / prevRoot / lamport / signature` shape (signature `DSSE-PLACEHOLDER` until signing
-  lands).
-- **Honest errors.** Malformed input returns an explicit error — never a silent pass.
-- **Doctrine-typed.** The 13 Yuyay axes and 10 HUKLLA tripwires are first-class enums.
-
-See [`szl-python`](/sdks/python) and [`szl-ts`](/sdks/typescript) for the planned surface and
-the per-flagship interim path.
+See [Python](/sdks/python), [TypeScript](/sdks/typescript), and
+[Source-local packages](/developers/substrate_packages). Current runtime availability belongs on
+[/status](/status), not in an SDK package claim.

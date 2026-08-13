@@ -15,6 +15,7 @@ import {
 } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { normalizeNewWindowRelationships } from './scripts/html-security.mjs'
 
 const ROOT = dirname(fileURLToPath(import.meta.url))
 const DIST = join(ROOT, 'docs', '.vitepress', 'dist')
@@ -58,7 +59,7 @@ function walk(dir, out = []) {
 }
 
 function setTagAttribute(tag, name, value) {
-  const existing = new RegExp(`\\s${name}(?:="[^"]*")?(?=\\s|>)`)
+  const existing = new RegExp(`\\s${name}(?:\\s*=\\s*(?:"[^"]*"|'[^']*'|[^\\s>]+))?(?=\\s|>)`, 'i')
   if (existing.test(tag)) return tag.replace(existing, ` ${name}="${value}"`)
   return tag.replace(/>$/, ` ${name}="${value}">`)
 }
@@ -113,6 +114,7 @@ const files = walk(DIST)
 let changed = 0
 let accessibleLandmarks = 0
 let accessibleSwitches = 0
+let securedNewWindowLinks = 0
 
 for (const file of files) {
   let html = readFileSync(file, 'utf8')
@@ -124,6 +126,13 @@ for (const file of files) {
   accessibleLandmarks += accessible.landmarks
   accessibleSwitches += accessible.switches
 
+  // VitePress emits either `noopener` or `noreferrer` depending on the link
+  // source. Publish the explicit two-token relationship required by the
+  // generated-artifact contract for every new browsing context.
+  const secured = normalizeNewWindowRelationships(html)
+  html = secured.html
+  securedNewWindowLinks += secured.links
+
   if (html !== before) {
     writeFileSync(file, html)
     changed++
@@ -131,4 +140,4 @@ for (const file of files) {
 }
 
 const trustFilesPublished = publishTrustEvidence()
-console.log(`fix-relative-paths: rewrote ${changed} HTML file(s) of ${files.length} total; labeled ${accessibleSwitches} appearance control(s) and ${accessibleLandmarks} main landmark(s); published ${trustFilesPublished} raw trust evidence file(s).`)
+console.log(`fix-relative-paths: rewrote ${changed} HTML file(s) of ${files.length} total; labeled ${accessibleSwitches} appearance control(s) and ${accessibleLandmarks} main landmark(s); secured ${securedNewWindowLinks} new-window link(s); published ${trustFilesPublished} raw trust evidence file(s).`)
