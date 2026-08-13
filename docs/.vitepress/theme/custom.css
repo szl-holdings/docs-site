@@ -120,6 +120,16 @@
   min-height: 44px;
 }
 .VPNavBarHamburger { min-width: 44px; }
+
+/* At VitePress's exact 768px breakpoint, the extra-navigation flyout becomes
+   visible while the tablet layout still has constrained horizontal space.
+   Its upstream negative margin and menu alignment can extend 25px beyond the
+   viewport. Keep the control and its menu inside the safe inline boundary. */
+@media (min-width: 768px) and (max-width: 959px) {
+  .VPNavBarExtra.VPNavBarExtra { margin-right: 0; }
+  .VPNavBarExtra.VPNavBarExtra .menu { right: 0; }
+}
+
 .VPSidebarItem > .item,
 .VPSidebarItem > .item > .VPLink {
   min-height: 44px;
