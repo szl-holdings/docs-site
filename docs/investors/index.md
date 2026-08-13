@@ -56,7 +56,8 @@ current supply-chain and certification posture.
 The public product map distinguishes flagships from roles that are implemented in-process,
 documented as frontier capabilities, or not separately deployed. In particular, Provenance Anchor,
 Operator, and Policy are not represented as independent live services. Their standalone status is
-stated on [Runtime status](/status).
+stated in the [flagship product and role map](/flagships/); [Runtime status](/status) remains
+authoritative only for the named hosted surfaces it actually reports.
 
 That distinction matters in diligence: design intent, local source, an in-process capability, a
 published image, and a currently reachable runtime are different kinds of evidence.
