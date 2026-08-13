@@ -31,7 +31,8 @@ and relevant public key/certificate material. Do not use a cosign image result a
 
 ## Claims not made
 
-- SLSA L2/L3, FedRAMP, CMMC, Iron Bank, SOC 2, IL5, or Cardano-mainnet anchoring.
+- No supply-chain level above the documented posture or named regulatory, registry, audit,
+  impact-level, or public-ledger authorization is claimed.
 - A public SDK/package release without a registry receipt and immutable release provenance.
 - A current API-key customer portal or generic desktop client configuration.
 - Continuous service availability from a source commit, a provider `RUNNING` label, or a historical

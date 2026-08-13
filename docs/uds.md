@@ -64,8 +64,9 @@ Without that evidence, “self-contained” and “no registry egress required�
 
 ## Section 889 policy boundary
 
-The documented design lists five named vendors for an admission policy. That source policy is not
-a FedRAMP, CMMC, Iron Bank, IL5, or procurement certification. Publish a policy test and admitted
+The documented design lists five named vendors for an admission policy. That source policy does not
+confer federal authorization, maturity certification, hardened-registry admission, impact-level
+authorization, or procurement certification. Publish a policy test and admitted
 deployment receipt before calling the control operational.
 
 ---
