@@ -7,7 +7,7 @@ classes. None may be promoted into another.
 | Claim | Current documented posture | What it does not prove |
 |---|---|---|
 | Documentation source | Exact source/workflow/artifact identity from `/deployment.json` | Product deployment or runtime readiness. |
-| SLSA | **L1 (honest)** | L2 or L3 provenance. |
+| SLSA | **L1 (honest)** | Artifact-specific provenance beyond the documented level. |
 | SBOM / CI / DCO | Source/build controls when attached to their named artifact | A deployed image or a live runtime. |
 | Image signature | Separate immutable-image evidence, only with full digest and published verification material | A signed runtime receipt or a ready service. |
 | Runtime receipt | `DSSE-PLACEHOLDER` or `UNSIGNED` means unsigned | Signer authentication from a hash chain. |

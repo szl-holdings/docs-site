@@ -2,7 +2,7 @@ import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs'
 import { isAbsolute, join, relative, resolve, sep } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import process from 'node:process'
-import { parseHtmlAttributes, tokenizeHtmlTags } from './html-security.mjs'
+import { decodeHtmlCharacterReferences, parseHtmlAttributes, tokenizeHtmlTags } from './html-security.mjs'
 
 export const LIVE_ORIGIN = 'https://holdings.a-11-oy.com'
 export const BASE_PATH = '/docs-site/'
@@ -118,34 +118,13 @@ function textContent(html) {
     cursor = tag.end
   }
   visible += html.slice(cursor)
-  return visible
-    .replace(/<!--[\s\S]*?-->/g, ' ')
-    .replace(/&nbsp;/gi, ' ')
-    .replace(/&amp;/gi, '&')
-    .replace(/&lt;/gi, '<')
-    .replace(/&gt;/gi, '>')
-    .replace(/&quot;/gi, '"')
-    .replace(/&#39;/gi, "'")
+  return decodeHtmlCharacterReferences(visible.replace(/<!--[\s\S]*?-->/g, ' ')).value
     .replace(/\s+/g, ' ')
     .trim()
 }
 
 function normalizeTitleText(html) {
-  return html
-    .replace(/&nbsp;/gi, ' ')
-    .replace(/&amp;/gi, '&')
-    .replace(/&lt;/gi, '<')
-    .replace(/&gt;/gi, '>')
-    .replace(/&quot;/gi, '"')
-    .replace(/&#39;/gi, "'")
-    .replace(/&#x([0-9a-f]+);/gi, (match, hex) => {
-      const codePoint = Number.parseInt(hex, 16)
-      return Number.isNaN(codePoint) || codePoint < 0 || codePoint > 0x10ffff ? match : String.fromCodePoint(codePoint)
-    })
-    .replace(/&#(\d+);/g, (match, decimal) => {
-      const codePoint = Number.parseInt(decimal, 10)
-      return Number.isNaN(codePoint) || codePoint < 0 || codePoint > 0x10ffff ? match : String.fromCodePoint(codePoint)
-    })
+  return decodeHtmlCharacterReferences(html).value
     .replace(/\s+/g, ' ')
     .trim()
 }

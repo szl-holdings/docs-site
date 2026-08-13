@@ -1,6 +1,10 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { normalizeNewWindowRelationships } from './html-security.mjs'
+import {
+  decodeHtmlCharacterReferences,
+  normalizeNewWindowRelationships,
+  parseHtmlAttributes
+} from './html-security.mjs'
 
 test('normalizes mixed-case, single-quoted, unquoted, and duplicate rel attributes', () => {
   const source = `<a target='_blank' REL='opener external' rel=noopener href="https://example.test">Example</a>`
@@ -28,4 +32,23 @@ test('normalizes entity-encoded blank targets', () => {
   const result = normalizeNewWindowRelationships(source)
   assert.equal(result.links, 1)
   assert.match(result.html, /rel="noopener noreferrer"/)
+})
+
+test('normalizes browser-accepted semicolonless numeric blank targets', () => {
+  for (const encodedTarget of ['_&#98lank', '_&#x62lank']) {
+    const source = `<a target="${encodedTarget}" href="https://example.test">Example</a>`
+    const result = normalizeNewWindowRelationships(source)
+    assert.equal(result.links, 1)
+    assert.match(result.html, /rel="noopener noreferrer"/)
+  }
+})
+
+test('decodes only one layer and marks nested or invalid references unresolved', () => {
+  const decoded = decodeHtmlCharacterReferences('&amp;lt; _&amp;#98;lank')
+  assert.equal(decoded.value, '&lt; _&#98;lank')
+  assert.equal(decoded.hasUnresolvedCharacterReference, true)
+
+  const [invalid] = parseHtmlAttributes('target="&#x110000;"')
+  assert.equal(invalid.value, '&#x110000;')
+  assert.equal(invalid.hasUnresolvedCharacterReference, true)
 })

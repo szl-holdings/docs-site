@@ -80,18 +80,36 @@ const HTML_ENTITY_MAP = {
   trade: '\u2122'
 }
 
-function decodeHtmlCharacterReferences(value) {
+const REFERENCE_LIKE_REMAINDER = /&(?:#(?:x[0-9a-f]*|[0-9]*)|[a-z][a-z0-9]+;)/i
+
+function isValidHtmlCodePoint(codePoint) {
+  return Number.isInteger(codePoint)
+    && codePoint > 0
+    && codePoint <= 0x10ffff
+    && (codePoint < 0xd800 || codePoint > 0xdfff)
+}
+
+/**
+ * Decode exactly one browser-visible character-reference layer.
+ *
+ * Numeric references may omit their semicolon in HTML, including before the
+ * next ASCII letter (`&#98lank` -> `blank`). Named references remain limited
+ * to the explicit allow-list and require a semicolon. A reference-like value
+ * left after this single pass is reported so security-sensitive callers can
+ * fail closed without recursively unescaping attacker-controlled input.
+ */
+export function decodeHtmlCharacterReferences(value) {
   let hasUnresolvedCharacterReference = false
-  const decoded = value.replaceAll(/&(?:#([0-9]+)|#x([0-9a-fA-F]+)|([a-zA-Z0-9]+));/g, (match, decimal, hex, named) => {
+  const decoded = value.replaceAll(/&(?:#([0-9]+);?|#x([0-9a-fA-F]+);?|([a-zA-Z][a-zA-Z0-9]+);)/g, (match, decimal, hex, named) => {
     if (decimal != null) {
       const codePoint = Number.parseInt(decimal, 10)
-      if (!Number.isNaN(codePoint) && codePoint >= 0 && codePoint <= 0x10ffff) return String.fromCodePoint(codePoint)
+      if (isValidHtmlCodePoint(codePoint)) return String.fromCodePoint(codePoint)
       hasUnresolvedCharacterReference = true
       return match
     }
     if (hex != null) {
       const codePoint = Number.parseInt(hex, 16)
-      if (!Number.isNaN(codePoint) && codePoint >= 0 && codePoint <= 0x10ffff) return String.fromCodePoint(codePoint)
+      if (isValidHtmlCodePoint(codePoint)) return String.fromCodePoint(codePoint)
       hasUnresolvedCharacterReference = true
       return match
     }
@@ -103,6 +121,7 @@ function decodeHtmlCharacterReferences(value) {
     }
     return resolved
   })
+  if (REFERENCE_LIKE_REMAINDER.test(decoded)) hasUnresolvedCharacterReference = true
   return { value: decoded, hasUnresolvedCharacterReference }
 }
 

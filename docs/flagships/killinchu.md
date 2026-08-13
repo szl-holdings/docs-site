@@ -50,25 +50,25 @@ JSON. The dated hosted observation did not call that route:
 ## API
 
 At exact observed revision `83142da9526e2c0ddfe1e78eb99a20940cde0cf3`, hosted evidence is
-strictly limited to `GET /api/killinchu/healthz` returning HTTP 200 on 2026-08-11. Every `/v1/*`
+strictly limited to `GET /api/killinchu/healthz` returning HTTP 200 on 2026-08-11. Every `/api/killinchu/v1/*`
 entry below is a source-described route shape, not a hosted response witness. See the
 [full API reference](/api/killinchu) for that same boundary.
 
 | Method | Path | Evidence boundary |
 |--------|------|-------------------|
-| GET | `/healthz` | **HOSTED HEALTH WITNESS:** HTTP 200 at the exact observed revision and time only. |
-| GET | `/readyz` | Source-described; not separately witnessed. |
-| GET | `/v1/honest` | Source-described honesty-disclosure shape; not runtime-witnessed. |
-| POST | `/v1/remote-id/decode` | Source-described OpenDroneID / ASTM F3411 decoder shape; not runtime-witnessed. |
-| POST | `/v1/ads-b/decode` | Source-described ADS-B decoder shape; not runtime-witnessed. |
-| POST | `/v1/mavlink/parse` | Source-described MAVLink parser shape; not runtime-witnessed. |
-| GET | `/v1/drones/database` · `/v1/drones/{id}` | Source-described database routes; not runtime-witnessed. |
-| POST | `/v1/counter-uas/evaluate` | Source-described geofence/Λ/receipt shape; not runtime-witnessed. |
-| GET/POST | `/v1/swarm/topology` | Source-described topology routes; not runtime-witnessed. |
-| GET | `/v1/threats/active` | Source-described threat-board route; not runtime-witnessed. |
-| POST | `/v1/receipt/emit` · GET `/v1/receipt/ledger` | Source-described receipt routes; not runtime-witnessed. |
-| GET | `/v1/lambda` | Source-described Λ-axis route; not runtime-witnessed. |
-| GET | `/v1/research` · `/v1/samples` | Source-described research/sample routes; not runtime-witnessed. |
+| GET | `/api/killinchu/healthz` | **HOSTED HEALTH WITNESS:** HTTP 200 at the exact observed revision and time only. |
+| GET | `/api/killinchu/readyz` | Source-described; not separately witnessed. |
+| GET | `/api/killinchu/v1/honest` | Source-described honesty-disclosure shape; not runtime-witnessed. |
+| POST | `/api/killinchu/v1/remote-id/decode` | Source-described OpenDroneID / ASTM F3411 decoder shape; not runtime-witnessed. |
+| POST | `/api/killinchu/v1/ads-b/decode` | Source-described ADS-B decoder shape; not runtime-witnessed. |
+| POST | `/api/killinchu/v1/mavlink/parse` | Source-described MAVLink parser shape; not runtime-witnessed. |
+| GET | `/api/killinchu/v1/drones/database` · `/api/killinchu/v1/drones/{id}` | Source-described database routes; not runtime-witnessed. |
+| POST | `/api/killinchu/v1/counter-uas/evaluate` | Source-described geofence/Λ/receipt shape; not runtime-witnessed. |
+| GET/POST | `/api/killinchu/v1/swarm/topology` | Source-described topology routes; not runtime-witnessed. |
+| GET | `/api/killinchu/v1/threats/active` | Source-described threat-board route; not runtime-witnessed. |
+| POST | `/api/killinchu/v1/receipt/emit` · GET `/api/killinchu/v1/receipt/ledger` | Source-described receipt routes; not runtime-witnessed. |
+| GET | `/api/killinchu/v1/lambda` | Source-described Λ-axis route; not runtime-witnessed. |
+| GET | `/api/killinchu/v1/research` · `/api/killinchu/v1/samples` | Source-described research/sample routes; not runtime-witnessed. |
 
 ## Historical request shapes — not a live API witness
 
@@ -93,6 +93,6 @@ MapLibre GL (OpenFreeMap tokenless tiles) · Docker on Hugging Face Spaces.
 ## Source & evidence
 
 - **Repo:** [github.com/szl-holdings/killinchu](https://github.com/szl-holdings/killinchu)
-- **Observed host (health only):** [szlholdings-killinchu.hf.space](https://szlholdings-killinchu.hf.space) — health HTTP 200 at revision `83142da9526e2c0ddfe1e78eb99a20940cde0cf3`; no `/v1/*` response is witnessed here.
+- **Observed host (health only):** [szlholdings-killinchu.hf.space](https://szlholdings-killinchu.hf.space) — health HTTP 200 at revision `83142da9526e2c0ddfe1e78eb99a20940cde0cf3`; no `/api/killinchu/v1/*` response is witnessed here.
 - **License:** Apache-2.0 · Doctrine v11 · ORCID [0009-0001-0110-4173](https://orcid.org/0009-0001-0110-4173)
 - **Legal boundaries:** counter-UAS engagement guidance is decision-support only; see the repo's `LEGAL_BOUNDARIES.md`.

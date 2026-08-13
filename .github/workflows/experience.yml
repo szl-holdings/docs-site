@@ -18,7 +18,7 @@ jobs:
   build:
     name: Build and verify docs
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -30,3 +30,7 @@ jobs:
       - run: npm ci --no-audit --no-fund
       - run: npm run test:deployment
       - run: npm run docs:build
+      - name: Install hosted browser
+        run: npx --no-install playwright install --with-deps chromium
+      - name: Verify browser experience contract
+        run: npm run test:browser:built

@@ -15,8 +15,9 @@
     "test:links": "node --test scripts/test-html-security.mjs scripts/test-built-links.mjs",
     "test:runtime-status": "node --test scripts/test-runtime-status.mjs && node scripts/verify-runtime-status.mjs",
     "test:contracts": "npm run test:links && npm run test:runtime-status",
-    "test:browser": "npm run docs:build && playwright test",
-    "test:deployment": "node --test scripts/test-deployment-manifest.mjs scripts/test-protected-source.mjs",
+    "test:browser:built": "playwright test",
+    "test:browser": "npm run docs:build && npm run test:browser:built",
+    "test:deployment": "node --test scripts/test-deployment-manifest.mjs scripts/test-protected-source.mjs scripts/test-workflow-contract.mjs",
     "deployment:write": "node scripts/write-deployment-manifest.mjs",
     "deployment:verify": "node scripts/verify-deployment-manifest.mjs"
   },
@@ -32,7 +33,7 @@
     "katex": "^0.18.1"
   },
   "overrides": {
-    "vite": "^6.4.2",
+    "vite": "^6.4.3",
     "esbuild": "^0.25.0",
     "nanoid": "3.3.17"
   }

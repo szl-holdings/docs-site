@@ -85,11 +85,20 @@ test('rejects encoded slash and backslash traversal outside the artifact root', 
 
 test('decodes character references in security attributes', (t) => {
   const root = fixture(t, {
-    'index.html': page('<a href="java&#x73;cript:alert(1)">Encoded javascript</a><a target="&#95;blank" href="https://example.test">Safe</a>', 'Home')
+    'index.html': page('<a href="java&#x73;cript:alert(1)">Encoded javascript</a><a href="java&#115cript:alert(2)">Semicolonless javascript</a><a target="&#95;blank" href="https://example.test">Safe</a><a target="_&#98lank" href="https://second.example">Semicolonless blank</a>', 'Home')
   })
   const issues = collectBuiltLinkIssues(root).issues.join('\n')
-  assert.match(issues, /forbidden javascript URL|forbidden URL scheme javascript:/)
-  assert.match(issues, /target=_blank lacks rel=noopener noreferrer/)
+  assert.equal((issues.match(/forbidden javascript URL|forbidden URL scheme javascript:/g) ?? []).length, 2)
+  assert.equal((issues.match(/target=_blank lacks rel=noopener noreferrer/g) ?? []).length, 2)
+})
+
+test('does not recursively unescape double-encoded security values or title text', (t) => {
+  const root = fixture(t, {
+    'index.html': page('<a href="java&amp;#115;cript:alert(1)">Nested reference</a>', 'A &amp;lt; B')
+  })
+  const issues = collectBuiltLinkIssues(root).issues.join('\n')
+  assert.match(issues, /unresolved character reference in href="java&amp;#115;cript:alert\(1\)"/)
+  assert.doesNotMatch(issues, /page-specific social title mismatch/)
 })
 
 test('rejects executable data hrefs and unresolved aria-labelledby names', (t) => {
