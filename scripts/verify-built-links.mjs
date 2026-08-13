@@ -313,7 +313,10 @@ export function collectBuiltLinkIssues(rootPath = resolve('docs/.vitepress/dist'
     for (const tag of tags) {
       if (tag.closing) continue
       const attrs = attributeMetadata(tag.attributes)
-      const target = attrs.get('target')?.value ?? ''
+      const targetMetadata = attrs.get('target')
+      const targetReferenceIssue = assertResolvedCharacterReferences(rel, 'target', targetMetadata)
+      if (targetReferenceIssue) issues.push(targetReferenceIssue)
+      const target = targetMetadata?.value ?? ''
       for (const name of duplicateSecurityAttributes(tag.attributes)) {
         issues.push(`${rel} -> duplicate security attribute ${name}`)
       }

@@ -101,6 +101,14 @@ test('does not recursively unescape double-encoded security values or title text
   assert.doesNotMatch(issues, /page-specific social title mismatch/)
 })
 
+test('rejects unresolved browser-visible named references in target attributes', (t) => {
+  const root = fixture(t, {
+    'index.html': page('<a target="&lowbar;blank" href="https://example.test">Named blank reference</a>', 'Home')
+  })
+  const issues = collectBuiltLinkIssues(root).issues.join('\n')
+  assert.match(issues, /unresolved character reference in target="&lowbar;blank"/)
+})
+
 test('rejects executable data hrefs and unresolved aria-labelledby names', (t) => {
   const root = fixture(t, {
     'index.html': page('<a href="data:text/html,%3Cscript%3Ealert(1)%3C/script%3E">Data</a><a href="https://example.test" aria-labelledby="missing"></a>', 'Home')
