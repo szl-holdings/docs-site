@@ -25,6 +25,13 @@ acts*. Doctrine v12 = **Doctrine v11 + PURIQ**: it carries forward every v11
 > obligations are in `formulas/PuriqLean.lean` (all `sorry`-tagged). These live in the SZL
 > PURIQ workspace and feed [`lutar-lean`](https://github.com/szl-holdings/lutar-lean).
 
+::: warning Design contract, not enforcement evidence
+PURIQ states intended selection rules and open Lean obligations. The audited material does not
+establish that a deployed runtime implements `P(x,t)`, that Hatun rejects locked-number edits, or
+that any of the four invariants is a closed theorem. Runtime enforcement requires separate exact
+implementation, test, deployment, and readback evidence.
+:::
+
 ## The definition of "agentic" (locked)
 
 An action is **agentic** iff it is selected by `P(x,t)` under all four invariants below —
@@ -104,6 +111,10 @@ break any invariant. See [Anatomy + Organs](/anatomy/) for each organ's full der
 | SF-10 {#sf-10} | Hatun — doctrine | $D(a)$ additivity | HR-3 / HR-7 |
 | SF-11 {#sf-11} | Sumaq — designer | $S(a)$ honest-proof | status tags |
 | SF-12 {#sf-12} | Killinchu — bridge | $G(a)$ geofence | Bekenstein / reachability |
+
+In particular, SF-10/$D(a)$ is a proposed design guard. Its presence in the formula table is not
+runtime enforcement and is not a closed theorem; it remains `sorry`-tagged with the other PURIQ
+obligations.
 
 ## Honest labels (carried from v11 §9)
 

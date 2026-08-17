@@ -1,49 +1,39 @@
-# Compliance & Security
+# Compliance and supply-chain posture
 
-SZL's compliance posture is stated **honestly** — what is true today, what is pending, and what
-is a roadmap target. Overclaiming a security level is a [Doctrine v11](/doctrine/v11-v12)
-sacred-axis violation (measurabilityHonesty, tripwire T02). This page is the authoritative
-posture; where a repository badge disagrees, this page is correct.
+This page is the authoritative posture for this documentation release. A source commit, build
+attestation, image signature, runtime receipt, and runtime readiness are different evidence
+classes. None may be promoted into another.
 
-## Supply-chain integrity
+| Claim | Current documented posture | What it does not prove |
+|---|---|---|
+| Documentation source | Exact source/workflow/artifact identity from `/deployment.json` | Product deployment or runtime readiness. |
+| SLSA | **L1 (honest)** | Artifact-specific provenance beyond the documented level. |
+| SBOM / CI / DCO | Source/build controls when attached to their named artifact | A deployed image or a live runtime. |
+| Image signature | Separate immutable-image evidence, only with full digest and published verification material | A signed runtime receipt or a ready service. |
+| Runtime receipt | `DSSE-PLACEHOLDER` or `UNSIGNED` means unsigned | Signer authentication from a hash chain. |
+| Hash chain / self-digest | Integrity of supplied bytes when recomputed | Signer identity, non-repudiation, or availability. |
+| Runtime availability | See [/status](/status) | Continuous uptime or authorization for unrelated routes. |
 
-| Control | Status | Note |
-|---------|--------|------|
-| **SLSA level** | <span class="dot green" aria-hidden="true"></span> **L1 (honest)** | Provenance is generated. **NOT** L3-verified. "SLSA L3" is a banned claim. |
-| **cosign signing** | <span class="dot amber" aria-hidden="true"></span> **PENDING** | Sigstore/cosign CI not yet wired. Receipts carry a real SHA-256 Merkle digest; the DSSE envelope is **`PLACEHOLDER`** (unsigned) until signing lands. |
-| **SBOM** | <span class="dot green" aria-hidden="true"></span> generated | SBOM workflow runs per repo. |
-| **CodeQL** | <span class="dot green" aria-hidden="true"></span> on every push | Security scanning to `main`. |
-| **DCO** | <span class="dot green" aria-hidden="true"></span> enforced | Developer Certificate of Origin on commits. |
-| **OpenSSF Scorecard** | <span class="dot green" aria-hidden="true"></span> 7.0 (a11oy, 2026-05-28) | [report](https://securityscorecards.dev/viewer/?uri=github.com/szl-holdings/a11oy) |
+## Runtime evidence — 2026-08-11
 
-::: warning The single most important honesty disclosure
-**SLSA is L1, not L3. cosign signing is PENDING.** Every Khipu receipt's `signature` field reads
-`DSSE-PLACEHOLDER`. The hash *chain* is real and verified; the *signature* is not yet wired. Any
-SZL surface claiming otherwise is wrong and violates T02.
-:::
+a11oy was provider `RUNNING` at `f5c395e81eaa306b2eb1c8bbf8773f07664ce564` but readiness timed
+out at 20 s and 30 s: **UNAVAILABLE**. killinchu was `RUNNING` at
+`83142da9526e2c0ddfe1e78eb99a20940cde0cf3` and its documented health route returned HTTP 200:
+**AVAILABLE_AT_OBSERVATION** for that dated probe only. Hatun-MCP was `PAUSED` at
+`ebc78be2ffffb08241a1da1eb8ebcc6d34a1ab34`; `/readyz`
+returned 503 and quota was `3/3`: **UNAVAILABLE**.
 
-## Formal-verification posture
+## Signature rule
 
-- **Kernel:** [`lutar-lean`](https://github.com/szl-holdings/lutar-lean) — at the v11 lock,
-  <span class="locked">749 declarations</span> / <span class="locked">14 unique axioms</span> /
-  <span class="locked">163 sorries</span>. Open goals are **`sorry`-tagged, never hidden**.
-- **Λ-uniqueness** is [**Conjecture 1**](/doctrine/v11-v12#conjecture-1), *not* a theorem.
-- The 13-axis governance score is a **decision aid**, not a proof of safety.
+No page may call a runtime receipt “signed,” “verified,” or “non-repudiable” unless a fresh,
+exact-revision runtime witness records the signature algorithm, key identity, verification result,
+and relevant public key/certificate material. Do not use a cosign image result as that witness.
 
-## Certification roadmap (targets, not held)
+## Claims not made
 
-SZL holds **none** of the following today. They are architecture targets on the Series-A
-roadmap; this site states the path, not a badge.
-
-| Framework | Status | Architectural readiness |
-|-----------|--------|-------------------------|
-| **FedRAMP** | <span class="dot gray" aria-hidden="true"></span> roadmap target | Air-gap + audit-trail design aligns to control families |
-| **SOC 2** | <span class="dot gray" aria-hidden="true"></span> roadmap target | Receipt ledger provides the evidence trail |
-| **IL5** | <span class="dot gray" aria-hidden="true"></span> roadmap target | Sovereign / air-gapped deployment model |
-| **CMMC** | <span class="dot gray" aria-hidden="true"></span> roadmap target | HUKLLA tripwires (T05–T08) map to access/egress controls |
-
-## Security contact
-
-Report vulnerabilities via the `SECURITY.md` of the relevant
-[`szl-holdings`](https://github.com/szl-holdings) repository. Each flagship ships a `SECURITY.md`
-with the coordinated-disclosure process.
+- No supply-chain level above the documented posture or named regulatory, registry, audit,
+  impact-level, or public-ledger authorization is claimed.
+- A public SDK/package release without a registry receipt and immutable release provenance.
+- A current API-key customer portal or generic desktop client configuration.
+- Continuous service availability from a source commit, a provider `RUNNING` label, or a historical
+  HTTP response.

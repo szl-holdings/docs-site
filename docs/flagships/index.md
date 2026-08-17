@@ -1,38 +1,46 @@
 # Flagships
 
-SZL Holdings ships **two products on one signed substrate**: **[a11oy](/flagships/a11oy)** — the
-governed-AI command platform — and **[killinchu](/flagships/killinchu)** — counter-UAS drone &
-vessel intelligence. a11oy delivers its capabilities as internal verticals — **Memory**,
-**Sentinel**, and **Operator** — each mapped to an [anatomy organ](/anatomy/), cross-referenced
-to the Ouroboros Thesis ([DOI 10.5281/zenodo.20434276](https://doi.org/10.5281/zenodo.20434276)),
-and backed by the Lean kernel [`lutar-lean`](https://github.com/szl-holdings/lutar-lean).
+SZL documents two flagship source products: **[a11oy](/flagships/a11oy)**, the governed-AI
+execution fabric, and **[killinchu](/flagships/killinchu)**, a counter-UAS decision-support
+surface. A public-source product label is not a claim that a hosted runtime is currently
+available; [Runtime status](/status) is authoritative for that question.
+
+a11oy also documents **Memory**, **Sentinel**, and **Operator** as in-process capabilities and
+frontier roles. They are not separately deployed services. Each is mapped to an
+[anatomy organ](/anatomy/), cross-referenced to the Ouroboros Thesis
+([DOI 10.5281/zenodo.20434276](https://doi.org/10.5281/zenodo.20434276)), and scoped by the
+[Evidence](/evidence/) and [Compliance](/compliance) records.
 
 ```mermaid
 flowchart LR
-  subgraph A11OY["a11oy — governed command platform"]
-    A[Execution fabric<br/>7 layers]
-    M[Memory<br/>Cardano + Shor anchor]
-    R[Operator<br/>Khipu receipt DAG]
-    S[Sentinel<br/>Kitaev drift]
+  subgraph A11OY["a11oy - governed execution fabric"]
+    A[Execution fabric]
+    M[Memory - in-process capability]
+    R[Operator - frontier role]
+    S[Sentinel - in-process capability]
   end
-  K[killinchu<br/>counter-UAS]
+  K[killinchu - decision support]
   A -->|policy decision| R
   A -->|signal scoring| S
-  R -->|receipt chain| M
-  K -->|Λ-gate + receipt| R
+  R -->|receipt model| M
+  K -->|governed evaluation| R
 ```
 
-| Surface | Part of | Name origin | Role | Source |
-|---------|---------|-------------|------|--------|
-| [a11oy](/flagships/a11oy) | product | *alloy* — blended hardened substrate | Governed execution fabric (7 layers) | [repo](https://github.com/szl-holdings/a11oy) |
-| [a11oy Memory](/flagships/memory) | a11oy vertical | provenance & receipt anchoring | Cardano-anchored provenance | [repo](https://github.com/szl-holdings/a11oy) |
-| [a11oy Sentinel](/flagships/sentinel) | a11oy vertical | security-posture guard | Kitaev-surface drift detection | [repo](https://github.com/szl-holdings/a11oy) |
-| [a11oy Operator](/flagships/operator) | a11oy vertical | receipt-orchestration surface | Receipt-DAG orchestration | [repo](https://github.com/szl-holdings/a11oy) |
-| [killinchu](/flagships/killinchu) | product | Quechua *killinchu* = kestrel | Counter-UAS drone intelligence | [repo](https://github.com/szl-holdings/killinchu) |
+## Product and role map
 
-::: info Honesty note on SLSA
-Some repo badges historically read "SLSA 3". The **doctrine-correct, honest level is
-SLSA L1** — provenance is generated but not L3-verified, and cosign signing is **PENDING**
-(see [Compliance & Security](/compliance)). Where this site and a badge disagree, this site
-is correct.
+| Surface | Product role | Source status | Standalone runtime | Source |
+|---------|--------------|---------------|--------------------|--------|
+| [a11oy](/flagships/a11oy) | flagship | `REAL` source surface | check [status](/status) | [repo](https://github.com/szl-holdings/a11oy) |
+| [killinchu](/flagships/killinchu) | flagship | `REAL` source surface | check [status](/status) | [repo](https://github.com/szl-holdings/killinchu) |
+| [a11oy Memory](/flagships/memory) | in-process capability / provenance role | `ROADMAP` as a standalone role | no standalone Space claimed | [repo](https://github.com/szl-holdings/a11oy) |
+| [a11oy Sentinel](/flagships/sentinel) | in-process capability / policy role | `MIXED` implementation and roadmap claims | no standalone Space claimed | [repo](https://github.com/szl-holdings/a11oy) |
+| [a11oy Operator](/flagships/operator) | in-process capability / receipt role | `ROADMAP` as a standalone role | no standalone Space claimed | [repo](https://github.com/szl-holdings/a11oy) |
+
+::: info Evidence boundary
+The documented supply-chain posture is **SLSA L1**. It is not an L3 claim. Khipu receipt
+signature status is artifact-specific and governed by [Compliance & Security](/compliance).
+Do not infer signing from a flagship label.
 :::
+
+For a public-safe investment view that keeps these distinctions intact, see the
+[Investor brief](/investors/).

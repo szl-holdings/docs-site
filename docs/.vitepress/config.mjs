@@ -33,6 +33,7 @@ export default withMermaid(defineConfig({
   },
 
   head: [
+    ['meta', { name: 'viewport', content: 'width=device-width, initial-scale=1, viewport-fit=cover' }],
     ['link', { rel: 'icon', href: '/docs-site/img/szl-mark.svg', type: 'image/svg+xml' }],
     ['link', { rel: 'manifest', href: '/docs-site/site.webmanifest' }],
     ['meta', { name: 'theme-color', content: '#030f29' }],
@@ -72,7 +73,7 @@ export default withMermaid(defineConfig({
           { text: 'Developer hub', link: '/developers/' },
           { text: 'API reference', link: '/api/' },
           { text: 'SDKs', link: '/sdks/' },
-          { text: 'Cookbook', link: '/cookbook/' }
+          { text: 'Historical cookbook', link: '/cookbook/' }
         ]
       },
       {
@@ -89,6 +90,7 @@ export default withMermaid(defineConfig({
         text: 'Company',
         items: [
           { text: 'About SZL', link: '/about' },
+          { text: 'Investors', link: '/investors/' },
           { text: 'KANCHAY design system', link: '/brand' },
           { text: 'Changelog', link: '/changelog' },
           { text: 'GitHub organization', link: 'https://github.com/szl-holdings' },
@@ -148,6 +150,13 @@ export default withMermaid(defineConfig({
         ]
       }],
       '/evidence/': [{ text: 'Evidence', items: [{ text: 'Evidence index', link: '/evidence/' }] }],
+      '/investors/': [{
+        text: 'Investors',
+        items: [
+          { text: 'Investor brief', link: '/investors/' },
+          { text: 'Diligence index', link: '/investors/diligence' }
+        ]
+      }],
       '/anatomy/': [{
         text: 'Architecture',
         items: [
@@ -159,7 +168,7 @@ export default withMermaid(defineConfig({
         ]
       }],
       '/cookbook/': [{
-        text: 'Cookbook',
+        text: 'Historical cookbook',
         items: [
           { text: 'Overview', link: '/cookbook/' },
           { text: 'Recipes', link: '/cookbook/recipes/' },

@@ -1,34 +1,25 @@
-# API Reference
+# API reference
 
-This section documents the live HTTP surfaces of the SZL flagships. Where a flagship publishes
-an **OpenAPI** spec, this site renders it; where a spec is not yet published, the endpoint
-tables below are the authoritative reference.
+This reference describes published HTTP route shapes. It is not an uptime page: consult
+[/status](/status) for the current provider and readiness observation.
 
-::: info OpenAPI auto-generation status
-- **killinchu** — live FastAPI service; its OpenAPI schema is served at
-  `/openapi.json` on the Space. The [killinchu API page](/api/killinchu) mirrors it.
-- **a11oy** — consumed as a TypeScript package, not a public HTTP API. Its typed surface is
-  documented on the [flagship page](/flagships/a11oy).
-- **Provenance Anchor / Operator / Policy** — roadmap roles, not released as packages or public
-  HTTP APIs today.
-- **Auto-generated OpenAPI doc pages** for any future public HTTP service are **in development**;
-  this index will render them as specs publish.
-:::
+| Service | Public route family | Current 2026-08-11 evidence |
+|---|---|---|
+| [a11oy](/api/a11oy) | `/healthz`, `/api/a11oy/v1/*`, `/khipu/*`, `/mcp/` | Provider `RUNNING` at `f5c395e8`; `/healthz` timed out at 20 s and 30 s — **UNAVAILABLE**. |
+| [killinchu](/api/killinchu) | `/api/killinchu/healthz`, `/api/killinchu/v1/*`, `/mcp/` | Provider `RUNNING` at `83142da9`; health route HTTP 200 — **AVAILABLE_AT_OBSERVATION** at that observation. |
+| Hatun-MCP | `/readyz`, server card, Streamable HTTP MCP | Provider `PAUSED` at `ebc78be2`; `/readyz` 503, quota `3/3` — **UNAVAILABLE**. |
 
-## Live HTTP surfaces
+The standalone Provenance Anchor, Operator, Policy, GraphQL, and unified-SDK surfaces are
+roadmap/not deployed. They are not public API or package-installation claims.
 
-| Flagship | Surface | Reference |
-|----------|---------|-----------|
-| [killinchu](/api/killinchu) | FastAPI on HF Space — counter-UAS, decoders, receipts | [/api/killinchu/*](https://szlholdings-killinchu.hf.space/api/killinchu/v1/honest) |
-| [a11oy](/flagships/a11oy) | TypeScript package (no public HTTP) | [flagship page](/flagships/a11oy) |
-| Provenance Anchor | roadmap — not released | [flagship page](/flagships/memory) |
-| Operator | roadmap — not released | [flagship page](/flagships/operator) |
-| Policy | roadmap — not released | [flagship page](/flagships/sentinel) |
+## Rules for using this catalog
 
-## Conventions
+- A route in a table is a **published contract**, not a proof that it currently responds.
+- An HTTP 200 readiness probe proves only that route at the observed time/revision; it does not
+  prove authorization for another route.
+- `DSSE-PLACEHOLDER`/`UNSIGNED` receipts are unsigned. Hash chains and self-digests can support
+  integrity checks but do not authenticate a signer.
+- Container image signatures and build attestations are separate artifact evidence and do not
+  establish runtime readiness or runtime-receipt signing.
 
-- **Receipts.** Every state-changing call returns a Khipu receipt:
-  `{ sha256, prevRoot, lamport, signature, chain_verified }` with `signature: "DSSE-PLACEHOLDER"`.
-- **Honest errors.** Malformed input returns a 4xx with an explicit error body — never a silent
-  pass (a Doctrine v11 §2 measurability-honesty requirement).
-- **Health.** Services expose `/healthz` (liveness) and `/readyz` (readiness).
+Use [Developer API reference](/developers/api_reference) for the host, auth, and client boundary.

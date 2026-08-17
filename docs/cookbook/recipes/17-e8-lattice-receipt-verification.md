@@ -1,127 +1,70 @@
-# E8 lattice receipt verification
+# E8 receipt-geometry design note
 
-> **Encode a 256-bit Khipu receipt digest onto the E8 lattice — the densest sphere packing in ℝ⁸ — and read its minimum-distance integrity geometry. Error-DETECTION only; not security.**
->
-> **Headline number: 1 GET → an on-lattice receipt reports `min_squared_distance = 0`; E8's minimal separation is exactly 2.**
+::: warning Runtime and project implementation unavailable
+No pinned SZL encoder, decoder, route response, receipt, or deployment is established by this
+recipe. The material below separates cited E8 mathematics from a proposed digest mapping. It is
+not receipt verification and adds no cryptographic security.
+:::
 
-E8 is the unique densest lattice sphere packing in eight dimensions — a result that won
-**Maryna Viazovska the 2022 Fields Medal** (proof: Viazovska 2017, *Annals of Mathematics*
-185:991–1015; later formalized in Lean at EPFL). This recipe maps a receipt digest onto E8 and
-uses the nearest-lattice-point distance as a structural integrity metric.
+The E8 lattice attains the optimal sphere-packing density in eight dimensions. That mathematical
+result is cited prior art. A system may choose to map data into eight coordinates and compare them
+with a lattice, but such a mapping is a separate engineering artifact with its own correctness and
+security obligations.
 
-> **Honest posture — read this first.** E8 gives **error-DETECTION geometry only**: the minimum
-> distance between distinct lattice codepoints (squared distance 2) is a separation metric. It
-> does **NOT** give adversarial-substitution resistance, collision resistance, tamper-proofing,
-> or BFT safety — adversarial substitution is **Conjecture 2 (Khipu BFT), NOT proven**. The
-> Viazovska proof is **cited prior art, not produced here**. This encoding adds **zero** to the
-> locked-proven count (stays **8**). Λ = Conjecture 1.
+Minimum-distance geometry can detect some perturbations relative to a fixed encoding. It does
+**not** authenticate an issuer, provide collision resistance, prove a receipt chain, or establish
+Byzantine-fault tolerance.
 
----
+## Executable local partition fixture
 
-## Prerequisites
-
-```bash
-python3 -m pip install httpx   # plus stdlib hashlib for the offline check
-```
-
-Live base: `https://a-11-oy.com`.
-
----
-
-## Quickstart (live, verified)
+This standard-library example performs only the historical recipe's 256-bit-to-eight-word
+partition. It does not claim that the resulting point is in E8 and does not run a closest-point
+decoder.
 
 ```python
-import httpx
+def digest_words(digest_hex: str) -> list[int]:
+    raw = bytes.fromhex(digest_hex)
+    if len(raw) != 32:
+        raise ValueError("expected one 256-bit digest")
+    return [int.from_bytes(raw[offset : offset + 4], "big") for offset in range(0, 32, 4)]
 
-BASE = "https://a-11-oy.com"
 
-# GET verifies the current ledger head; POST verifies any digest you supply.
-digest = "d0361e9f2c8d8ac96a1cdab46a6f45de3ed697a9e767d7ccccce2d69b60ae73c"
-r = httpx.post(f"{BASE}/api/a11oy/v1/e8/verify", json={"digest": digest}, timeout=30).json()
-
-print("coords (8 × 32-bit):", r["encoding"]["coords"])
-print("on_lattice:", r["on_lattice"])                       # => True
-print("min_squared_distance:", r["min_squared_distance"])   # => 0.0 ⇒ exact lattice member
-print("E8 minimal separation:", r["e8_min_squared_distance"])  # => 2
-print("algorithm:", r["algorithm"])   # Conway & Sloane closest-point (decode D8 and D8+glue)
+fixture_digest = "d0361e9f2c8d8ac96a1cdab46a6f45de3ed697a9e767d7ccccce2d69b60ae73c"
+words = digest_words(fixture_digest)
+assert len(words) == 8
+assert all(0 <= word < 2**32 for word in words)
+print(words)
 ```
 
----
+The output is a deterministic local representation of the fixture digest only. A canonical E8
+scheme would still need to define coordinate scaling, coset selection, encoding and decoding,
+round-trip behavior, error thresholds, and versioned test vectors.
 
-## Full walkthrough
+## Promotion contract
 
-### Step 1 — Encode the digest
+Before an SZL E8 receipt claim can be called implemented, it needs:
 
-A SHA3-256 digest is 64 hex chars. Split it into 8 × 8-hex groups; each becomes a 32-bit unsigned
-integer coordinate. That gives an 8-vector in ℝ⁸ — the input to the E8 closest-point search.
+1. a pinned encoder/decoder source revision and exact algorithm specification;
+2. executable positive, negative, boundary, and round-trip vectors;
+3. a binding from exact receipt bytes to the digest and from the digest to the lattice codeword;
+4. a clear error model and an explicit statement of what the scheme cannot detect;
+5. cryptographic receipt authentication evaluated separately; and
+6. exact runtime request/response evidence if an endpoint is claimed.
 
-### Step 2 — Find the nearest lattice point
+## Evidence state
 
-E8 = D8 ∪ (D8 + glue), where D8 is the even-coordinate-sum integer lattice and the glue vector is
-(½,…,½). The Conway & Sloane algorithm decodes the input in both cosets and picks the nearer
-point. `min_squared_distance` is the squared Euclidean distance to that point.
-
-```python
-# min_squared_distance == 0  ⇒  the encoded vector lies EXACTLY on E8 (a lattice member)
-# min_squared_distance > 0   ⇒  off-lattice by that amount (a perturbation / corruption signal)
-assert r["error_detection"]["is_member"] is True
-print(r["error_detection"]["interpretation"])
-```
-
-### Step 3 — Interpret it as error-detection geometry
-
-The minimal squared distance between two distinct E8 points is **2**. So any perturbation that
-moves a codepoint less than that separation is detectable as "off-lattice by δ." This is exactly
-sphere-packing error-detection — the same family of idea as a lattice code's minimum distance.
-
-### Step 4 — Do NOT overclaim
-
-The endpoint ships a `do_not_claim` block. Honor it:
-
-```python
-import json
-print(json.dumps(r["do_not_claim"]["must_not_claim"], indent=2))
-# - "E8 gives sphere-packing / minimum-distance error-DETECTION geometry ONLY."
-# - "E8 does NOT give adversarial-substitution resistance, tamper-proofing, or BFT safety."
-# - "This encoding adds ZERO to the locked-proven count (stays 8)."
-# - "Λ = Conjecture 1, never a theorem."
-```
-
----
-
-## Honest scope table
-
-| Claim | Status |
+| Claim | Current status |
 |---|---|
-| E8 is the densest packing in ℝ⁸ | **PROVEN** — Viazovska 2017 (*cited*, formalized in Lean at EPFL) |
-| Closest-point decode | **REAL** — Conway & Sloane deterministic algorithm |
-| `min_squared_distance` integrity metric | **REAL** error-DETECTION geometry |
-| Adversarial / collision / BFT resistance | **NOT claimed** — Conjecture 2, OPEN |
-| Locked-proven count contribution | **0** (stays 8 @ `c7c0ba17`) |
-
----
-
-## See also
-
-- **[01 — Verify a receipt end-to-end](01-verify-a-receipt-end-to-end.md)** — the receipt the digest comes from.
-- **[08 — Receipt knot algebra](08-receipt-knot-algebra.md)** — another structural integrity lens.
-- **[20 — Evidence pack for auditors](20-evidence-pack-for-auditors.md)** — bundles ledger heads for offline audit.
-
-## Cite this recipe
-
-```bibtex
-@misc{szl_cookbook_e8_verify_2026,
-  title        = {E8 lattice receipt verification (SZL Cookbook recipe 17)},
-  author       = {{SZL Holdings}},
-  year         = {2026},
-  howpublished = {\url{https://github.com/szl-holdings/szl-cookbook/blob/main/recipes/17-e8-lattice-receipt-verification.md}},
-  note         = {E8 error-DETECTION geometry; cites Viazovska 2017; NOT security. Λ = Conjecture 1; locked count stays 8.}
-}
-```
+| E8 sphere-packing result | `CITED_PRIOR_ART` |
+| Eight-word digest partition above | `MODELED_LOCAL_FIXTURE` |
+| SZL E8 encoder or closest-point decoder | `SOURCE_ARTIFACT_UNAVAILABLE` |
+| SZL E8 route and deployed response | `UNAVAILABLE` |
+| Receipt authentication or adversarial security | `NOT_ESTABLISHED` |
 
 References: M. Viazovska, "The sphere packing problem in dimension 8," *Annals of Mathematics*
-185 (2017) 991–1015. J. H. Conway & N. J. A. Sloane, *Sphere Packings, Lattices and Groups*,
-3rd ed., Springer 1999 (E8 closest-point algorithm).
+185 (2017), 991-1015; J. H. Conway and N. J. A. Sloane, *Sphere Packings, Lattices and Groups*,
+3rd edition, Springer (1999).
 
 ---
-*Doctrine v11 LOCKED — 749/14/163 — kernel `c7c0ba17` · Λ = Conjecture 1 · SLSA L1 (honest)*
+
+*Cited lattice geometry is not evidence of an SZL runtime, implementation, or security proof.*

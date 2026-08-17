@@ -8,15 +8,19 @@ target is resolved. Gloss: <a href="https://kaikki.org/eswiktionary/">kaikki.org
 
 ## Overview
 
-`killinchu` 🦅 is the SZL **drone-intelligence flagship**: a formally-governed **counter-UAS
-rule engine** with **Λ-gate governance**, **DSSE Khipu receipts**, and **real protocol
-ingest**. It is the SZL counter-UAS rule engine for the governance substrate.
+`killinchu` 🦅 is the SZL **drone-intelligence flagship**: a source-described **counter-UAS
+rule engine** with **Λ-gate governance**, Khipu receipt structures, and protocol-ingest
+implementations. These are source capabilities; the dated hosted observation below witnessed
+only the health route.
 
 **Anatomy mapping:** killinchu is the **embodied bridge organ** — the
 [Killinchu-bridge](/anatomy/#killinchu-bridge) — that extends digital governance to
 physical-space actuation (see sub-formula [SF-12](/doctrine/puriq#sf-12)).
 
-## Real protocol decoders (no mocks)
+## Source-described protocol decoders
+
+The repository describes the following decoder implementations. They were not exercised against
+the hosted revision during this docs release, so this section is not a runtime witness.
 
 | Protocol | Decoder | Standard |
 |----------|---------|----------|
@@ -35,7 +39,8 @@ physical-space actuation (see sub-formula [SF-12](/doctrine/puriq#sf-12)).
 
 ## Honesty disclosure (Doctrine v11)
 
-`GET /api/killinchu/v1/honest` returns this disclosure as JSON:
+Source documentation describes `GET /api/killinchu/v1/honest` as returning this disclosure as
+JSON. The dated hosted observation did not call that route:
 
 - **Λ is a Conjecture, not a Theorem.** The 13-axis governance score is a decision aid, not a proof of safety.
 - **DSSE receipt signatures are `PLACEHOLDER`** — Sigstore CI signing is not yet wired. Receipts carry a real SHA-256 Merkle digest but an unsigned envelope. **SLSA L1 honest.**
@@ -44,38 +49,41 @@ physical-space actuation (see sub-formula [SF-12](/doctrine/puriq#sf-12)).
 
 ## API
 
-Base: `/api/killinchu`. See the [full API reference](/api/killinchu) for request/response shapes.
+At exact observed revision `83142da9526e2c0ddfe1e78eb99a20940cde0cf3`, hosted evidence is
+strictly limited to `GET /api/killinchu/healthz` returning HTTP 200 on 2026-08-11. Every `/api/killinchu/v1/*`
+entry below is a source-described route shape, not a hosted response witness. See the
+[full API reference](/api/killinchu) for that same boundary.
 
-| Method | Path | Description |
-|--------|------|-------------|
-| GET | `/healthz` · `/readyz` | Liveness / readiness |
-| GET | `/v1/honest` | Doctrine v11 honesty disclosure |
-| POST | `/v1/remote-id/decode` | Decode OpenDroneID / ASTM F3411 hex |
-| POST | `/v1/ads-b/decode` | Decode ADS-B (single frame or even/odd pair) |
-| POST | `/v1/mavlink/parse` | Parse MAVLink v1/v2 frames |
-| GET | `/v1/drones/database` · `/v1/drones/{id}` | Drone DB (filters: side, group, country, role) |
-| POST | `/v1/counter-uas/evaluate` | Geofence + 13-axis Λ-gate + receipt |
-| GET/POST | `/v1/swarm/topology` | Union-Find swarm component detection |
-| GET | `/v1/threats/active` | Active threat board |
-| POST | `/v1/receipt/emit` · GET `/v1/receipt/ledger` | Emit / read Khipu DSSE receipts |
-| GET | `/v1/lambda` | Λ-gate axis definitions |
-| GET | `/v1/research` · `/v1/samples` | Sourced research corpus / verified test vectors |
+| Method | Path | Evidence boundary |
+|--------|------|-------------------|
+| GET | `/api/killinchu/healthz` | **HOSTED HEALTH WITNESS:** HTTP 200 at the exact observed revision and time only. |
+| GET | `/api/killinchu/readyz` | Source-described; not separately witnessed. |
+| GET | `/api/killinchu/v1/honest` | Source-described honesty-disclosure shape; not runtime-witnessed. |
+| POST | `/api/killinchu/v1/remote-id/decode` | Source-described OpenDroneID / ASTM F3411 decoder shape; not runtime-witnessed. |
+| POST | `/api/killinchu/v1/ads-b/decode` | Source-described ADS-B decoder shape; not runtime-witnessed. |
+| POST | `/api/killinchu/v1/mavlink/parse` | Source-described MAVLink parser shape; not runtime-witnessed. |
+| GET | `/api/killinchu/v1/drones/database` · `/api/killinchu/v1/drones/{id}` | Source-described database routes; not runtime-witnessed. |
+| POST | `/api/killinchu/v1/counter-uas/evaluate` | Source-described geofence/Λ/receipt shape; not runtime-witnessed. |
+| GET/POST | `/api/killinchu/v1/swarm/topology` | Source-described topology routes; not runtime-witnessed. |
+| GET | `/api/killinchu/v1/threats/active` | Source-described threat-board route; not runtime-witnessed. |
+| POST | `/api/killinchu/v1/receipt/emit` · GET `/api/killinchu/v1/receipt/ledger` | Source-described receipt routes; not runtime-witnessed. |
+| GET | `/api/killinchu/v1/lambda` | Source-described Λ-axis route; not runtime-witnessed. |
+| GET | `/api/killinchu/v1/research` · `/api/killinchu/v1/samples` | Source-described research/sample routes; not runtime-witnessed. |
 
-## Example — decode + evaluate
+## Historical request shapes — not a live API witness
 
-```bash
-# Honest disclosure
-curl -s https://szlholdings-killinchu.hf.space/api/killinchu/v1/honest | jq .
-
-# Decode a Remote-ID broadcast
-curl -s -X POST https://szlholdings-killinchu.hf.space/api/killinchu/v1/remote-id/decode \
-  -H 'content-type: application/json' -d '{"hex":"0d01..."}' | jq .
-
-# Geofence + 13-axis Λ-gate + receipt
-curl -s -X POST https://szlholdings-killinchu.hf.space/api/killinchu/v1/counter-uas/evaluate \
-  -H 'content-type: application/json' \
-  -d '{"track":{"lat":...,"lon":...},"geofence":{"center":[...],"radius_m":500}}' | jq .
+```text
+GET  /api/killinchu/v1/honest
+POST /api/killinchu/v1/remote-id/decode
+     {"hex":"<Remote-ID frame>"}
+POST /api/killinchu/v1/counter-uas/evaluate
+     {"track":{"lat":"<lat>","lon":"<lon>"},"geofence":{"center":["<lat>","<lon>"],"radius_m":500}}
 ```
+
+These examples document historical/source-level shapes only. They are not a claim that an action
+route is currently callable, authorized, compatible with the example payload, or reproducible at
+the hosted revision. Establish each of those properties with a fresh, exact-revision response
+before operational use.
 
 ## Stack
 
@@ -85,6 +93,6 @@ MapLibre GL (OpenFreeMap tokenless tiles) · Docker on Hugging Face Spaces.
 ## Source & evidence
 
 - **Repo:** [github.com/szl-holdings/killinchu](https://github.com/szl-holdings/killinchu)
-- **Live Space:** [szlholdings-killinchu.hf.space](https://szlholdings-killinchu.hf.space)
+- **Observed host (health only):** [szlholdings-killinchu.hf.space](https://szlholdings-killinchu.hf.space) — health HTTP 200 at revision `83142da9526e2c0ddfe1e78eb99a20940cde0cf3`; no `/api/killinchu/v1/*` response is witnessed here.
 - **License:** Apache-2.0 · Doctrine v11 · ORCID [0009-0001-0110-4173](https://orcid.org/0009-0001-0110-4173)
 - **Legal boundaries:** counter-UAS engagement guidance is decision-support only; see the repo's `LEGAL_BOUNDARIES.md`.

@@ -1,0 +1,58 @@
+{
+  "contract": "szl.docs.runtime-status/v1",
+  "observation_window_ended_at": "2026-08-11T07:27:11Z",
+  "method": "Non-mutating Hugging Face repository API and unauthenticated public readiness probes",
+  "surfaces": [
+    {
+      "id": "a11oy",
+      "repository": "SZLHOLDINGS/a11oy",
+      "revision": "f5c395e81eaa306b2eb1c8bbf8773f07664ce564",
+      "provider_stage": "RUNNING",
+      "provider_error": null,
+      "probe": {
+        "url": "https://szlholdings-a11oy.hf.space/healthz",
+        "outcome": "TIMEOUT",
+        "http_status": null,
+        "attempt_timeouts_seconds": [20, 30]
+      },
+      "evidence_state": "UNAVAILABLE",
+      "readiness_observed_at_observation": false
+    },
+    {
+      "id": "killinchu",
+      "repository": "SZLHOLDINGS/killinchu",
+      "revision": "83142da9526e2c0ddfe1e78eb99a20940cde0cf3",
+      "provider_stage": "RUNNING",
+      "provider_error": null,
+      "probe": {
+        "url": "https://szlholdings-killinchu.hf.space/api/killinchu/healthz",
+        "outcome": "RESPONSE",
+        "http_status": 200,
+        "attempt_timeouts_seconds": [20]
+      },
+      "evidence_state": "AVAILABLE_AT_OBSERVATION",
+      "readiness_observed_at_observation": true
+    },
+    {
+      "id": "hatun-mcp",
+      "repository": "SZLHOLDINGS/hatun-mcp",
+      "revision": "ebc78be2ffffb08241a1da1eb8ebcc6d34a1ab34",
+      "provider_stage": "PAUSED",
+      "provider_error": "Quota exceeded for flavor cpu-basic (requested=1): current=3, limit=3",
+      "probe": {
+        "url": "https://szlholdings-hatun-mcp.hf.space/readyz",
+        "outcome": "RESPONSE",
+        "http_status": 503,
+        "attempt_timeouts_seconds": [20]
+      },
+      "evidence_state": "UNAVAILABLE",
+      "readiness_observed_at_observation": false
+    }
+  ],
+  "non_claims": [
+    "Provider RUNNING does not prove application readiness.",
+    "A successful point-in-time readiness probe does not prove continuous availability.",
+    "Repository publication, image signing, runtime receipt signing, and hosted readiness are separate evidence classes.",
+    "This observation did not use credentials or mutate, restart, publish, or deploy any service."
+  ]
+}

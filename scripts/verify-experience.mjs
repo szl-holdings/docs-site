@@ -129,6 +129,7 @@ const quickstart = readFileSync(join(root, 'docs', 'developers', 'quickstart.md'
 const developerHub = readFileSync(join(root, 'docs', 'developers', 'index.md'), 'utf8')
 const compliancePage = readFileSync(join(root, 'docs', 'compliance.md'), 'utf8')
 const statusPage = readFileSync(join(root, 'docs', 'status.md'), 'utf8')
+const investorBrief = readFileSync(join(root, 'docs', 'investors', 'index.md'), 'utf8')
 const pagesWorkflow = readFileSync(join(root, '.github', 'workflows', 'deploy-pages.yml'), 'utf8')
 const udsPage = readFileSync(join(root, 'docs', 'uds', 'index.md'), 'utf8')
 const themeIndex = readFileSync(join(root, 'docs', '.vitepress', 'theme', 'index.js'), 'utf8')
@@ -151,6 +152,9 @@ for (const file of publicTruthFiles) {
 if (/fonts\.googleapis|fonts\.gstatic/.test(config)) fail('runtime font CDN is forbidden')
 if (!config.includes("base: '/docs-site/'")) fail('VitePress base is not the canonical Pages path')
 if (/^\s*mpa:\s*true/m.test(config)) fail('VitePress static mpa mode must remain disabled for interactive docs')
+if (!config.includes('width=device-width, initial-scale=1, viewport-fit=cover')) {
+  fail('viewport contract must opt into safe-area geometry')
+}
 for (const staleMarker of ["mpa: true", "MPA loses VitePress's instant in-page SPA navigation"]) {
   if (readme.includes(staleMarker)) fail(`README retains the retired non-interactive architecture: ${staleMarker}`)
 }
@@ -163,10 +167,15 @@ for (const marker of [
 ]) {
   if (!pagesWorkflow.includes(marker)) fail(`Pages source-binding step missing: ${marker}`)
 }
-for (const marker of ['deployment.json', 'exact protected', 'SHA-256 inventory/root digest']) {
-  if (!statusPage.includes(marker)) fail(`public deployment-evidence explanation missing: ${marker}`)
-}
-for (const marker of ['Observed at **', 'Provider state', 'Evidence state', '**UNAVAILABLE**']) {
+for (const marker of [
+  '2026-08-11T07:27:11Z',
+  '/deployment.json',
+  '/runtime-status.json',
+  'Provider state',
+  'Evidence state',
+  '**UNAVAILABLE**',
+  '**AVAILABLE_AT_OBSERVATION**'
+]) {
   if (!statusPage.includes(marker)) fail(`public runtime observation marker missing: ${marker}`)
 }
 for (const staleMarker of [
@@ -183,45 +192,34 @@ for (const marker of ['transformHead({ page, title, description })', 'property: 
 for (const marker of ['Investor', 'Developer', 'Evaluator', 'data-state="real">REAL', 'data-state="roadmap">ROADMAP']) {
   if (!home.includes(marker)) fail(`homepage truth/audience marker missing: ${marker}`)
 }
+for (const marker of ['The investment thesis', 'Current public posture', 'Evidence before adjectives', 'Request investor diligence']) {
+  if (!investorBrief.includes(marker)) fail(`investor journey marker missing: ${marker}`)
+}
 for (const marker of [
   '/api/a11oy/v1/mcp/tools',
-  '/api/a11oy/v1/mcp/call',
-  'https://szlholdings-a11oy.hf.space/mcp/',
-  'https://szlholdings-killinchu.hf.space/mcp/',
-  'a11oy and killinchu native MCP — protocol witnessed',
-  'successful JSON-RPC',
-  'Hatun-MCP — runtime ready, authentication required',
-  'RUNTIME READY · AUTH REQUIRED · CLIENT SESSION NOT WITNESSED',
-  'No drop-in Claude Desktop or Cursor configuration is published yet',
-  'No generic bridge command is asserted here'
+  'same-origin `/mcp/`',
+  'Historical API-key transport evidence',
+  'No current authenticated client session claimed',
+  'No generic desktop-client setup claimed',
+  'fail closed'
 ]) {
   if (!mcpIntegration.includes(marker)) fail(`MCP truth-boundary marker missing: ${marker}`)
 }
 for (const forbidden of forbiddenMcpClientMarkers) {
   if (mcpIntegration.includes(forbidden)) fail(`unavailable MCP client configuration is published: ${forbidden}`)
 }
-for (const [file, content] of [['docs/status.md', statusPage], ['docs/uds/index.md', udsPage]]) {
-  for (const marker of ['server-card.json', 'API-key authentication', 'authenticated client session']) {
-    if (!content.toLowerCase().includes(marker.toLowerCase())) {
-      fail(`Hatun evidence marker missing from ${file}: ${marker}`)
-    }
-  }
-  for (const staleClaim of ['23 static tools', '16 governed tools', 'Re-deploying']) {
-    if (content.includes(staleClaim)) fail(`stale Hatun claim in ${file}: ${staleClaim}`)
-  }
+for (const marker of ['Hatun-MCP', '`PAUSED`', 'HTTP 503', 'authenticated Hatun-MCP']) {
+  if (!statusPage.includes(marker)) fail(`Hatun runtime-boundary marker missing: ${marker}`)
 }
 for (const [file, content] of [
   ['docs/developers/api_reference.md', apiReference],
   ['docs/developers/quickstart.md', quickstart]
 ]) {
-  for (const marker of ['same-origin', '/mcp/', 'MCP integration']) {
+  for (const marker of ['/status', '**UNAVAILABLE**', 'MCP integration']) {
     if (!content.includes(marker)) fail(`native MCP evidence marker missing from ${file}: ${marker}`)
   }
-  for (const staleClaim of ['roadmap, not live', 'returns **HTTP 405**', 'HTML landing page', 'JSON-RPC `/mcp/` transport is roadmap']) {
-    if (content.includes(staleClaim)) fail(`stale native MCP claim in ${file}: ${staleClaim}`)
-  }
 }
-if (!developerHub.includes('target client completes a witnessed session')) {
+if (!developerHub.includes('desktop-client session')) {
   fail('developer hub does not bind client configuration to a witnessed session')
 }
 for (const staleClaim of ['until the live transport accepts JSON-RPC', "fleet's only spec-compliant"]) {
@@ -246,23 +244,32 @@ for (const marker of [
 ]) {
   if (!customCss.includes(marker)) fail(`status-indicator style missing: ${marker}`)
 }
-const statusIndicators = [...compliancePage.matchAll(/<span\b[^>]*>/g)]
-  .map((match) => match[0])
-  .filter((tag) => /\bclass=(['"])dot (?:green|amber|gray)\1/.test(tag))
-for (const state of ['green', 'amber', 'gray']) {
-  const stateIndicators = statusIndicators.filter((tag) => {
-    const classValue = tag.match(/\bclass=(['"])([^'"]*)\1/)?.[2] ?? ''
-    return classValue.split(/\s+/).includes('dot') && classValue.split(/\s+/).includes(state)
-  })
-  if (stateIndicators.length === 0) {
-    fail(`accessible compliance status indicator missing: ${state}`)
-  }
-  if (stateIndicators.some((tag) => !/\baria-hidden=(['"])true\1/.test(tag))) {
-    fail(`compliance status indicator is exposed to assistive technology: ${state}`)
-  }
+for (const marker of ['Image signature', 'Runtime receipt', 'Source/build controls', 'Runtime availability', 'DSSE-PLACEHOLDER']) {
+  if (!compliancePage.includes(marker)) fail(`artifact-class compliance marker missing: ${marker}`)
 }
 for (const marker of ['button.VPSwitchAppearance', "setAttribute('aria-label'", "setAttribute('role', 'main'"]) {
   if (!themeIndex.includes(marker)) fail(`accessible chrome marker missing: ${marker}`)
+}
+if (!themeIndex.includes('updated()') || !themeIndex.includes('scheduleAccessibleChromeRepair')) {
+  fail('accessible chrome repair is not retained after SPA navigation')
+}
+for (const marker of ['installMobileNavigationEscape', 'event.key !== \'Escape\'', 'aria-expanded="true"', 'trigger.click()', 'trigger.focus()']) {
+  if (!themeIndex.includes(marker)) fail(`mobile navigation Escape contract missing: ${marker}`)
+}
+if (/\.VPHome\s*\{\s*overflow:\s*hidden/i.test(customCss)) {
+  fail('homepage must not globally clip overflow or focus outlines')
+}
+for (const marker of [
+  'padding-top: var(--szl-safe-top)',
+  'top: calc(var(--vp-nav-height) + var(--szl-safe-top))',
+  '.VPNavScreen {',
+  'padding-bottom: max(1rem, var(--szl-safe-bottom))',
+  'scrollbar-gutter: stable',
+  '-webkit-overflow-scrolling: touch',
+  '@media (forced-colors: active)',
+  'outline: 3px solid CanvasText'
+]) {
+  if (!customCss.includes(marker)) fail(`responsive accessibility marker missing: ${marker}`)
 }
 
 for (const file of requiredPublic) {

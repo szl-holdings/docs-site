@@ -1,130 +1,111 @@
-# Cardano-anchored DSSE blood ledger
+# Local Cardano metadata candidate
 
-> **Batch a set of DSSE Khipu receipts into a Merkle root and anchor that root as Cardano transaction metadata — a public, immutable timestamp for your governance "blood ledger."**
->
-> **Headline number: N receipts → 1 Merkle root → 1 on-chain metadatum.**
+::: warning No on-chain or signature proof
+This recipe creates a deterministic metadata **candidate** from synthetic local receipts. It does
+not read a mutable data lake, verify a DSSE signature, submit a transaction, or prove a Cardano
+anchor. No canonical signed receipt sample or current a11oy runtime is established here.
+:::
 
-The memory cortex (the a11oy Memory role, inside a11oy)
-calls its receipt chain the *yawar* (blood) ledger. Anchoring its Merkle root on Cardano L1
-gives an independent, public proof-of-existence. This is **hash anchoring only** — not a token,
-not custodial, not a transfer of value.
+A Merkle root can compactly bind an ordered collection of bytes. Publishing such a root on a
+ledger can provide a later proof-of-existence, but only when the input bytes, signature results,
+transaction, network, and confirmed readback are all retained. Hashing unverified receipts does
+not make them authentic.
 
-> **HONEST PREREQUISITE — READ FIRST.** a11oy's live `/v1/honest` states:
-> *"Cardano-anchored receipts are demo-seeded, not on-chain mainnet."* Mainnet (and even funded
-> testnet) submission requires **founder credentials** (a funded wallet + signing keys). This
-> recipe therefore has two paths:
-> 1. **Demo path (no credentials)** — build and verify the Merkle root + the metadata payload
->    locally. Fully runnable here.
-> 2. **Testnet path (requires a funded Cardano preprod wallet)** — submit the root and retrieve the
->    proof. Clearly gated below.
+## Executable local fixture
 
----
-
-## Prerequisites
-
-```bash
-python3 -m pip install requests          # demo path
-# Testnet path additionally needs: cardano-cli OR a Blockfrost preprod project_id,
-# and a funded preprod wallet. These are FOUNDER-PROVIDED credentials.
-```
-
----
-
-## Quickstart — demo path (no credentials)
+The following standard-library example has no network dependency. Its receipts are explicitly
+synthetic and unsigned.
 
 ```python
-import hashlib, json, urllib.request
+import hashlib
+import json
 
-LAKE = "https://huggingface.co/datasets/SZLHOLDINGS/szl-lake/resolve/main"
-lines = urllib.request.urlopen(f"{LAKE}/khipu/a11oy_receipts.ndjson", timeout=30).read().splitlines()
-leaves = [hashlib.sha256(l).digest() for l in lines if l.strip()]
+RECEIPTS = [
+    {
+        "seq": 2,
+        "receipt_id": "fixture-b",
+        "payload": {"decision": "DENY"},
+        "signature_state": "UNSIGNED_SYNTHETIC_FIXTURE",
+    },
+    {
+        "seq": 1,
+        "receipt_id": "fixture-a",
+        "payload": {"decision": "DENY"},
+        "signature_state": "UNSIGNED_SYNTHETIC_FIXTURE",
+    },
+]
 
-def merkle_root(leaves):
-    if not leaves: return b"\x00" * 32
-    layer = leaves
+
+def canonical_bytes(value: object) -> bytes:
+    return json.dumps(
+        value,
+        sort_keys=True,
+        separators=(",", ":"),
+        ensure_ascii=False,
+    ).encode("utf-8")
+
+
+def merkle_root(leaves: list[bytes]) -> bytes:
+    if not leaves:
+        return b"\x00" * 32
+    layer = list(leaves)
     while len(layer) > 1:
-        if len(layer) % 2: layer = layer + [layer[-1]]            # duplicate last
-        layer = [hashlib.sha256(layer[i] + layer[i+1]).digest() for i in range(0, len(layer), 2)]
+        if len(layer) % 2:
+            layer.append(layer[-1])
+        layer = [
+            hashlib.sha256(layer[i] + layer[i + 1]).digest()
+            for i in range(0, len(layer), 2)
+        ]
     return layer[0]
 
+
+ordered = sorted(RECEIPTS, key=lambda item: (item["seq"], item["receipt_id"]))
+leaves = [hashlib.sha256(canonical_bytes(item)).digest() for item in ordered]
 root = merkle_root(leaves).hex()
-metadatum = {"674": {"msg": ["szl.khipu.anchor/v1", f"root:{root}",
-                              "doctrine:v11", "kernel:c7c0ba17"]}}   # CIP-20 label 674
-print("merkle_root:", root)
-print("cardano_metadatum:", json.dumps(metadatum))
-```
 
-The `674` label is the [CIP-20](https://cips.cardano.org/cip/CIP-20) transaction-message standard —
-the conventional home for arbitrary anchor strings.
-
----
-
-## Full walkthrough
-
-### Step 1 — Verify the receipts before you anchor
-
-Anchoring a forged receipt just timestamps a forgery. Verify each receipt's signature first
-(**[recipe 01](01-verify-a-receipt-end-to-end.md)**) so the Merkle root commits to *authentic*
-receipts only.
-
-### Step 2 — Build a stable, ordered Merkle tree
-
-Sort receipts by `(seq, receipt_id)` so the root is deterministic and reproducible by an auditor.
-Record the leaf order alongside the root.
-
-### Step 3 — Form the metadata payload
-
-Keep each metadata string ≤ 64 bytes (Cardano metadata constraint). Split the root across two
-strings if needed, or store `root` plus a pointer to the leaf-order file in the lake.
-
-### Step 4 (gated) — Submit to Cardano preprod testnet
-
-> Requires a funded preprod wallet — **founder credentials**.
-
-```bash
-# Example with cardano-cli (preprod). Wallet keys are founder-supplied; never commit them.
-cardano-cli transaction build \
-  --testnet-magic 1 \
-  --tx-in "$UTXO" --change-address "$ADDR" \
-  --metadata-json-file metadatum.json \
-  --out-file tx.raw
-cardano-cli transaction sign --tx-body-file tx.raw --signing-key-file payment.skey \
-  --testnet-magic 1 --out-file tx.signed
-cardano-cli transaction submit --tx-file tx.signed --testnet-magic 1
-```
-
-### Step 5 — Retrieve the proof
-
-After confirmation, the transaction hash *is* the proof. Resolve it on a preprod explorer or via
-Blockfrost:
-
-```bash
-curl -s -H "project_id: $BLOCKFROST_PREPROD" \
-  "https://cardano-preprod.blockfrost.io/api/v0/txs/$TXHASH/metadata" | jq .
-```
-
-Store `{merkle_root, leaf_order_url, tx_hash, network: "preprod"}` back in the lake as the anchor
-receipt — itself verifiable by recipe 01.
-
----
-
-## See also
-
-- **[01 — Verify a receipt end-to-end](01-verify-a-receipt-end-to-end.md)** — verify before anchoring.
-- **[05 — Memory-attested reasoning](05-memory-attested-reasoning.md)** — the chain you're anchoring.
-- Live: [a11oy](https://szlholdings-a11oy.hf.space) (hosts the a11oy Memory) · [CIP-20](https://cips.cardano.org/cip/CIP-20)
-
-## Cite this recipe
-
-```bibtex
-@misc{szl_cookbook_cardano_anchor_2026,
-  title        = {Cardano-anchored DSSE blood ledger (SZL Cookbook recipe 10)},
-  author       = {{SZL Holdings}},
-  year         = {2026},
-  howpublished = {\url{https://github.com/szl-holdings/szl-cookbook/blob/main/recipes/10-cardano-dsse-blood-ledger.md}},
-  note         = {Hash anchoring only; mainnet/testnet submission needs founder credentials. Demo path needs none.}
+# CIP-20 uses metadata label 674 for transaction messages. This is only a local candidate.
+messages = [
+    "szl.khipu.anchor/v1",
+    f"sha256:{root[:32]}",
+    f"continue:{root[32:]}",
+]
+assert all(len(message.encode("utf-8")) <= 64 for message in messages)
+candidate = {
+    "674": {"msg": messages},
+    "evidence_state": "LOCAL_CANDIDATE_NOT_SUBMITTED",
 }
+print(json.dumps(candidate, indent=2, sort_keys=True))
 ```
 
+The resulting root binds the exact synthetic fixture bytes in the displayed order. It proves
+nothing about a11oy, an issuer, a public lake, or a Cardano transaction.
+
+## Promotion contract
+
+An on-chain claim requires an immutable evidence bundle containing:
+
+1. the exact receipt bytes and deterministic leaf order;
+2. artifact-specific signature verification results and signer identity;
+3. the root-building implementation revision and reproducible test vectors;
+4. the signed transaction body, network identifier, and transaction hash;
+5. terminal confirmation/finality evidence from an independent ledger reader; and
+6. a readback showing that the confirmed metadata contains the same root.
+
+Until those items exist, the only valid status is `LOCAL_CANDIDATE_NOT_SUBMITTED`. Wallet access,
+funding, or a command template would not by itself satisfy the contract.
+
+## Evidence state
+
+| Surface | Current status |
+|---|---|
+| Synthetic receipt bytes | `MODELED_LOCAL_FIXTURE` |
+| Receipt authenticity | `UNAVAILABLE` |
+| Merkle computation | `LOCAL_EXECUTABLE_EXAMPLE` |
+| Cardano metadata | `LOCAL_CANDIDATE_NOT_SUBMITTED` |
+| Confirmed ledger readback | `UNAVAILABLE` |
+
+Reference: [CIP-20 transaction messages](https://cips.cardano.org/cip/CIP-20).
+
 ---
-*Doctrine v11 LOCKED — 749/14/163 — kernel `c7c0ba17` · Λ = Conjecture 1 · SLSA L1 (honest)*
+
+*Hash anchoring is not signing, authentication, finality, or proof of a deployed runtime.*

@@ -1,185 +1,86 @@
-# Governed speculative decoding — speedup model + receipt
+# Speculative-decoding accounting model
 
-> **Probe the speculative-decoding surface: get the acceptance-rejection cost curve, the expected per-step token yield, and a receipted snapshot — all honestly labeled MODELED until a same-family draft+target pair is live on the sovereign tower.**
->
-> **Headline number: `GET /specdec/health` → `label: "SPEC-DECODE ROADMAP"` (draft not yet pulled) or `"SPEC-DECODE MEASURED"` once the llama3.2:1b draft is present on the tower.**
+::: warning No hardware measurement or runtime evidence
+This page provides a local illustrative accounting proxy. It does not establish a draft/target
+model pair, tokenizer compatibility, sampling-preserving verification, throughput, output parity,
+energy use, a receipt, or a deployed route. All such operational states are `UNAVAILABLE`.
+:::
 
-Speculative decoding (Leviathan et al. 2023, arXiv:2211.17192; Chen et al. 2023, arXiv:2302.01318)
-pairs a small **draft** model with a large **target** — the draft proposes *k* tokens in one pass;
-the target accepts or rejects them via sampling-preserving verification. Throughput scales as
-\(1 + k\alpha\) where α is the per-token acceptance rate. The SZL surface computes this curve,
-stores the speedup accounting, and wraps the whole result in a governance receipt.
+Speculative decoding uses a smaller draft model to propose tokens and a target model to verify
+them. The published algorithms define acceptance and correction procedures needed to preserve the
+target distribution. A simple cost curve cannot prove that property and cannot predict production
+speed without measurements on an exact model pair and hardware/software stack.
 
-> **Honest posture.** Until both draft and target are on the same sovereign node (shared tokenizer
-> required), the surface returns `label: "SPEC-DECODE ROADMAP"` and `measured: "UNAVAILABLE"`.
-> The acceptance-rate curve is `MODELED` (Leviathan Lemma 1 applied to the configured *k*).
-> Λ = Conjecture 1 (advisory). No joules fabricated. No throughput fabricated.
+## Executable local accounting proxy
 
----
-
-## Prerequisites
-
-```bash
-python3 -m pip install httpx
-```
-
-Live base: `https://a-11-oy.com`. Check current state:
-
-```bash
-curl -s https://a-11-oy.com/api/a11oy/v1/specdec/health \
-  | python3 -m json.tool \
-  | grep -E '"status"|"label"|"same_family_pair"|"measured_run_possible"'
-```
-
-Expected (tower down today):
-```json
-"status": "LIVE",
-"label": "SPEC-DECODE ROADMAP (no same-family pair)",
-"measured_run_possible": false
-```
-
----
-
-## Quickstart — run the surface
+The following standard-library fixture assumes an illustrative independent acceptance rate and an
+illustrative draft-cost ratio. Its `speedup_proxy` is a unitless planning number, not a theorem or
+benchmark.
 
 ```python
-import httpx, json
+import json
 
-BASE = "https://a-11-oy.com"
 
-# POST a prompt (tower reachable → MEASURED; tower down → MODELED cost curve)
-r = httpx.post(
-    f"{BASE}/api/a11oy/v1/specdec/run",
-    json={"prompt": "The sovereign GPU mesh uses governed speculative decoding to"},
-    timeout=60,
-).json()
+def accounting_proxy(k: int, alpha: float, draft_cost_ratio: float) -> dict:
+    if k <= 0:
+        raise ValueError("k must be positive")
+    if not 0.0 <= alpha <= 1.0:
+        raise ValueError("alpha must be in [0, 1]")
+    if draft_cost_ratio < 0.0:
+        raise ValueError("draft_cost_ratio must be non-negative")
 
-# Always present (even when tower is down)
-acctg  = r["payload"]["accounting_modeled"]
-k      = acctg["k"]
-label  = r["payload"]["label"]
-digest = r["payload_sha3_256"]
-
-print(f"k (draft steps):         {k}")
-print(f"State label:             {label}")
-print(f"Expected speedup @ α=0.7: {acctg['expected_speedup_at_alpha']['0.7']:.3f}×")
-print(f"Receipt digest (SHA3-256): {digest}")
-print(f"Signed: {r['signature']['signed']}")
-
-# Offline verify the receipt (zero server round-trip)
-import json as _j, hashlib
-payload_bytes = _j.dumps(
-    r["payload"], sort_keys=True, separators=(",", ":"), ensure_ascii=False
-).encode("utf-8")
-recomputed = hashlib.sha3_256(payload_bytes).hexdigest()
-assert recomputed == digest, "RECEIPT TAMPERED"
-print("Offline receipt verify: OK ✓")
-```
-
----
-
-## Full walkthrough
-
-### Step 1 — health check
-
-```python
-h = httpx.get(f"{BASE}/api/a11oy/v1/specdec/health", timeout=15).json()
-print(h["same_family_pair"])   # {"found": false, "reason": "tower unreachable"} until pair pulled
-```
-
-### Step 2 — cost curve (always available)
-
-The `accounting_modeled` block applies **Leviathan et al. 2023 Lemma 1** (cited, not re-derived):
-
-| α (acceptance rate) | Expected tokens/step | Expected speedup |
-|---|---|---|
-| 0.5 | 1.94 | 1.08× |
-| 0.7 | 2.77 | 1.54× |
-| 0.9 | 4.10 | 2.28× |
-
-These are MODELED projections — not measurements. Honest `label: "MODELED"`.
-
-### Step 3 — offline receipt verification
-
-Every `/specdec/run` response includes a `payload_sha3_256` field and a `digest_canonicalization`
-note. Verify in one line:
-
-```python
-import json, hashlib
-payload_bytes = json.dumps(
-    r["payload"], sort_keys=True, separators=(",", ":"), ensure_ascii=False
-).encode()
-assert hashlib.sha3_256(payload_bytes).hexdigest() == r["payload_sha3_256"]
-```
-
-### Step 4 — activate MEASURED mode (founder / tower operator)
-
-When the tower (RTX 4060 Ti, `https://gpu.a-11-oy.com`) is reachable and holds a
-same-family draft+target pair, the endpoint auto-detects and runs a MEASURED block:
-
-```bash
-# On the tower
-ollama pull llama3.2:1b    # draft (same llama family as existing llama3.1:8b)
-ollama pull llama3.1:8b    # target (likely already present)
-
-# Confirm
-curl -s https://gpu.a-11-oy.com/api/tags | python3 -m json.tool | grep '"name"'
-```
-
-After this, `POST /specdec/run` returns `label: "SPEC-DECODE MEASURED"` with a real
-`accepted_rate`, `mean_accepted_len`, and `speedup_modeled` derived from live token sampling.
-
----
-
-## Expected response shape
-
-```json
-{
-  "schema": "szl.a11oy.specdec.receipt.v1",
-  "payload": {
-    "schema": "szl.a11oy.specdec.v1",
-    "label": "SPEC-DECODE ROADMAP",
-    "measured": "UNAVAILABLE",
-    "accounting_modeled": {
-      "label": "MODELED (acceptance-rejection accounting curve, not a measurement)",
-      "k": 4,
-      "expected_speedup_at_alpha": {"0.5": 1.0764, "0.7": 1.5406, "0.9": 2.2751}
+    accepted_proposals_proxy = k * alpha
+    output_tokens_proxy = 1.0 + accepted_proposals_proxy
+    cost_units_proxy = 1.0 + k * draft_cost_ratio
+    return {
+        "k": k,
+        "alpha": alpha,
+        "draft_cost_ratio": draft_cost_ratio,
+        "accepted_proposals_proxy": accepted_proposals_proxy,
+        "output_tokens_proxy": output_tokens_proxy,
+        "cost_units_proxy": cost_units_proxy,
+        "speedup_proxy": output_tokens_proxy / cost_units_proxy,
+        "evidence_state": "MODELED_LOCAL_PROXY_NOT_A_MEASUREMENT",
     }
-  },
-  "payload_sha3_256": "<sha3-256 of canonicalised payload>",
-  "signature": {"signed": false, "status": "DSSE_PLACEHOLDER"}
-}
+
+
+report = accounting_proxy(k=4, alpha=0.7, draft_cost_ratio=0.15)
+assert report["evidence_state"] == "MODELED_LOCAL_PROXY_NOT_A_MEASUREMENT"
+print(json.dumps(report, indent=2, sort_keys=True))
 ```
 
-When tower is live and same-family pair present:
+This fixture deliberately does not name models or emit future response fields. Model availability
+is mutable, and no exact admitted pair or hardware witness is bound to this page.
 
-```json
-{
-  "payload": {
-    "label": "SPEC-DECODE MEASURED",
-    "measured": "MEASURED",
-    "accepted_rate": 0.73,
-    "mean_accepted_len": 3.1,
-    "speedup_modeled": 1.63,
-    "n": 50,
-    "draft_model": "llama3.2:1b",
-    "target_model": "llama3.1:8b",
-    "quality_delta": {"identical_rate": 1.0, "label": "MEASURED (lossless)"}
-  }
-}
-```
+## Measurement and promotion contract
 
----
+An operational speculative-decoding claim requires one immutable evidence set containing:
 
-## Doctrine
+1. exact target and draft model revisions, weights digests, tokenizer digest, and licenses;
+2. the exact decoding implementation and sampling parameters;
+3. a correctness test showing distribution-preserving behavior for the implemented algorithm;
+4. warm-up policy, prompts/dataset, random seeds, run count, latency distribution, and token counts;
+5. target-only and speculative baselines on the same authorized hardware and software stack;
+6. output-quality or distribution-parity analysis, plus energy telemetry when energy is claimed;
+7. an artifact-specific signed receipt when signing is claimed; and
+8. immutable runtime readback for the exact deployed revision.
 
-| Field | Value |
+No model pull, route probe, or future example response can substitute for those results.
+
+## Evidence state
+
+| Surface | Current status |
 |---|---|
-| Locked-proven | 8 ({F1,F4,F7,F11,F12,F18,F19,F22}) |
-| Λ | Conjecture 1 (advisory, ≤0.99, NOT a theorem) |
-| Energy | UNAVAILABLE until NVML meter live |
-| Throughput | MODELED until same-family pair on tower |
-| Citations | arXiv:2211.17192 (Leviathan 2023); arXiv:2302.01318 (Chen 2023); arXiv:2406.02532 (SpecExec, MIT reference); arXiv:2402.12374 (Sequoia, MIT reference) |
+| Speculative-decoding algorithms | `CITED_PRIOR_ART` |
+| Local arithmetic above | `MODELED_LOCAL_PROXY_NOT_A_MEASUREMENT` |
+| Exact compatible model pair | `UNAVAILABLE` |
+| Sampling-preservation result | `UNAVAILABLE` |
+| Hardware throughput, quality, and energy | `UNAVAILABLE` |
+| Runtime route, receipt, and signature | `UNAVAILABLE` |
+
+References: Y. Leviathan, M. Kalman, and Y. Matias, arXiv:2211.17192 (2023); C. Chen et al.,
+arXiv:2302.01318 (2023).
 
 ---
-*Doctrine v11 LOCKED · Λ = Conjecture 1 · SLSA L1*
+
+*Modeled accounting is not measured throughput, lossless parity, or an operational runtime.*

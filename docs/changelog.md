@@ -4,6 +4,11 @@ All notable changes across the SZL flagships are documented here. The format fol
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+::: warning Historical release prose
+This page records contemporaneous release notes. Words such as “live” below do not override the
+current evidence contract on [/status](/status) or [/compliance](/compliance).
+:::
+
 > Doctrine v11 **LOCKED** — 749/14/163 · kernel `c7c0ba17` · Λ = Conjecture 1 · SLSA L1 honest.
 > This page **aggregates** the v1.0.0 release notes published per flagship; each flagship's
 > own release is the source of truth (linked below).
@@ -12,11 +17,11 @@ All notable changes across the SZL flagships are documented here. The format fol
 
 ## [1.0.0] — 2026-06-09
 
-Coordinated v1.0.0 launch of the **two shipping flagships**. Per-flagship GitHub releases:
+Coordinated v1.0.0 source release for the **two flagship repositories**. Per-repository releases:
 [a11oy](https://github.com/szl-holdings/a11oy/releases/tag/v1.0.0) ·
 [killinchu](https://github.com/szl-holdings/killinchu/releases/tag/v1.0.0).
 
-### Added (shipping flagships)
+### Added (historical release notes)
 - **a11oy** — policy + receipt substrate; `/v1/policy/evaluate`, `/v1/verify`, `/v1/ledger`, `/v1/honest`, `/v1/version` live.
 - **killinchu** — counter-UAS rule engine; real Remote-ID / ADS-B / MAVLink decoders (unauthenticated/spoofable, honestly disclosed); 13-axis Λ-gate; effector path is a command demonstration, simulated; DSSE Khipu receipts (PLACEHOLDER signatures).
 - Doctrine v11 compliance — kernel `c7c0ba17` (749 declarations / 14 axioms / 163 sorries); exactly 8 locked-proven formulas {F1,F4,F7,F11,F12,F18,F19,F22}; Λ unconditional = Conjecture 1 (machine-checked false, never a theorem); Khipu BFT = Conjecture 2 (Wave 23 `khipu_quorum_safety_conditional` conditional-only).

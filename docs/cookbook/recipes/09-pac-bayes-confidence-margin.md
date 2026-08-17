@@ -1,18 +1,25 @@
-# PAC-Bayes confidence margin
+# PAC-Bayes confidence-margin fixture
 
-> **Put a non-vacuous, distribution-free upper bound on your governance head's risk using the McAllester-1999 PAC-Bayes inequality — the runnable implementation is pinned below.**
+> **MODELED_FIXTURE:** exercise the McAllester-1999 PAC-Bayes arithmetic with a pinned
+> implementation. This recipe does not establish a risk bound for an SZL dataset, policy, or
+> deployed runtime.
 >
-> **Headline number: n=100,000, KL=0.5, δ=0.05, R̂=0.05 → risk bound ≈ 0.057 (non-vacuous).**
+> **MODELED_FIXTURE inputs/result:** `n=100,000`, `KL=0.5`, `δ=0.05`, `R̂=0.05` → arithmetic
+> result ≈ `0.057` (`nonVacuous: true` for these fixture values only).
 
 How confident can you be that a passing Λ-gate generalizes beyond the sample you measured it on?
-PAC-Bayes answers with a tail bound. The implementation is real and linked at an immutable
+PAC-Bayes supplies a conditional tail-bound framework. The arithmetic implementation is pinned
+and linked at an immutable
 `szl-cookbook` revision:
 [`recipes/knot-calculus-v1/code/src/pac-bayes-bound.ts`](https://github.com/szl-holdings/szl-cookbook/blob/1be98cc0fed44fba98bfb89a1056c6f3364ae736/recipes/knot-calculus-v1/code/src/pac-bayes-bound.ts).
 
 > **Honest scope.** The closed-form arithmetic is proved in Lean (**TH13**
 > `governanceHead_PACBayes_bound`); the probabilistic `Pr ≥ 1−δ` quantifier is the documented
-> residual `sorry`. The bound is a *bound*, not a guarantee of optimality, and Λ remains
-> **Conjecture 1**.
+> residual `sorry`. The worked `n`, `KL`, `δ`, `R̂`, and `0.057` result are a
+> **MODELED_FIXTURE**, not measured production evidence. A real claim additionally requires a
+> bound dataset and sampling process, prior and posterior, loss function, exact evaluation
+> artifact, and runtime/source revision. The wrappers that connect those artifacts to the
+> arithmetic remain unproven obligations. Λ remains **Conjecture 1**.
 
 ---
 
@@ -38,7 +45,7 @@ cd recipes/knot-calculus-v1/code && npm install
 
 ---
 
-## Quickstart (runnable, in this repo)
+## Quickstart (runnable fixture, in the pinned repo)
 
 ```bash
 cd recipes/knot-calculus-v1/code
@@ -70,33 +77,41 @@ print(pac_bayes(0.05, 0.5, 100_000, 0.05))
 
 ## Full walkthrough
 
-### Step 1 — Estimate the empirical risk R̂(Q)
+### Step 1 — Bind an empirical risk R̂(Q)
 
 Replay your receipts (e.g., a compliance regime from **[recipe 03](03-fine-tune-compliance-regime.md)**)
 and count the fraction where the gate's decision disagreed with the ground-truth label. That
-fraction is R̂(Q) on bounded 0–1 loss.
+fraction can be R̂(Q) only after the dataset, sampling procedure, label provenance, loss, exclusions,
+and exact receipt/runtime revisions are recorded. The `0.05` in this recipe is not such a
+measurement; it is a **MODELED_FIXTURE**.
 
 ### Step 2 — Estimate KL(Q‖P)
 
-P is the doctrine prior over policies (the locked axis priors); Q is your tuned posterior. For a
-diagonal-Gaussian parameterization, KL is the usual closed form. Keep KL small by staying close to
-the doctrine prior — the bound rewards that directly.
+P must be a precisely defined prior selected without using the evaluation sample; Q must be the
+exact posterior evaluated. For a diagonal-Gaussian parameterization, KL has a closed form, but the
+parameterization and computation still need artifact bindings. The `0.5` here is a
+**MODELED_FIXTURE**, not a measured doctrine-prior divergence.
 
 ### Step 3 — Choose n and δ
 
-n is your evaluation sample size; δ is the failure probability (0.05 is standard). The slack
-shrinks like \(1/\sqrt{n}\): going from n=10⁴ to n=10⁵ roughly cuts the slack by ~3×.
+For an evidence-bearing claim, n must identify the sampled observations and δ must be selected and
+recorded as part of the evaluation protocol. Here `100,000` and `0.05` are
+**MODELED_FIXTURE** values. The arithmetic slack shrinks like \(1/\sqrt{n}\), conditional on the
+bound's assumptions and valid bindings.
 
 ### Step 4 — Read the margin
 
-The **confidence margin** is `lambda_floor − upperBound_on_failure`. If your Λ floor is 0.9 and the
-bound says failure risk ≤ 0.057, you have a real, distribution-free safety margin — not a vibe.
+The fixture can compute `lambda_floor − upperBound_on_failure` as arithmetic. Calling that
+difference a safety margin requires the missing dataset/sampling, prior/posterior, bounded-loss,
+source/runtime, and wrapper-proof bindings. The `0.057` result is therefore
+**MODELED_FIXTURE**, not a real distribution-free safety claim.
 
 ### Step 5 — Non-vacuity check
 
-`nonVacuous` must be `true` (upperBound < 1). A vacuous bound means you need more samples or a
-posterior closer to the prior. Lotfi et al. 2023 show non-vacuous bounds are achievable even for
-LLM-scale heads.
+`nonVacuous: true` means only that the computed fixture upper bound is below 1. It does not prove
+that the inputs describe a real system. If a fully bound evaluation is vacuous, more valid samples
+or a justified posterior closer to its predeclared prior may tighten it. Literature examples do
+not supply the missing SZL artifact bindings.
 
 ---
 
@@ -105,6 +120,11 @@ LLM-scale heads.
 | Theorem | File | Status |
 |---|---|---|
 | TH13 `governanceHead_PACBayes_bound` | `lutar-lean/Lutar/PACBayes.lean` | closed-form proved; Pr-quantifier open |
+
+Unproven wrapper obligations include: dataset identity and provenance; sampling/i.i.d. conditions;
+prior independence and exact posterior identity; bounded loss and label semantics; reproducible
+R̂/KL computation; exact source/runtime/evaluation revisions; and a verified wrapper that passes
+those bound values to the pinned arithmetic without substitution.
 
 ---
 

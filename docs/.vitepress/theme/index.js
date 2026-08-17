@@ -27,12 +27,43 @@ function repairAccessibleChrome() {
   }
 }
 
+let repairQueued = false
+function scheduleAccessibleChromeRepair() {
+  if (typeof window === 'undefined' || repairQueued) return
+  repairQueued = true
+  window.requestAnimationFrame(() => {
+    repairQueued = false
+    repairAccessibleChrome()
+  })
+}
+
+let mobileEscapeInstalled = false
+function installMobileNavigationEscape() {
+  if (typeof document === 'undefined' || mobileEscapeInstalled) return
+  mobileEscapeInstalled = true
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape') return
+    const trigger = document.querySelector('button.VPNavBarHamburger[aria-expanded="true"]')
+    const screen = document.querySelector('.VPNavScreen')
+    if (!trigger || !screen) return
+    event.preventDefault()
+    trigger.click()
+    window.requestAnimationFrame(() => trigger.focus())
+  })
+}
+
 export default {
   extends: DefaultTheme,
   enhanceApp({ app }) {
     app.mixin({
       mounted() {
-        window.requestAnimationFrame(repairAccessibleChrome)
+        installMobileNavigationEscape()
+        scheduleAccessibleChromeRepair()
+      },
+      updated() {
+        // VitePress keeps the shell during SPA navigation; repair the newly
+        // rendered content after the DOM update as well as at first paint.
+        scheduleAccessibleChromeRepair()
       }
     })
   }

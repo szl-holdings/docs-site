@@ -125,17 +125,27 @@ szl_docs_site/
 
 ## Develop & build
 
-Prerequisites: Node 18+ and npm.
+Prerequisites: Node 20+ and npm. Browser verification also needs the Chromium build pinned by
+the installed Playwright package.
 
 ```bash
 # install dependencies
 npm install
+
+# install the exact browser used by the responsive/accessibility suite
+npm exec playwright install chromium
 
 # live dev server with hot reload (http://localhost:5173)
 npm run docs:dev
 
 # production build → docs/.vitepress/dist/
 npm run docs:build
+
+# rerun source/runtime/link contract tests without rebuilding
+npm run test:contracts
+
+# rebuild and exercise the five-viewport browser/accessibility contract
+npm run test:browser
 
 # preview the production build locally (http://localhost:4173)
 npm run docs:preview
@@ -158,7 +168,9 @@ npm run docs:preview
    `/img/yourfile.png` (the `public/` prefix is stripped at build).
 7. **Brand colors** live as CSS custom properties in `docs/.vitepress/theme/custom.css`
    (Kanchay tokens). Adjust there to retheme globally.
-8. Run `npm run docs:build`, eyeball with `npm run docs:preview`, then deploy.
+8. Run `npm run docs:build` and `npm run test:browser`, eyeball with
+   `npm run docs:preview`, then deploy. The build itself reruns the deterministic link and runtime
+   truth contracts used by the hosted Pages workflows.
 
 ### Editing the LOCKED contract numbers
 

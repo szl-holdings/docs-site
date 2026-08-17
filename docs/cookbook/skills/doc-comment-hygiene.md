@@ -1,4 +1,5 @@
 ---
+title: Doc & Comment Hygiene
 name: doc-comment-hygiene
 description: Audit and improve inline documentation, JSDoc comments, and README files across the monorepo. Use when preparing code for review, after completing a feature, or when a new engineer needs to onboard to a module. Adapted from Antigravity Awesome Skills documentation patterns.
 ---

@@ -1,107 +1,90 @@
-# Quickstart — five minutes to your first call
+# Quickstart — start with evidence
 
-This page gets you from zero to a verifiable result against the **two shipping flagships**,
-a11oy and killinchu. Everything in those sections is **real** — the endpoints, repos, and
-commands all exist today. The Provenance Anchor, Operator, and Policy roles are
-**roadmap/frontier** and are documented honestly below; they are not yet released as cloneable
-repos or published packages.
+This quickstart starts with a reproducible source checkout, then shows the public-runtime
+boundary. It intentionally does not present a timing-out or paused service as an executable
+integration path.
 
-::: tip Prerequisites
-- **Node 18+** and **pnpm** for the a11oy TypeScript fabric.
-- **Python 3.11+** for killinchu and the math/receipt tooling.
-- A clone of the relevant repo from [`github.com/szl-holdings`](https://github.com/szl-holdings).
+::: warning Runtime status — observed 2026-08-11
+**killinchu is AVAILABLE_AT_OBSERVATION** at `GET /api/killinchu/healthz` (HTTP 200) for the recorded revision.
+**a11oy is UNAVAILABLE for readiness**: its provider is `RUNNING` at `f5c395e8`, but `/healthz`
+timed out at both 20 s and 30 s. **Hatun-MCP is PAUSED** and `/readyz` returned HTTP 503 because
+the provider quota was `3/3`. Recheck [Runtime status](/status) before every hosted call.
 :::
 
-## 0 · Verify the corpus (30 seconds)
+## 1. Reproduce the pinned doctrine source
 
-Before trusting any number on this site, reproduce the canonical Lean figures yourself.
-This is the Doctrine v11 honesty rule — **regenerate, don't trust**:
-
-```bash
-gh repo clone szl-holdings/lutar-lean /tmp/lutar -- --depth 1
-cd /tmp/lutar
-DECL=$(grep -rE '^(theorem|lemma|def|abbrev|axiom) ' --include='*.lean' Lutar/ | wc -l)
-AXIOM_UNIQ=$(grep -rhE '^axiom ' --include='*.lean' Lutar/ | awk '{print $2}' | sort -u | wc -l)
-SORRY=$(grep -rE '\bsorry\b' --include='*.lean' Lutar/ | wc -l)
-echo "Lean: $DECL declarations / $AXIOM_UNIQ unique axioms / $SORRY sorries"
-```
-
-The Doctrine v11 LOCKED snapshot is <span class="locked">749 declarations</span> /
-<span class="locked">14 unique axioms</span> / <span class="locked">163 sorries</span>
-at tag `lutar-v18.0.0`, kernel `c7c0ba17`. The corpus is living; see [Evidence](/evidence/)
-for the single source of truth and the live snapshot. Note: exactly **8** formulas are
-locked-proven {F1, F4, F7, F11, F12, F18, F19, F22}; Λ unconditional is **Conjecture 1** (machine-checked
-false, never a theorem); the conditional Λ result is axiom-free PROVEN (Wave 22); Khipu BFT
-is **Conjecture 2** (Wave 23 `khipu_quorum_safety_conditional` is conditional-only).
-
-## 1 · a11oy — evaluate a policy gate
-
-`a11oy` is the governed execution fabric. The fastest first call is the Covenant Policy
-engine deciding whether an action may proceed.
+The locked contract is not a claim about a running Space. It is the exact Lean snapshot
+`c7c0ba17c2eaec60ad38ea9172b4a0d9ca0b582f`; do not conflate it with the separately bound
+`lutar-v18.0.0` tag.
 
 ```bash
-git clone https://github.com/szl-holdings/a11oy.git && cd a11oy
-pnpm install && pnpm build
+LUTAR_REV=c7c0ba17c2eaec60ad38ea9172b4a0d9ca0b582f
+git clone --filter=blob:none --no-checkout https://github.com/szl-holdings/lutar-lean.git lutar
+cd lutar
+git checkout --detach "$LUTAR_REV"
+test "$(git rev-parse HEAD)" = "$LUTAR_REV" || { echo "wrong locked snapshot"; exit 1; }
+python3 -I -B .github/scripts/lean_numbers.py --repo-path . --ref "$LUTAR_REV"
 ```
 
-```ts
-import { CovenantPolicy } from '@szl/a11oy-policy'
+The remeasured values are `749 declarations / 14 unique axioms / 163 raw sorry tokens`. A clone of `main` answers a different question;
+print its full SHA and label its result **CURRENT SOURCE**, not the locked contract. See
+[Evidence](/evidence/) for DOI and source-lineage rules.
 
-const policy = new CovenantPolicy()
-const decision = policy.evaluate({
-  action: 'deploy',
-  axes: { moralGrounding: 0.97, measurabilityHonesty: 0.96 /* ...13 axes */ },
-})
+## 2. Build a flagship from source
 
-console.log(decision.passed, decision.continuumHash)
-// → false unless all 13 axes clear their floors (conjunctive AND, no compensation)
-```
-
-You can also hit the live Space directly:
+Use source-local commands when registry publication has not been independently evidenced. The
+following builds the checked-out a11oy source; it is not a claim that a public package registry
+or hosted runtime is available.
 
 ```bash
-curl -s https://szlholdings-a11oy.hf.space/healthz | jq .   # → doctrine v11 · 749/14/163
+git clone https://github.com/szl-holdings/a11oy.git
+cd a11oy
+pnpm install --frozen-lockfile
+pnpm build
 ```
 
-## 2 · killinchu — decode a Remote-ID frame
+Consult the checked-out repository's `README`, lockfile, and package manifests for the current
+local package names. Do not substitute an undocumented `npm install @scope/name` command for a
+source checkout.
 
-`killinchu` is the drone-intelligence flagship. The honest counter-UAS path: decode a real
-broadcast self-ID, run the haversine geofence + 13-axis Λ-gate, emit a Khipu receipt.
+## 3. Call the currently ready public route
+
+Only killinchu has a successful public readiness probe in the 2026-08-11 observation:
 
 ```bash
-# Against the live Space API (no install needed)
-curl -s https://szlholdings-killinchu.hf.space/api/killinchu/v1/honest | jq .
-
-curl -s -X POST https://szlholdings-killinchu.hf.space/api/killinchu/v1/remote-id/decode \
-  -H 'content-type: application/json' \
-  -d '{"hex":"0d01..."}' | jq .
+curl --fail-with-body --max-time 30 \
+  https://szlholdings-killinchu.hf.space/api/killinchu/healthz
 ```
 
-::: tip Honest by construction
-`GET /api/killinchu/v1/honest` returns the Doctrine v11 disclosure as JSON: Λ is a
-**Conjecture**, DSSE signatures are **PLACEHOLDER**, broadcast Remote-ID/ADS-B/MAVLink are
-**unauthenticated and spoofable**, and the effector path is a **command demonstration,
-simulated**. Malformed input returns an honest error, never a silent pass.
-:::
+An HTTP 200 from that readiness endpoint establishes only the recorded public readiness result.
+It does not authenticate other endpoints, prove a client integration, or prove receipt signing.
+Use [killinchu API](/api/killinchu) for the published route shapes and recheck `/status` first.
 
-## Roadmap roles (not yet released)
+## 4. Handle unavailable runtime paths honestly
 
-The following roles are on the roadmap. They are **not** cloneable repos or published
-packages today — the commands and imports below describe the intended shape, not a current
-release. See [Flagships](/flagships/) for honest status.
+Do not make a production call to a11oy or Hatun-MCP based on this snapshot:
 
-- **Provenance Anchor** — append-only governance-receipt
-  sync with a Banach-contraction convergence bound; Cardano mainnet anchoring is **in
-  development**. Local Merkle anchoring is the live primitive inside a11oy today.
-- **Operator** — Khipu-indexed receipt-DAG console. Its
-  summation invariant `rootValue = Σ pendantValues = Σ Σ decisionValues` is formally verified
-  in `lutar-lean`; the standalone console is roadmap.
-- **Policy** — Kitaev-surface posture-drift detector.
-  Roadmap cyber-resilience pack; the live policy gate ships inside a11oy.
+```bash
+# a11oy readiness was UNAVAILABLE in the 2026-08-11 observation.
+# This diagnostic is expected to time out until a fresh successful readiness observation exists.
+curl --connect-timeout 20 --max-time 30 -i \
+  https://szlholdings-a11oy.hf.space/healthz
+```
+
+No API key, customer portal, or generic desktop configuration is documented here because none is
+a currently witnessed end-to-end integration path. See [MCP integration](/developers/mcp_integration)
+for the separate protocol/authentication boundary.
+
+## Receipt and signing boundary
+
+A receipt hash chain or a recomputed self-digest supports integrity of supplied bytes. It is not
+a signature. Treat a receipt labelled `DSSE-PLACEHOLDER` or `UNSIGNED` as unsigned. Container
+image cosign evidence, where available for an immutable image digest, is separate from a runtime
+receipt and does not establish runtime readiness. See [Compliance](/compliance).
 
 ## Next steps
 
-- **[The 12 organs](/anatomy/)** — formula-by-formula breakdown.
-- **[SDKs](/sdks/)** — `szl-python` and `szl-ts` unified clients (in development).
-- **[Cookbook](/cookbook/)** — runnable, Lean-backed recipes.
-- **[API Reference](/api/)** — endpoint tables, OpenAPI when published.
+- [Developer hub](/developers/) — exact route, auth, package, and client boundaries.
+- [API reference](/api/) — published route catalog; availability remains on [/status](/status).
+- [SDKs](/sdks/) — planned SDK surfaces and source-local interim work.
+- [Evidence](/evidence/) — pinned Lean reproduction, artifact lineage, and DOIs.
