@@ -260,12 +260,18 @@ if (/\.VPHome\s*\{\s*overflow:\s*hidden/i.test(customCss)) {
   fail('homepage must not globally clip overflow or focus outlines')
 }
 for (const marker of [
+  '--szl-nav-offset: calc(var(--vp-nav-height) + var(--szl-safe-top))',
   'padding-top: var(--szl-safe-top)',
-  'top: calc(var(--vp-nav-height) + var(--szl-safe-top))',
-  '.VPNavScreen {',
+  'top: var(--szl-nav-offset)',
+  '.VPNavScreen.VPNavScreen {',
+  'height: calc(100dvh - var(--vp-nav-height) - var(--szl-safe-top))',
+  'overscroll-behavior-y: contain',
   'padding-bottom: max(1rem, var(--szl-safe-bottom))',
   'scrollbar-gutter: stable',
   '-webkit-overflow-scrolling: touch',
+  '.vp-doc :not(pre) > code',
+  '@media (prefers-reduced-transparency: reduce)',
+  '@media (prefers-contrast: more)',
   '@media (forced-colors: active)',
   'outline: 3px solid CanvasText'
 ]) {
