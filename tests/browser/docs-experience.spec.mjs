@@ -5,6 +5,7 @@ const basePath = '/docs-site/'
 const viewports = [
   { name: 'phone-320', width: 320, height: 568 },
   { name: 'phone-390', width: 390, height: 844 },
+  { name: 'short-landscape', width: 568, height: 320 },
   { name: 'tablet-768', width: 768, height: 1024 },
   { name: 'laptop-1366', width: 1366, height: 768 },
   { name: 'wide-1728', width: 1728, height: 1117 }
@@ -42,21 +43,38 @@ async function assertViewportIntegrity(page) {
   expect(metrics.mainCount, 'exactly one primary-content landmark').toBe(1)
   expect(metrics.labeledMainCount, 'primary landmark must be named').toBe(1)
 
-  const controls = page.locator('a:visible, button:visible, input:visible, select:visible, textarea:visible, summary:visible')
-  const count = await controls.count()
-  for (let index = 0; index < count; index++) {
-    const box = await controls.nth(index).boundingBox()
-    expect(box, `visible control ${index} must have a box`).not.toBeNull()
-    if (!box) continue
-    const intersectsViewport = box.x + box.width > 0
-      && box.x < metrics.clientWidth
-      && box.y + box.height > 0
-      && box.y < metrics.innerHeight
+  // Snapshot all geometry in one browser task. Per-locator boundingBox() calls
+  // can outlive a VitePress transition and spend the entire test timeout
+  // waiting on a control that became hidden between count() and nth().
+  const controls = await page.locator('a, button, input, select, textarea, summary').evaluateAll((elements) =>
+    elements.map((element, index) => {
+      const box = element.getBoundingClientRect()
+      const style = getComputedStyle(element)
+      return {
+        index,
+        visible: style.display !== 'none'
+          && style.visibility !== 'hidden'
+          && style.visibility !== 'collapse'
+          && element.getClientRects().length > 0
+          && box.width > 0
+          && box.height > 0,
+        x: box.x,
+        y: box.y,
+        width: box.width,
+        height: box.height
+      }
+    }).filter((control) => control.visible)
+  )
+  for (const control of controls) {
+    const intersectsViewport = control.x + control.width > 0
+      && control.x < metrics.clientWidth
+      && control.y + control.height > 0
+      && control.y < metrics.innerHeight
     if (!intersectsViewport) continue
-    expect(box.width, `visible control ${index} width`).toBeGreaterThan(0)
-    expect(box.height, `visible control ${index} height`).toBeGreaterThan(0)
-    expect(box.x + box.width, `visible control ${index} must not overflow right`).toBeLessThanOrEqual(metrics.clientWidth + 1)
-    expect(box.x, `visible control ${index} must not overflow left`).toBeGreaterThanOrEqual(-1)
+    expect(control.width, 'visible control ' + control.index + ' width').toBeGreaterThan(0)
+    expect(control.height, 'visible control ' + control.index + ' height').toBeGreaterThan(0)
+    expect(control.x + control.width, 'visible control ' + control.index + ' must not overflow right').toBeLessThanOrEqual(metrics.clientWidth + 1)
+    expect(control.x, 'visible control ' + control.index + ' must not overflow left').toBeGreaterThanOrEqual(-1)
   }
 }
 
@@ -65,6 +83,7 @@ for (const viewport of viewports) {
     test.use({ viewport: { width: viewport.width, height: viewport.height } })
 
     test('scoped routes are responsive, keyboard-safe, and accessible', async ({ page }, testInfo) => {
+      test.slow()
       await page.emulateMedia({ colorScheme: 'dark', reducedMotion: 'reduce' })
       const consoleErrors = []
       const failedInternalRequests = []
@@ -137,6 +156,7 @@ for (const viewport of viewports) {
 }
 
 test('representative investor, developer, status, compliance, and proof routes survive SPA navigation', async ({ page }) => {
+  test.slow()
   await page.setViewportSize({ width: 1366, height: 768 })
   const consoleErrors = []
   const failedInternalRequests = []
@@ -239,6 +259,34 @@ test('mobile navigation honors nonzero top and bottom safe-area insets', async (
     navHeight: Number.parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--vp-nav-height'))
   }))
   expect(geometry.top).toBeGreaterThanOrEqual(geometry.navHeight + 17)
+  expect(geometry.paddingBottom).toBeGreaterThanOrEqual(19)
+})
+
+test('short mobile navigation stays inside the dynamic viewport', async ({ page }) => {
+  await page.setViewportSize({ width: 568, height: 320 })
+  await page.goto(localPath(''), { waitUntil: 'networkidle' })
+  await page.addStyleTag({ content: ':root { --szl-safe-top: 17px !important; --szl-safe-bottom: 19px !important; }' })
+  const menu = page.locator('button.VPNavBarHamburger')
+  await menu.click()
+  const geometry = await page.locator('.VPNavScreen').evaluate((screen) => {
+    const rect = screen.getBoundingClientRect()
+    const style = getComputedStyle(screen)
+    return {
+      top: rect.top,
+      bottom: rect.bottom,
+      innerHeight: window.innerHeight,
+      clientHeight: screen.clientHeight,
+      scrollHeight: screen.scrollHeight,
+      overflowY: style.overflowY,
+      paddingBottom: Number.parseFloat(style.paddingBottom),
+      navHeight: Number.parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--vp-nav-height'))
+    }
+  })
+  expect(geometry.top).toBeGreaterThanOrEqual(geometry.navHeight + 17)
+  expect(geometry.bottom).toBeLessThanOrEqual(geometry.innerHeight + 1)
+  expect(geometry.clientHeight).toBeGreaterThan(0)
+  expect(geometry.scrollHeight).toBeGreaterThanOrEqual(geometry.clientHeight)
+  expect(geometry.overflowY).toMatch(/auto|scroll/)
   expect(geometry.paddingBottom).toBeGreaterThanOrEqual(19)
 })
 

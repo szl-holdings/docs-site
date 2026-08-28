@@ -32,6 +32,7 @@
   --szl-safe-right: env(safe-area-inset-right, 0px);
   --szl-safe-bottom: env(safe-area-inset-bottom, 0px);
   --szl-safe-left: env(safe-area-inset-left, 0px);
+  --szl-nav-offset: calc(var(--vp-nav-height) + var(--szl-safe-top));
   --szl-layer-content: 0;
   --szl-layer-nav: 30;
   --szl-layer-overlay: 50;
@@ -42,6 +43,14 @@
 }
 
 .dark { --vp-code-lang-color: var(--color-gray-200); }
+
+html { scroll-padding-top: calc(var(--szl-nav-offset) + 1rem); }
+
+/* Every nested flex/grid owner must be allowed to shrink. This keeps long
+   hashes, URLs, diagrams, and code from widening the document at 320px. */
+:where(.VPContent, .VPDoc, .VPDoc .container, .VPDoc .content, .VPDoc .content-container, .vp-doc) {
+  min-inline-size: 0;
+}
 
 /* Do not hide overflow on the entire home surface: that clips focused controls
    and masks responsive defects. Decorative geometry is non-interactive. */
@@ -75,6 +84,8 @@
   position: relative;
   z-index: var(--szl-layer-content);
   padding-top: var(--szl-safe-top) !important;
+  padding-left: var(--szl-safe-left);
+  padding-right: var(--szl-safe-right);
 }
 .VPNavBar,
 .VPLocalNav {
@@ -82,9 +93,16 @@
   padding-right: max(0px, var(--szl-safe-right));
 }
 .VPNav { padding-top: var(--szl-safe-top); }
-.VPLocalNav.VPLocalNav { top: calc(var(--vp-nav-height) + var(--szl-safe-top)) !important; }
+.VPLocalNav.VPLocalNav { top: var(--szl-nav-offset) !important; }
 .VPNavScreen.VPNavScreen {
-  top: calc(var(--vp-nav-height) + var(--szl-safe-top)) !important;
+  top: var(--szl-nav-offset) !important;
+  height: calc(100vh - var(--vp-nav-height) - var(--szl-safe-top));
+  height: calc(100dvh - var(--vp-nav-height) - var(--szl-safe-top));
+  max-height: calc(100dvh - var(--vp-nav-height) - var(--szl-safe-top));
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  scrollbar-gutter: stable;
+  -webkit-overflow-scrolling: touch;
   padding-bottom: max(1rem, var(--szl-safe-bottom)) !important;
 }
 .VPDocFooter { padding-bottom: max(1rem, var(--szl-safe-bottom)); }
@@ -97,14 +115,22 @@
     visibility: hidden;
     pointer-events: none;
   }
+  .VPSidebar.VPSidebar {
+    max-width: calc(100vw - var(--szl-safe-left) - var(--szl-safe-right));
+    padding-left: max(32px, var(--szl-safe-left));
+    padding-right: max(32px, var(--szl-safe-right));
+    padding-bottom: max(48px, var(--szl-safe-bottom));
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
 }
 
 @media (min-width: 960px) {
   .VPContent.VPContent {
-    padding-top: calc(var(--vp-nav-height) + var(--szl-safe-top)) !important;
+    padding-top: var(--szl-nav-offset) !important;
   }
   .VPSidebar.VPSidebar {
-    top: calc(var(--vp-layout-top-height, 0px) + var(--vp-nav-height) + var(--szl-safe-top));
+    top: calc(var(--vp-layout-top-height, 0px) + var(--szl-nav-offset));
     padding-top: 24px;
     padding-bottom: max(48px, var(--szl-safe-bottom));
     scroll-padding-top: 24px;
@@ -116,10 +142,17 @@
 .VPNavBarMenuLink,
 .VPNavBarMenuGroup .button,
 .VPNavBarHamburger,
-.VPSwitchAppearance {
+.VPSwitchAppearance,
+.VPLocalNav .menu,
+.VPNavScreenMenuLink,
+.VPNavScreenMenuGroup .button,
+.VPDocAsideOutline .outline-link,
+.VPSocialLink {
   min-height: 44px;
 }
-.VPNavBarHamburger { min-width: 44px; }
+.VPNavBarHamburger,
+.VPSwitchAppearance,
+.VPSocialLink { min-width: 44px; }
 
 /* At VitePress's exact 768px breakpoint, the extra-navigation flyout becomes
    visible while the tablet layout still has constrained horizontal space. The
@@ -162,9 +195,27 @@
 .vp-doc h1 { font-weight: 800; letter-spacing: -0.02em; }
 .vp-doc h2 { font-weight: 700; letter-spacing: -0.01em; border-top: 1px solid var(--vp-c-divider); padding-top: 1.6rem; }
 .vp-doc h3 { font-weight: 600; }
-.vp-doc .katex-display { overflow-x: auto; overflow-y: hidden; padding: 0.4rem 0; }
+.vp-doc :where(h1, h2, h3, h4, h5, h6) {
+  scroll-margin-top: calc(var(--szl-nav-offset) + 1rem);
+  overflow-wrap: anywhere;
+}
+.vp-doc :not(pre) > code {
+  white-space: break-spaces;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+.vp-doc :where([class*='language-'], pre, .katex-display, .mermaid) {
+  max-inline-size: 100%;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scrollbar-gutter: stable;
+  -webkit-overflow-scrolling: touch;
+}
+.vp-doc .katex-display { overflow-y: hidden; padding: 0.4rem 0; }
 .vp-doc mjx-container,
 .vp-doc .katex { font-size: 1.04em; }
+.vp-doc :where(img, video, canvas, svg, iframe) { max-inline-size: 100%; }
+.vp-doc :where(img, video) { height: auto; }
 
 .locked {
   display: inline-flex;
@@ -275,9 +326,40 @@
     height: min(320px, calc(100vw - 48px));
   }
   .VPHomeHero .actions { width: 100%; }
+  .VPHomeHero .actions .action { flex: 1 1 100%; }
   .VPHomeHero .actions .VPButton { width: 100%; justify-content: center; }
   .vp-doc { overflow-wrap: anywhere; }
   .vp-doc pre { max-width: 100%; }
+}
+
+@media (max-width: 360px) {
+  .VPHomeHero .image-container {
+    width: min(256px, calc(100vw - 32px));
+    height: min(256px, calc(100vw - 32px));
+  }
+  .vp-doc > p:first-of-type { font-size: 1.0625rem; }
+  .vp-doc h1 { font-size: clamp(2rem, 10vw, 2.5rem); }
+  .vp-doc h2 { font-size: clamp(1.5rem, 8vw, 2rem); }
+}
+
+@media (max-width: 959px) and (max-height: 520px) {
+  .VPNavScreen.VPNavScreen { overscroll-behavior-block: contain; }
+  .VPHomeHero .image-container {
+    width: min(220px, 56vh);
+    height: min(220px, 56vh);
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .VPNav,
+  .VPNavBar,
+  .VPLocalNav,
+  .VPNavScreen,
+  .VPSidebar,
+  .nav {
+    background-color: var(--vp-c-bg);
+    backdrop-filter: none !important;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -288,6 +370,24 @@
     transition-duration: 0.01ms !important;
   }
   .szl-audience > a:hover { transform: none; }
+}
+
+@media (prefers-contrast: more) {
+  :root,
+  :root.dark {
+    --border: var(--text);
+    --border-subtle: var(--text-sub);
+    --hairline: var(--text-sub);
+    --vp-c-text-2: var(--vp-c-text-1);
+    --vp-c-text-3: var(--vp-c-text-2);
+    --vp-c-border: var(--vp-c-text-1);
+    --vp-c-divider: var(--vp-c-text-2);
+  }
+  .vp-doc a { text-decoration: underline; text-decoration-thickness: 2px; }
+  :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+    outline-width: 4px;
+    outline-offset: 4px;
+  }
 }
 
 /* System colors retain a visible focus boundary when author colors are removed. */
